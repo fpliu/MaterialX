@@ -167,6 +167,27 @@ ShaderPtr GlslShaderGenerator::generate(const string& name, ElementPtr element, 
     return shader;
 }
 
+ShaderPtr GlslShaderGenerator::generate(const string& name, ShaderGraphPtr graph, GenContext& context) const
+{
+    ShaderPtr shader = createShader(name, graph, context);
+
+    ScopedFloatFormatting fmt(Value::FloatFormatFixed);
+
+    HwResourceBindingContextPtr resourceBindingCtx = getResourceBindingContext(context);
+    if (resourceBindingCtx)
+        resourceBindingCtx->initialize();
+
+    ShaderStage& vs = shader->getStage(Stage::VERTEX);
+    emitVertexStage(shader->getGraph(), context, vs);
+    replaceTokens(_tokenSubstitutions, vs);
+
+    ShaderStage& ps = shader->getStage(Stage::PIXEL);
+    emitPixelStage(shader->getGraph(), context, ps);
+    replaceTokens(_tokenSubstitutions, ps);
+
+    return shader;
+}
+
 void GlslShaderGenerator::emitVertexStage(const ShaderGraph& graph, GenContext& context, ShaderStage& stage) const
 {
     HwResourceBindingContextPtr resourceBindingCtx = getResourceBindingContext(context);

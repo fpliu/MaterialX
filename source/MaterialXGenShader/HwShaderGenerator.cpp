@@ -9,6 +9,7 @@
 
 #include <MaterialXCore/Document.h>
 #include <MaterialXCore/Definition.h>
+#include <MaterialXCore/Geom.h>
 
 MATERIALX_NAMESPACE_BEGIN
 
@@ -464,6 +465,185 @@ ShaderPtr HwShaderGenerator::createShader(const string& name, ElementPtr element
     }
 
     return shader;
+}
+
+ShaderPtr HwShaderGenerator::createShader(const string& name, ShaderGraphPtr graph, GenContext& context) const
+{
+    // Replicate the geomProp-insertion loop from createShader(ElementPtr):
+    // for each graph input socket whose geomProp is set, replace all downstream
+    // connections with a geomProp node and re-sort the graph.
+    // This must run before stage setup so the vertex/pixel stage visitors see
+    // the geomProp nodes rather than the graph input sockets they replace.
+    ConstDocumentPtr doc = graph->getDocument();
+    if (doc)
+    {
+        bool geomNodeAdded = false;
+        for (ShaderGraphInputSocket* socket : graph->getInputSockets())
+        {
+            if (!socket->getGeomProp().empty())
+            {
+                GeomPropDefPtr geomprop = doc->getGeomPropDef(socket->getGeomProp());
+                if (geomprop)
+                {
+                    ShaderInputVec connections = socket->getConnections();
+                    for (auto* connection : connections)
+                    {
+                        connection->breakConnection();
+                        graph->addDefaultGeomNode(connection, *geomprop, context);
+                        geomNodeAdded = true;
+                    }
+                }
+            }
+        }
+        if (geomNodeAdded)
+            graph->topologicalSort();
+    }
+
+    ShaderPtr shader = std::make_shared<Shader>(name, graph);
+
+    // Create vertex stage.
+    ShaderStagePtr vs = createStage(Stage::VERTEX, *shader);
+    vs->createInputBlock(HW::VERTEX_INPUTS, "i_vs");
+
+    vs->createUniformBlock(HW::PRIVATE_UNIFORMS, "u_prv");
+    vs->createUniformBlock(HW::PUBLIC_UNIFORMS, "u_pub");
+
+    VariableBlock& vsInputs = vs->getInputBlock(HW::VERTEX_INPUTS);
+    vsInputs.add(Type::VECTOR3, HW::T_IN_POSITION);
+    VariableBlock& vsPrivateUniforms = vs->getUniformBlock(HW::PRIVATE_UNIFORMS);
+    vsPrivateUniforms.add(Type::MATRIX44, HW::T_WORLD_MATRIX);
+    vsPrivateUniforms.add(Type::MATRIX44, HW::T_VIEW_PROJECTION_MATRIX);
+
+    // Create pixel stage.
+    ShaderStagePtr ps = createStage(Stage::PIXEL, *shader);
+    VariableBlockPtr psOutputs = ps->createOutputBlock(HW::PIXEL_OUTPUTS, "o_ps");
+
+    VariableBlockPtr psPrivateUniforms = ps->createUniformBlock(HW::PRIVATE_UNIFORMS, "u_prv");
+    VariableBlockPtr psPublicUniforms = ps->createUniformBlock(HW::PUBLIC_UNIFORMS, "u_pub");
+    VariableBlockPtr lightData = ps->createUniformBlock(HW::LIGHT_DATA, HW::T_LIGHT_DATA_INSTANCE);
+    lightData->add(Type::INTEGER, getLightDataTypevarString());
+
+    addStageConnectorBlock(HW::VERTEX_DATA, HW::T_VERTEX_DATA_INSTANCE, *vs, *ps);
+
+    if (context.getOptions().hwTransparency)
+        psPrivateUniforms->add(Type::FLOAT, HW::T_ALPHA_THRESHOLD, Value::createValue(0.001f));
+
+    if (context.getOptions().hwShadowMap)
+    {
+        psPrivateUniforms->add(Type::FILENAME, HW::T_SHADOW_MAP);
+        psPrivateUniforms->add(Type::MATRIX44, HW::T_SHADOW_MATRIX, Value::createValue(Matrix44::IDENTITY));
+    }
+
+    if (context.getOptions().hwAmbientOcclusion)
+    {
+        addStageInput(HW::VERTEX_INPUTS, Type::VECTOR2, HW::T_IN_TEXCOORD + "_0", *vs);
+        addStageConnector(HW::VERTEX_DATA, Type::VECTOR2, HW::T_TEXCOORD + "_0", *vs, *ps);
+        psPrivateUniforms->add(Type::FILENAME, HW::T_AMB_OCC_MAP);
+        psPrivateUniforms->add(Type::FLOAT, HW::T_AMB_OCC_GAIN, Value::createValue(1.0f));
+    }
+
+    if (requiresLighting(*graph) && context.getOptions().hwSpecularEnvironmentMethod != SPECULAR_ENVIRONMENT_NONE)
+    {
+        const Matrix44 yRotationPI = Matrix44::createScale(Vector3(-1, 1, -1));
+        psPrivateUniforms->add(Type::MATRIX44, HW::T_ENV_MATRIX, Value::createValue(yRotationPI));
+        psPrivateUniforms->add(Type::FILENAME, HW::ENV_RADIANCE);
+        psPrivateUniforms->add(Type::FLOAT, HW::T_ENV_LIGHT_INTENSITY, Value::createValue(1.0f));
+        psPrivateUniforms->add(Type::INTEGER, HW::T_ENV_RADIANCE_MIPS, Value::createValue<int>(1));
+        psPrivateUniforms->add(Type::INTEGER, HW::T_ENV_RADIANCE_SAMPLES, Value::createValue<int>(16));
+        psPrivateUniforms->add(Type::FILENAME, HW::ENV_IRRADIANCE);
+        psPrivateUniforms->add(Type::BOOLEAN, HW::T_REFRACTION_TWO_SIDED);
+    }
+
+    if (context.getOptions().hwDirectionalAlbedoMethod == DIRECTIONAL_ALBEDO_TABLE ||
+        context.getOptions().hwWriteAlbedoTable)
+    {
+        psPrivateUniforms->add(Type::FILENAME, HW::T_ALBEDO_TABLE);
+        psPrivateUniforms->add(Type::INTEGER, HW::T_ALBEDO_TABLE_SIZE, Value::createValue<int>(64));
+    }
+
+    if (context.getOptions().hwWriteEnvPrefilter)
+    {
+        psPrivateUniforms->add(Type::FILENAME, HW::ENV_RADIANCE);
+        psPrivateUniforms->add(Type::FLOAT, HW::T_ENV_LIGHT_INTENSITY, Value::createValue(1.0f));
+        psPrivateUniforms->add(Type::INTEGER, HW::T_ENV_PREFILTER_MIP, Value::createValue<int>(1));
+        const Matrix44 yRotationPI = Matrix44::createScale(Vector3(-1, 1, -1));
+        psPrivateUniforms->add(Type::MATRIX44, HW::T_ENV_MATRIX, Value::createValue(yRotationPI));
+        psPrivateUniforms->add(Type::INTEGER, HW::T_ENV_RADIANCE_MIPS, Value::createValue<int>(1));
+    }
+
+    for (ShaderGraphInputSocket* inputSocket : graph->getInputSockets())
+    {
+        if (!inputSocket->getConnections().empty() && graph->isEditable(*inputSocket))
+            psPublicUniforms->add(inputSocket->getSelf());
+    }
+
+    ShaderGraphOutputSocket* outputSocket = graph->getOutputSocket();
+    ShaderPort* output = psOutputs->add(Type::COLOR4, outputSocket->getName());
+    output->setVariable(outputSocket->getVariable());
+    output->setPath(outputSocket->getPath());
+
+    createVariables(graph, context, *shader);
+
+    HwLightShadersPtr lightShaders = context.getUserData<HwLightShaders>(HW::USER_DATA_LIGHT_SHADERS);
+    if (lightShaders && graph->hasClassification(ShaderNode::Classification::SHADER | ShaderNode::Classification::SURFACE))
+    {
+        for (const auto& it : lightShaders->get())
+        {
+            ShaderNode* node = it.second.get();
+            node->getImplementation().createVariables(*node, context, *shader);
+        }
+    }
+
+    vector<ShaderGraph*> graphStack = { graph.get() };
+    if (lightShaders)
+    {
+        for (const auto& it : lightShaders->get())
+        {
+            ShaderNode* node = it.second.get();
+            ShaderGraph* lightGraph = node->getImplementation().getGraph();
+            if (lightGraph)
+                graphStack.push_back(lightGraph);
+        }
+    }
+
+    while (!graphStack.empty())
+    {
+        ShaderGraph* g = graphStack.back();
+        graphStack.pop_back();
+
+        for (ShaderNode* node : g->getNodes())
+        {
+            if (node->hasClassification(ShaderNode::Classification::FILETEXTURE))
+            {
+                for (ShaderInput* input : node->getInputs())
+                {
+                    if (!input->getConnection() && input->getType() == Type::FILENAME)
+                    {
+                        ShaderPort* filename = psPublicUniforms->add(Type::FILENAME, input->getVariable(), input->getValue());
+                        filename->setPath(input->getPath());
+                        input->setValue(Value::createValue(input->getVariable()));
+                    }
+                }
+            }
+            ShaderGraph* subgraph = node->getImplementation().getGraph();
+            if (subgraph)
+                graphStack.push_back(subgraph);
+        }
+    }
+
+    if (context.getOptions().hwTransparency)
+        shader->setAttribute(HW::ATTR_TRANSPARENT);
+
+    return shader;
+}
+
+bool HwShaderGenerator::requiresLighting(const ShaderGraph& graph) const
+{
+    const bool isBsdf = graph.hasClassification(ShaderNode::Classification::BSDF);
+    const bool isLitSurfaceShader = graph.hasClassification(ShaderNode::Classification::SHADER) &&
+                                    graph.hasClassification(ShaderNode::Classification::SURFACE) &&
+                                    !graph.hasClassification(ShaderNode::Classification::UNLIT);
+    return isBsdf || isLitSurfaceShader;
 }
 
 void HwShaderGenerator::bindLightShader(const NodeDef& nodeDef, unsigned int lightTypeId, GenContext& context)

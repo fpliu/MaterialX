@@ -43,12 +43,20 @@ class MX_GENOSL_API OslShaderGenerator : public ShaderGenerator
     /// the element and all dependencies upstream into shader code.
     ShaderPtr generate(const string& name, ElementPtr element, GenContext& context) const override;
 
+    /// Generate a shader from a pre-built ShaderGraph (bypasses graph construction).
+    /// Note: oslConnectCiWrapper is not supported in this path — it requires a
+    /// document for NodeDef lookup. Use generate(ElementPtr) when that option is needed.
+    ShaderPtr generate(const string& name, ShaderGraphPtr graph, GenContext& context) const override;
+
     /// Add all function calls for a graph. If a classification mask is given only functions for
     /// nodes matching this classification will be emitted.
     void emitFunctionCalls(const ShaderGraph& graph, GenContext& context, ShaderStage& stage, uint32_t classification = 0u) const override;
 
     /// Emit code for starting a new function body.
     void emitFunctionBodyBegin(const ShaderNode& node, GenContext& context, ShaderStage& stage, Syntax::Punctuation punc = Syntax::CURLY_BRACKETS) const override;
+
+    /// Add all function calls for a node, and all upstream nodes.
+    void emitAllDependentFunctionCalls(const ShaderNode& node, GenContext& context, ShaderStage& stage) const;
 
     /// Unique identifier for this generator target
     static const string TARGET;
@@ -59,6 +67,9 @@ class MX_GENOSL_API OslShaderGenerator : public ShaderGenerator
   protected:
     /// Create and initialize a new OSL shader for shader generation.
     virtual ShaderPtr createShader(const string& name, ElementPtr element, GenContext& context) const;
+
+    /// Create and initialize a new OSL shader from a pre-built ShaderGraph.
+    virtual ShaderPtr createShader(const string& name, ShaderGraphPtr graph, GenContext& context) const;
 
     /// Emit include headers needed by the generated shader code.
     virtual void emitLibraryIncludes(ShaderStage& stage, GenContext& context) const;

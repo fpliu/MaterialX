@@ -336,6 +336,9 @@ class MX_GENSHADER_API HwShaderGenerator : public ShaderGenerator
 
     /// Create and initialize a new HW shader for shader generation.
     virtual ShaderPtr createShader(const string& name, ElementPtr element, GenContext& context) const;
+
+    /// Create and initialize a new HW shader from a pre-built ShaderGraph.
+    virtual ShaderPtr createShader(const string& name, ShaderGraphPtr graph, GenContext& context) const;
 };
 
 /// @class HwImplementation

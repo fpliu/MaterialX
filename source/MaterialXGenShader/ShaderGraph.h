@@ -61,8 +61,11 @@ class MX_GENSHADER_API ShaderGraph : public ShaderNode
     /// Return true if this node is a graph.
     bool isAGraph() const override { return true; }
 
-    /// Get an internal node by name
-    ShaderNode* getNode(const string& name);
+    /// Return the document associated with this graph, if any.
+    ConstDocumentPtr getDocument() const { return _document; }
+
+    /// Get an internal node by its unique identifier.
+    ShaderNode* getNode(const string& uniqueId);
 
     /// Get an internal node by name
     const ShaderNode* getNode(const string& name) const;

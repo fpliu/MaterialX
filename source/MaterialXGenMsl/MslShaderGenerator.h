@@ -42,6 +42,9 @@ class MX_GENMSL_API MslShaderGenerator : public HwShaderGenerator
     /// the element and all dependencies upstream into shader code.
     ShaderPtr generate(const string& name, ElementPtr element, GenContext& context) const override;
 
+    /// Generate a shader from a pre-built ShaderGraph (bypasses graph construction).
+    ShaderPtr generate(const string& name, ShaderGraphPtr graph, GenContext& context) const override;
+
     /// Return a unique identifier for the target this generator is for
     const string& getTarget() const override { return TARGET; }
 

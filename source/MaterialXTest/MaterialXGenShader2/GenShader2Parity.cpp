@@ -47,6 +47,8 @@
 
 #include <MaterialXCore/Document.h>
 
+#include <fstream>
+
 namespace mx = MaterialX;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -584,6 +586,20 @@ static void checkShaderParity(const mx::Shader& oldShader, const mx::Shader& new
         const mx::ShaderStage& oldStage = oldShader.getStage(i);
         const mx::ShaderStage& newStage = newShader.getStage(i);
         INFO("  Stage: " << oldStage.getName());
+        if (newStage.getSourceCode() != oldStage.getSourceCode())
+        {
+            // Dump both to temp files for diffing
+            std::string base = "C:/tmp/" + label + "_stage" + std::to_string(i);
+            {
+                std::ofstream f(base + "_old.glsl");
+                f << oldStage.getSourceCode();
+            }
+            {
+                std::ofstream f(base + "_new.glsl");
+                f << newStage.getSourceCode();
+            }
+            WARN("Dumped diff files: " + base + "_old.glsl vs _new.glsl");
+        }
         CHECK(newStage.getSourceCode() == oldStage.getSourceCode());
     }
 }
