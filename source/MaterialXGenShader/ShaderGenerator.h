@@ -52,7 +52,6 @@ class MX_GENSHADER_API ShaderGenerator
     /// building the graph twice when buildShader() follows buildGraph().
     virtual ShaderPtr generate(const string& name, ShaderGraphPtr graph, GenContext& context) const;
 
-
     /// Start a new scope using the given bracket type.
     virtual void emitScopeBegin(ShaderStage& stage, Syntax::Punctuation punc = Syntax::CURLY_BRACKETS) const;
 
