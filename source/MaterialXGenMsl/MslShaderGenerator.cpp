@@ -173,6 +173,34 @@ ShaderPtr MslShaderGenerator::generate(const string& name, ElementPtr element, G
     return shader;
 }
 
+ShaderPtr MslShaderGenerator::generate(const string& name, ShaderGraphPtr graph, GenContext& context) const
+{
+    ShaderPtr shader = createShader(name, graph, context);
+
+    ScopedFloatFormatting fmt(Value::FloatFormatFixed);
+
+    HwResourceBindingContextPtr resourceBindingCtx = getResourceBindingContext(context);
+    if (!resourceBindingCtx)
+    {
+        context.pushUserData(HW::USER_DATA_BINDING_CONTEXT, MslResourceBindingContext::create());
+        resourceBindingCtx = context.getUserData<HwResourceBindingContext>(HW::USER_DATA_BINDING_CONTEXT);
+    }
+    if (resourceBindingCtx)
+        resourceBindingCtx->initialize();
+
+    ShaderStage& vs = shader->getStage(Stage::VERTEX);
+    emitVertexStage(shader->getGraph(), context, vs);
+    replaceTokens(_tokenSubstitutions, vs);
+    MetalizeGeneratedShader(vs);
+
+    ShaderStage& ps = shader->getStage(Stage::PIXEL);
+    emitPixelStage(shader->getGraph(), context, ps);
+    replaceTokens(_tokenSubstitutions, ps);
+    MetalizeGeneratedShader(ps);
+
+    return shader;
+}
+
 void MslShaderGenerator::MetalizeGeneratedShader(ShaderStage& shaderStage) const
 {
     std::string sourceCode = shaderStage.getSourceCode();

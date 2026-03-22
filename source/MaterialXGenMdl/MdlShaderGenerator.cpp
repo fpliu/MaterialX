@@ -653,6 +653,223 @@ ShaderPtr MdlShaderGenerator::createShader(const string& name, ElementPtr elemen
     return shader;
 }
 
+ShaderPtr MdlShaderGenerator::createShader(const string& name, ShaderGraphPtr graph, GenContext& context) const
+{
+    // Graph construction is already done by ShaderGraphBuilder — proceed directly to stage setup.
+    ShaderPtr shader = std::make_shared<Shader>(name, graph);
+
+    ShaderStagePtr stage = createStage(Stage::PIXEL, *shader);
+    VariableBlockPtr inputs = stage->createInputBlock(MDL::INPUTS);
+    VariableBlockPtr outputs = stage->createOutputBlock(MDL::OUTPUTS);
+
+    createVariables(graph, context, *shader);
+
+    for (ShaderGraphInputSocket* inputSocket : graph->getInputSockets())
+    {
+        if (inputSocket->getConnections().size() && graph->isEditable(*inputSocket))
+        {
+            if (inputSocket->getType().getSemantic() == TypeDesc::SEMANTIC_SHADER ||
+                inputSocket->getType().getSemantic() == TypeDesc::SEMANTIC_CLOSURE ||
+                inputSocket->getType().getSemantic() == TypeDesc::SEMANTIC_MATERIAL)
+                continue;
+            inputs->add(inputSocket->getSelf());
+        }
+    }
+
+    for (ShaderGraphOutputSocket* outputSocket : graph->getOutputSockets())
+        outputs->add(outputSocket->getSelf());
+
+    GenMdlOptions::MdlVersion version = getMdlVersion(context);
+    bool uniformIorRequired =
+        version == GenMdlOptions::MdlVersion::MDL_1_6 ||
+        version == GenMdlOptions::MdlVersion::MDL_1_7 ||
+        version == GenMdlOptions::MdlVersion::MDL_1_8;
+    if (uniformIorRequired && (
+        graph->hasClassification(ShaderNode::Classification::SHADER) ||
+        graph->hasClassification(ShaderNode::Classification::CLOSURE)))
+    {
+        std::set<ShaderGraph*> graphsWithIorDependency;
+        std::set<ShaderGraph*> graphsWithIorVarying;
+        checkTransmissionIorDependencies(graph.get(), graphsWithIorDependency, graphsWithIorVarying);
+        for (ShaderGraph* g : graphsWithIorVarying)
+        {
+            disconnectTransmissionIor(g);
+            graphsWithIorDependency.erase(g);
+        }
+        for (ShaderGraph* g : graphsWithIorDependency)
+        {
+            for (ShaderOutput* socket : g->getInputSockets())
+            {
+                if (socket->getFlag(ShaderPortFlagMdl::TRANSMISSION_IOR_DEPENDENCY))
+                    socket->setUniform();
+            }
+        }
+    }
+
+    return shader;
+}
+
+ShaderPtr MdlShaderGenerator::generate(const string& name, ShaderGraphPtr graph, GenContext& context) const
+{
+    context.clearNodeImplementations();
+
+    ShaderPtr shader = createShader(name, graph, context);
+
+    ScopedFloatFormatting fmt(Value::FloatFormatFixed);
+
+    ShaderGraph& g = shader->getGraph();
+    ShaderStage& stage = shader->getStage(Stage::PIXEL);
+
+    emitMdlVersionNumber(context, stage);
+    emitLineBreak(stage);
+
+    for (const string& module : DEFAULT_IMPORTS)
+        emitLine(module, stage);
+    for (const string& module : DEFAULT_VERSIONED_IMPORTS)
+    {
+        emitString(module, stage);
+        emitMdlVersionFilenameSuffix(context, stage);
+        emitString(IMPORT_ALL, stage);
+        emitLineEnd(stage, true);
+    }
+
+    for (ShaderNode* node : g.getNodes())
+    {
+        const ShaderNodeImpl& impl = node->getImplementation();
+        const CustomCodeNodeMdl* customNode = dynamic_cast<const CustomCodeNodeMdl*>(&impl);
+        if (customNode)
+        {
+            const string& importName = customNode->getQualifiedModuleName();
+            if (!importName.empty())
+            {
+                emitString("import ", stage);
+                emitString(importName, stage);
+                emitString("::*", stage);
+                emitLineEnd(stage, true);
+            }
+        }
+    }
+
+    emitTypeDefinitions(context, stage);
+    emitFunctionDefinitions(g, context, stage);
+
+    const ShaderGraphOutputSocket* outputSocket = g.getOutputSocket(0);
+    emitString("export material ", stage);
+
+    string functionName = shader->getName();
+    setFunctionName(functionName, stage);
+    emitLine(functionName, stage, false);
+    emitScopeBegin(stage, Syntax::PARENTHESES);
+    emitShaderInputs(stage.getInputBlock(MDL::INPUTS), stage);
+    emitScopeEnd(stage);
+
+    emitLine("= let", stage, false);
+    emitScopeBegin(stage);
+
+    const VariableBlock& constants = stage.getConstantBlock();
+    if (constants.size())
+    {
+        emitVariableDeclarations(constants, _syntax->getConstantQualifier(), Syntax::SEMICOLON, context, stage);
+        emitLineBreak(stage);
+    }
+
+    const string uniformPrefix = _syntax->getUniformQualifier() + " ";
+    for (ShaderGraphInputSocket* inputSocket : g.getInputSockets())
+    {
+        if (inputSocket->getConnections().size() &&
+            (inputSocket->getType().getSemantic() == TypeDesc::SEMANTIC_SHADER ||
+             inputSocket->getType().getSemantic() == TypeDesc::SEMANTIC_CLOSURE ||
+             inputSocket->getType().getSemantic() == TypeDesc::SEMANTIC_MATERIAL))
+        {
+            const string& qualifier = inputSocket->isUniform() || inputSocket->getType() == Type::FILENAME
+                ? uniformPrefix : EMPTY_STRING;
+            const string& type = _syntax->getTypeName(inputSocket->getType());
+            emitLineBegin(stage);
+            emitString(qualifier + type + " " + inputSocket->getVariable() + " = ", stage);
+            emitString(_syntax->getDefaultValue(inputSocket->getType(), true), stage);
+            emitLineEnd(stage, true);
+        }
+    }
+
+    emitFunctionCalls(g, context, stage, ShaderNode::Classification::TEXTURE);
+
+    bool rootFunctionCallEmitted = false;
+    for (ShaderGraphOutputSocket* socket : g.getOutputSockets())
+    {
+        if (socket->getConnection())
+        {
+            const ShaderNode* upstream = socket->getConnection()->getNode();
+            if (upstream->getParent() == &g &&
+                (upstream->hasClassification(ShaderNode::Classification::CLOSURE) ||
+                 upstream->hasClassification(ShaderNode::Classification::SHADER)))
+            {
+                emitFunctionCall(*upstream, context, stage);
+                rootFunctionCallEmitted = true;
+            }
+        }
+    }
+
+    const string result = getUpstreamResult(outputSocket, context);
+    const TypeDesc outputType = outputSocket->getType();
+
+    if (g.hasClassification(ShaderNode::Classification::TEXTURE))
+    {
+        if (outputType == Type::DISPLACEMENTSHADER)
+        {
+            emitLine("float3 displacement__ = " + result + ".geometry.displacement", stage);
+            emitLine("color finalOutput__ = mk_color3("
+                     "r: math::dot(displacement__, state::texture_tangent_u(0)),"
+                     "g: math::dot(displacement__, state::texture_tangent_v(0)),"
+                     "b: math::dot(displacement__, state::normal()))",
+                     stage);
+        }
+        else
+        {
+            emitLine("float3 displacement__ = float3(0.0)", stage);
+            std::string finalOutput = "mk_color3(0.0)";
+            if (outputType == Type::BOOLEAN)
+                finalOutput = result + " ? mk_color3(1.0, 1.0, 1.0) : mk_color3(0.0, 0.0, 0.0)";
+            else if (outputType == Type::INTEGER)
+                finalOutput = "mk_color3(" + result + ")";
+            else if (outputType == Type::FLOAT)
+                finalOutput = "mk_color3(" + result + ")";
+            else if (outputType == Type::VECTOR2)
+                finalOutput = "mk_color3(" + result + ".x, " + result + ".y, 0.0)";
+            else if (outputType == Type::VECTOR3)
+                finalOutput = "mk_color3(" + result + ")";
+            else if (outputType == Type::VECTOR4)
+                finalOutput = "mk_color3(" + result + ".x, " + result + ".y, " + result + ".z)";
+            else if (outputType == Type::COLOR3)
+                finalOutput = result;
+            else if (outputType == Type::COLOR4)
+                finalOutput = result + ".rgb";
+            else if (outputType == Type::MATRIX33 || outputType == Type::MATRIX44)
+                finalOutput = "mk_color3(" + result + "[0][0], " + result + "[1][1], " + result + "[2][2])";
+            emitLine("color finalOutput__ = " + finalOutput, stage);
+        }
+        emitScopeEnd(stage);
+        static const string textureMaterial =
+            "in material\n(\n    surface: material_surface(\n        emission : material_emission(\n"
+            "            emission : df::diffuse_edf(),\n            intensity : finalOutput__ * math::PI,\n"
+            "            mode : intensity_radiant_exitance\n        )\n    ),\n"
+            "    geometry: material_geometry(\n       displacement : displacement__\n    )\n);";
+        emitBlock(textureMaterial, FilePath(), context, stage);
+    }
+    else
+    {
+        if (rootFunctionCallEmitted)
+            emitLine(_syntax->getTypeSyntax(outputType).getName() + " finalOutput__ = " + result, stage);
+        else
+            emitLine(_syntax->getTypeSyntax(outputType).getName() + " finalOutput__ = material()", stage);
+        emitScopeEnd(stage);
+        static const string shaderMaterial = "in material(finalOutput__);";
+        emitBlock(shaderMaterial, FilePath(), context, stage);
+    }
+
+    replaceTokens(_tokenSubstitutions, stage);
+    return shader;
+}
+
 namespace
 {
 

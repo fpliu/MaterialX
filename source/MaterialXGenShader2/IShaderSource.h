@@ -188,11 +188,16 @@ class MX_GENSHADER2_API IShaderSource
     /// Dot-separated path of the port element (used for metadata / error messages).
     virtual string getPortPath(DataHandle port) const = 0;
 
-    /// Resolved value as a string, or empty if the port is connected / has no value.
-    /// This combines getResolvedValue()->getValueString() from the MX API.
+    /// The effective value for this port as a string, or empty if unavailable.
+    /// Implementations should follow interfacename bindings: if an input has no
+    /// direct value but is bound to a NodeGraph interface input via interfacename,
+    /// the interface input's resolved value is returned.
+    /// Note: portHasValue() returns false for interfacename-only inputs (no
+    /// locally-authored value), while this method returns the resolved value.
     virtual string getPortValueString(DataHandle port) const = 0;
 
-    /// True if the port has a literal value (i.e. not connected and not empty).
+    /// True if the port has a locally-authored literal value attribute
+    /// (i.e. not connected, not bound via interfacename only).
     virtual bool portHasValue(DataHandle port) const = 0;
 
     /// Retrieves a named XML attribute on a port element (e.g. "enum", "enumvalues",

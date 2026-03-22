@@ -8,6 +8,7 @@
 #include <MaterialXGenShader/Exception.h>
 #include <MaterialXGenShader/ShaderNode.h>
 
+#include <MaterialXCore/Geom.h>
 #include <MaterialXCore/Interface.h>
 #include <MaterialXCore/Node.h>
 #include <MaterialXCore/Value.h>
@@ -44,9 +45,6 @@ ShaderGraph2Ptr ShaderGraphBuilder::build(const string& name)
                                           _source.getElementName(root) + "'. Non-MX backends must override getMxNodeDef().");
         }
 
-        // Pass nullptr for the document — ShaderGraph2 no longer needs _document
-        // for GLSL/MDL generation.  addDefaultGeomNode2 uses IShaderSource queries
-        // instead of _document->getNodeDef(), so no document pointer is required.
         ShaderGraph2Ptr graph = std::make_shared<ShaderGraph2>(nullptr, name, nullptr, _context);
         graph->setClassification2(0);
 

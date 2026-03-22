@@ -342,6 +342,20 @@ string MxElementAdapter::getPortValueString(DataHandle port) const
     if (!e) return EMPTY_STRING;
     ConstValueElementPtr ve = e->asA<ValueElement>();
     if (!ve) return EMPTY_STRING;
+
+    // For inputs bound to a NodeGraph interface input via interfacename,
+    // follow the binding to retrieve the interface input's value.
+    ConstInputPtr inp = ve->asA<Input>();
+    if (inp && inp->hasInterfaceName())
+    {
+        ConstInputPtr ifaceInput = inp->getInterfaceInput();
+        if (ifaceInput)
+        {
+            ValuePtr val = ifaceInput->getResolvedValue();
+            return val ? val->getValueString() : EMPTY_STRING;
+        }
+    }
+
     ValuePtr val = ve->getResolvedValue();
     return val ? val->getValueString() : EMPTY_STRING;
 }
