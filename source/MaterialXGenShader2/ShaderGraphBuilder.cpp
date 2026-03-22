@@ -239,6 +239,13 @@ void ShaderGraphBuilder::addUpstreamDependencies(ShaderGraph2& graph, DataHandle
         DataHandle connectingInput; // input on the downstream node (InvalidHandle if downstream is Output)
     };
 
+    // KNOWN LIMITATION: assumes the graph is a DAG. A cycle between two or more
+    // nodes (A→B→A) will loop forever because only Output elements are tracked
+    // in processedOutputPaths; there is no visited set for node paths.
+    // MaterialX documents are required to be acyclic, so this is not a concern
+    // for well-formed inputs. A future revision should add a visitedNodePaths
+    // set and skip seedFromNode() for already-visited nodes to handle malformed
+    // graphs gracefully.
     std::queue<WorkItem> worklist;
     std::set<string> processedOutputPaths; // avoid re-processing graph Output elements
 

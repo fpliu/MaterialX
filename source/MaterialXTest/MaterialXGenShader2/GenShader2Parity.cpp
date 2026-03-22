@@ -198,6 +198,46 @@ static void checkGraphParity(const mx::ShaderGraph& oldGraph, const mx::ShaderGr
         REQUIRE(newNode != nullptr);
         CHECK(newNode->numInputs()  == oldNode->numInputs());
         CHECK(newNode->numOutputs() == oldNode->numOutputs());
+
+        // Verify per-input connections and values — not just counts.
+        for (size_t i = 0; i < oldNode->numInputs(); ++i)
+        {
+            const mx::ShaderInput* oldInput = oldNode->getInput(i);
+            const mx::ShaderInput* newInput = newNode->getInput(oldInput->getName());
+            INFO("    Input: " << oldInput->getName());
+            REQUIRE(newInput != nullptr);
+
+            const mx::ShaderOutput* oldConn = oldInput->getConnection();
+            const mx::ShaderOutput* newConn = newInput->getConnection();
+
+            if (oldConn)
+            {
+                // Both should connect to the same upstream node output.
+                CHECK(newConn != nullptr);
+                if (newConn)
+                {
+                    CHECK(newConn->getNode()->getUniqueId() == oldConn->getNode()->getUniqueId());
+                    CHECK(newConn->getName() == oldConn->getName());
+                }
+            }
+            else
+            {
+                // Neither should be connected; literal values must match.
+                CHECK(newConn == nullptr);
+                mx::ValuePtr oldVal = oldInput->getValue();
+                mx::ValuePtr newVal = newInput->getValue();
+                if (oldVal)
+                {
+                    CHECK(newVal != nullptr);
+                    if (newVal)
+                        CHECK(newVal->getValueString() == oldVal->getValueString());
+                }
+                else
+                {
+                    CHECK(newVal == nullptr);
+                }
+            }
+        }
     }
 }
 
