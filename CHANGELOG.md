@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.39.3] - Development
+
+### Added
+- Added a new [MaterialXGenShader2](source/MaterialXGenShader2) module introducing an abstract `IShaderSource` interface that decouples shader graph construction from the MaterialX data model. Any system that can answer graph topology queries — a MaterialX Document, a USD/Hydra HdMaterialNetwork, a runtime node graph — can drive shader generation via `DataHandle` tokens without constructing a MaterialX Element hierarchy. Includes `MxElementAdapter` (the MX-backed reference implementation), `ShaderGraphBuilder` (BFS graph traversal replacing `ShaderGraph::addUpstreamDependencies`), and `GenContextCreate` (entry point). See [issue #2566](https://github.com/AcademySoftwareFoundation/MaterialX/issues/2566).
 ## [1.39.3] - 2025-03-07
 
 ### Added
