@@ -156,6 +156,8 @@ class MX_GENSHADER2_API IShaderSource
 
     /// Named attribute on a NodeDef (e.g. doc, version, nodegroup).
     virtual string getNodeDefAttribute(DataHandle nodeDef, const string& attrName) const = 0;
+
+    /// Populates @p names with all attribute names present on a NodeDef element.
     virtual void   getNodeDefAttributeNames(DataHandle nodeDef, StringVec& names) const = 0;
 
     // --- NodeGraph interface --------------------------------------------------
@@ -203,6 +205,8 @@ class MX_GENSHADER2_API IShaderSource
     /// Retrieves a named XML attribute on a port element (e.g. "enum", "enumvalues",
     /// "uifolder").  Returns an empty string if the attribute is absent.
     virtual string getPortAttribute(DataHandle port, const string& attrName) const = 0;
+
+    /// Populates @p names with all attribute names present on a port element.
     virtual void   getPortAttributeNames(DataHandle port, StringVec& names) const = 0;
 
     // --- Interface binding (NodeGraph input propagation) ----------------------
@@ -230,7 +234,10 @@ class MX_GENSHADER2_API IShaderSource
 
     // --- Unit metadata --------------------------------------------------------
 
+    /// The unit declared directly on the port (e.g. "centimeter").  May be empty.
     virtual string getPortUnit(DataHandle port) const = 0;
+
+    /// The unit type category declared on the port (e.g. "distance").  May be empty.
     virtual string getPortUnitType(DataHandle port) const = 0;
 
     /// The resolved unit after applying document/scope overrides.
