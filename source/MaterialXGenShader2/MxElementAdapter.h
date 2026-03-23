@@ -42,19 +42,19 @@ class MX_GENSHADER2_API MxElementAdapter : public IShaderSource
 
     ~MxElementAdapter() override = default;
 
-    // ─── Root ─────────────────────────────────────────────────────────────────
+    // --- Root -----------------------------------------------------------------
     DataHandle getRootElement() const override;
 
-    // ─── Element classification ───────────────────────────────────────────────
+    // --- Element classification -----------------------------------------------
     bool isNode(DataHandle elem) const override;
     bool isOutput(DataHandle elem) const override;
     bool isNodeGraph(DataHandle elem) const override;
 
-    // ─── Element identity ─────────────────────────────────────────────────────
+    // --- Element identity -----------------------------------------------------
     string getElementName(DataHandle elem) const override;
     string getElementPath(DataHandle elem) const override;
 
-    // ─── Node topology ────────────────────────────────────────────────────────
+    // --- Node topology --------------------------------------------------------
     size_t   getNodeInputCount(DataHandle node) const override;
     DataHandle getNodeInput(DataHandle node, size_t index) const override;
     DataHandle getNodeInputByName(DataHandle node, const string& name) const override;
@@ -63,12 +63,12 @@ class MX_GENSHADER2_API MxElementAdapter : public IShaderSource
     DataHandle getOutputConnectedNode(DataHandle output) const override;
     DataHandle getNodeParentGraph(DataHandle node) const override;
 
-    // ─── Node definition lookup ───────────────────────────────────────────────
+    // --- Node definition lookup -----------------------------------------------
     string   getNodeDefName(DataHandle node) const override;
     DataHandle getNodeDef(DataHandle node) const override;
     DataHandle getNodeDefByName(const string& nodeDefName) const override;
 
-    // ─── NodeDef interface ────────────────────────────────────────────────────
+    // --- NodeDef interface ----------------------------------------------------
     string   getNodeDefType(DataHandle nodeDef) const override;
     size_t   getNodeDefInputCount(DataHandle nodeDef) const override;
     DataHandle getNodeDefInput(DataHandle nodeDef, size_t index) const override;
@@ -82,14 +82,14 @@ class MX_GENSHADER2_API MxElementAdapter : public IShaderSource
     string   getNodeDefAttribute(DataHandle nodeDef, const string& attrName) const override;
     void     getNodeDefAttributeNames(DataHandle nodeDef, StringVec& names) const override;
 
-    // ─── NodeGraph interface ──────────────────────────────────────────────────
+    // --- NodeGraph interface --------------------------------------------------
     DataHandle getNodeGraphNodeDef(DataHandle nodeGraph) const override;
     string   getNodeGraphName(DataHandle nodeGraph) const override;
     size_t   getNodeGraphInputCount(DataHandle nodeGraph) const override;
     DataHandle getNodeGraphInput(DataHandle nodeGraph, size_t index) const override;
     DataHandle getOutputParentNodeGraph(DataHandle output) const override;
 
-    // ─── Port queries ─────────────────────────────────────────────────────────
+    // --- Port queries ---------------------------------------------------------
     string   getPortName(DataHandle port) const override;
     string   getPortType(DataHandle port) const override;
     string   getPortPath(DataHandle port) const override;
@@ -98,39 +98,39 @@ class MX_GENSHADER2_API MxElementAdapter : public IShaderSource
     string   getPortAttribute(DataHandle port, const string& attrName) const override;
     void     getPortAttributeNames(DataHandle port, StringVec& names) const override;
 
-    // ─── Interface binding ────────────────────────────────────────────────────
+    // --- Interface binding ----------------------------------------------------
     bool     portHasInterfaceName(DataHandle port) const override;
     string   getPortInterfaceName(DataHandle port) const override;
     DataHandle getPortInterfaceInput(DataHandle port) const override;
 
-    // ─── Geometric default property ───────────────────────────────────────────
+    // --- Geometric default property -------------------------------------------
     bool     portHasDefaultGeomProp(DataHandle port) const override;
     DataHandle getPortDefaultGeomProp(DataHandle port) const override;
 
-    // ─── Unit metadata ────────────────────────────────────────────────────────
+    // --- Unit metadata --------------------------------------------------------
     string   getPortUnit(DataHandle port) const override;
     string   getPortUnitType(DataHandle port) const override;
     string   getPortActiveUnit(DataHandle port) const override;
 
-    // ─── Color space metadata ─────────────────────────────────────────────────
+    // --- Color space metadata -------------------------------------------------
     string   getPortColorSpace(DataHandle port) const override;
     string   getPortActiveColorSpace(DataHandle port) const override;
 
-    // ─── Uniformity ───────────────────────────────────────────────────────────
+    // --- Uniformity -----------------------------------------------------------
     bool portIsUniform(DataHandle port) const override;
 
-    // ─── GeomPropDef queries ──────────────────────────────────────────────────
+    // --- GeomPropDef queries --------------------------------------------------
     string getGeomPropDefName(DataHandle geomPropDef) const override;
     string getGeomPropDefProp(DataHandle geomPropDef) const override;
     string getGeomPropDefPath(DataHandle geomPropDef) const override;
     string getGeomPropDefSpace(DataHandle geomPropDef) const override;
     string getGeomPropDefIndex(DataHandle geomPropDef) const override;
 
-    // ─── Document-level queries ───────────────────────────────────────────────
+    // --- Document-level queries -----------------------------------------------
     string   getActiveColorSpace() const override;
     DataHandle getUnitTypeDefByName(const string& unitTypeName) const override;
 
-    // ─── Phase 2 MX bridge ────────────────────────────────────────────────────
+    // --- Phase 2 MX bridge ----------------------------------------------------
     ConstDocumentPtr getMxDocument() const override { return _document; }
     ConstNodeDefPtr  getMxNodeDef(DataHandle node) const override;
     ConstNodeDefPtr  getMxNodeDefByHandle(DataHandle nodeDefHandle) const override;
