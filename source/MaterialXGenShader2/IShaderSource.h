@@ -52,14 +52,14 @@ class MX_GENSHADER2_API IShaderSource
   public:
     virtual ~IShaderSource() = default;
 
-    // ─── Root ─────────────────────────────────────────────────────────────────
+    // --- Root -----------------------------------------------------------------
 
     /// Returns a handle to the root of the graph being generated.
     /// This corresponds to the ElementPtr passed to ShaderGenerator::generate()
     /// — typically an Output element or a surface/material Node.
     virtual DataHandle getRootElement() const = 0;
 
-    // ─── Element classification ───────────────────────────────────────────────
+    // --- Element classification -----------------------------------------------
 
     /// True if the handle refers to a node instance (not a NodeDef).
     virtual bool isNode(DataHandle elem) const = 0;
@@ -72,7 +72,7 @@ class MX_GENSHADER2_API IShaderSource
     /// internal graph and an associated NodeDef interface).
     virtual bool isNodeGraph(DataHandle elem) const = 0;
 
-    // ─── Element identity ─────────────────────────────────────────────────────
+    // --- Element identity -----------------------------------------------------
 
     /// Short name of the element (e.g. "base_color").
     virtual string getElementName(DataHandle elem) const = 0;
@@ -81,7 +81,7 @@ class MX_GENSHADER2_API IShaderSource
     /// Used as the map key when de-duplicating nodes in ShaderGraph.
     virtual string getElementPath(DataHandle elem) const = 0;
 
-    // ─── Node topology ────────────────────────────────────────────────────────
+    // --- Node topology --------------------------------------------------------
 
     /// Number of active inputs on a node instance.
     virtual size_t getNodeInputCount(DataHandle node) const = 0;
@@ -110,7 +110,7 @@ class MX_GENSHADER2_API IShaderSource
     /// InvalidHandle if the node lives directly in the root document.
     virtual DataHandle getNodeParentGraph(DataHandle node) const = 0;
 
-    // ─── Node definition lookup ───────────────────────────────────────────────
+    // --- Node definition lookup -----------------------------------------------
 
     /// Returns the name of the NodeDef for a node (e.g. "ND_standard_surface_surfaceshader").
     virtual string getNodeDefName(DataHandle node) const = 0;
@@ -123,7 +123,7 @@ class MX_GENSHADER2_API IShaderSource
     /// Returns InvalidHandle if not found.
     virtual DataHandle getNodeDefByName(const string& nodeDefName) const = 0;
 
-    // ─── NodeDef interface ────────────────────────────────────────────────────
+    // --- NodeDef interface ----------------------------------------------------
 
     /// The output type string of the NodeDef (e.g. "surfaceshader", "color3").
     virtual string getNodeDefType(DataHandle nodeDef) const = 0;
@@ -158,7 +158,7 @@ class MX_GENSHADER2_API IShaderSource
     virtual string getNodeDefAttribute(DataHandle nodeDef, const string& attrName) const = 0;
     virtual void   getNodeDefAttributeNames(DataHandle nodeDef, StringVec& names) const = 0;
 
-    // ─── NodeGraph interface ──────────────────────────────────────────────────
+    // --- NodeGraph interface --------------------------------------------------
 
     /// Returns the NodeDef handle that defines the interface for a NodeGraph.
     virtual DataHandle getNodeGraphNodeDef(DataHandle nodeGraph) const = 0;
@@ -177,7 +177,7 @@ class MX_GENSHADER2_API IShaderSource
     /// the Output lives directly in the root Document.
     virtual DataHandle getOutputParentNodeGraph(DataHandle output) const = 0;
 
-    // ─── Port (Input / Output ValueElement) queries ───────────────────────────
+    // --- Port (Input / Output ValueElement) queries ---------------------------
 
     /// Short name of the port (e.g. "base_color").
     virtual string getPortName(DataHandle port) const = 0;
@@ -205,7 +205,7 @@ class MX_GENSHADER2_API IShaderSource
     virtual string getPortAttribute(DataHandle port, const string& attrName) const = 0;
     virtual void   getPortAttributeNames(DataHandle port, StringVec& names) const = 0;
 
-    // ─── Interface binding (NodeGraph input propagation) ──────────────────────
+    // --- Interface binding (NodeGraph input propagation) ----------------------
 
     /// True if a node instance input is bound to a named interface input.
     virtual bool portHasInterfaceName(DataHandle port) const = 0;
@@ -218,7 +218,7 @@ class MX_GENSHADER2_API IShaderSource
     /// this port is bound to, or InvalidHandle if unbound.
     virtual DataHandle getPortInterfaceInput(DataHandle port) const = 0;
 
-    // ─── Geometric default property ───────────────────────────────────────────
+    // --- Geometric default property -------------------------------------------
 
     /// True if the input has a defaultgeomprop that should drive its value
     /// when no explicit value or connection is present.
@@ -228,7 +228,7 @@ class MX_GENSHADER2_API IShaderSource
     /// defaultgeomprop attribute.  Returns InvalidHandle if not present.
     virtual DataHandle getPortDefaultGeomProp(DataHandle port) const = 0;
 
-    // ─── Unit metadata ────────────────────────────────────────────────────────
+    // --- Unit metadata --------------------------------------------------------
 
     virtual string getPortUnit(DataHandle port) const = 0;
     virtual string getPortUnitType(DataHandle port) const = 0;
@@ -236,7 +236,7 @@ class MX_GENSHADER2_API IShaderSource
     /// The resolved unit after applying document/scope overrides.
     virtual string getPortActiveUnit(DataHandle port) const = 0;
 
-    // ─── Color space metadata ─────────────────────────────────────────────────
+    // --- Color space metadata -------------------------------------------------
 
     /// The color space declared directly on the port (may be empty).
     virtual string getPortColorSpace(DataHandle port) const = 0;
@@ -244,12 +244,12 @@ class MX_GENSHADER2_API IShaderSource
     /// The resolved color space after applying document/scope overrides.
     virtual string getPortActiveColorSpace(DataHandle port) const = 0;
 
-    // ─── Uniformity ───────────────────────────────────────────────────────────
+    // --- Uniformity -----------------------------------------------------------
 
     /// True if the input is declared uniform (constant across the geometry).
     virtual bool portIsUniform(DataHandle port) const = 0;
 
-    // ─── GeomPropDef queries ──────────────────────────────────────────────────
+    // --- GeomPropDef queries --------------------------------------------------
 
     /// The element name of the GeomPropDef (e.g. "geomprop_Nworld").
     virtual string getGeomPropDefName(DataHandle geomPropDef) const = 0;
@@ -266,7 +266,7 @@ class MX_GENSHADER2_API IShaderSource
     /// The index (for multi-set attributes like UV sets).
     virtual string getGeomPropDefIndex(DataHandle geomPropDef) const = 0;
 
-    // ─── Document-level queries ───────────────────────────────────────────────
+    // --- Document-level queries -----------------------------------------------
 
     /// The active (resolved) color space for the document/network.
     virtual string getActiveColorSpace() const = 0;
@@ -275,7 +275,7 @@ class MX_GENSHADER2_API IShaderSource
     /// Returns InvalidHandle if not found.  Used to drive unit transform nodes.
     virtual DataHandle getUnitTypeDefByName(const string& unitTypeName) const = 0;
 
-    // ─── MX compatibility bridge ──────────────────────────────────────────────
+    // --- MX compatibility bridge ----------------------------------------------
     // These optional methods allow ShaderGraphBuilder to fall back to the
     // existing MaterialX Element API for steps not yet fully expressible through
     // the pure IShaderSource queries above.
