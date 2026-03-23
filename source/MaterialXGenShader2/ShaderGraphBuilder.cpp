@@ -37,7 +37,11 @@ ShaderGraph2Ptr ShaderGraphBuilder::build(const string& name)
     if (_source.isNode(root))
     {
         // Resolve the NodeDef via the MX compatibility bridge.
-        // TODO: express this through pure IShaderSource queries for non-MX backends.
+        // getMxNodeDef() is a required bridge method: NodeDefs live in the loaded
+        // shader library and carry classification data (node category, group, version)
+        // that ShaderNode::create() needs.  Removing this dependency would require
+        // either exposing that metadata through IShaderSource or having backends
+        // pre-classify nodes themselves.
         ConstNodeDefPtr nodeDef = _source.getMxNodeDef(root);
         if (!nodeDef)
         {
