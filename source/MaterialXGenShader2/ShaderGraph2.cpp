@@ -18,7 +18,7 @@
 
 MATERIALX_NAMESPACE_BEGIN
 
-// ─── populateUnitTransformMap2 ───────────────────────────────────────────────
+// --- populateUnitTransformMap2 -----------------------------------------------
 
 void ShaderGraph2::populateUnitTransformMap2(UnitSystemPtr unitSystem,
                                               ShaderPort* shaderPort,
@@ -72,7 +72,7 @@ void ShaderGraph2::populateUnitTransformMap2(UnitSystemPtr unitSystem,
     }
 }
 
-// ─── applyInputTransforms2 ───────────────────────────────────────────────────
+// --- applyInputTransforms2 ---------------------------------------------------
 
 void ShaderGraph2::applyInputTransforms2(DataHandle nodeHandle,
                                           ShaderNode* shaderNode,
@@ -137,7 +137,7 @@ void ShaderGraph2::applyInputTransforms2(DataHandle nodeHandle,
     }
 }
 
-// ─── initializeNode2 ─────────────────────────────────────────────────────────
+// --- initializeNode2 ---------------------------------------------------------
 
 void ShaderGraph2::initializeNode2(DataHandle nodeHandle,
                                     ShaderNode* shaderNode,
@@ -146,7 +146,7 @@ void ShaderGraph2::initializeNode2(DataHandle nodeHandle,
                                     GenContext& context)
 {
     // 1. Copy input values, paths, units, and color spaces from node-instance
-    //    inputs — replicates the core of ShaderNode::initialize().
+    //    inputs - replicates the core of ShaderNode::initialize().
     //
     //    _impl->setValues(const Node&, ...) is intentionally NOT called here
     //    because it requires a ConstNodePtr.  The only known override is
@@ -248,7 +248,7 @@ void ShaderGraph2::initializeNode2(DataHandle nodeHandle,
     // 4. DefaultGeomProp: create and connect geomprop nodes for unconnected inputs.
     //    Replicates the geomprop loop in ShaderGraph::createNode(ConstNodePtr).
     //    Uses the NodeDef (a library object always present for any backend) to find
-    //    the GeomPropDef — addDefaultGeomNode() looks up node defs via _document,
+    //    the GeomPropDef - addDefaultGeomNode() looks up node defs via _document,
     //    which must be set for this to succeed.
     for (const InputPtr& ndInput : nodeDef->getActiveInputs())
     {
@@ -259,7 +259,7 @@ void ShaderGraph2::initializeNode2(DataHandle nodeHandle,
         }
 
         // Skip if the node instance has an explicit upstream node connection to this input.
-        // Do NOT skip for socket connections — if the socket has a defaultgeomprop, we must
+        // Do NOT skip for socket connections - if the socket has a defaultgeomprop, we must
         // break the socket connection and replace it with a geomprop node (mirroring the
         // geomProp loop in HwShaderGenerator::createShader that follows ShaderGraph::create).
         DataHandle nodeInpH = source.getNodeInputByName(nodeHandle, ndInput->getName());
@@ -287,7 +287,7 @@ void ShaderGraph2::initializeNode2(DataHandle nodeHandle,
     applyInputTransforms2(nodeHandle, shaderNode, source, context);
 }
 
-// ─── addInputSocketFromPort3 (shared helper) ─────────────────────────────────
+// --- addInputSocketFromPort3 (shared helper) ---------------------------------
 
 void ShaderGraph2::addInputSocketFromPort3(DataHandle portHandle,
                                             const IShaderSource& source,
@@ -332,7 +332,7 @@ void ShaderGraph2::addInputSocketFromPort3(DataHandle portHandle,
     }
 }
 
-// ─── addInputSocketsFrom*3 ────────────────────────────────────────────────────
+// --- addInputSocketsFrom*3 ----------------------------------------------------
 
 void ShaderGraph2::addInputSocketsFromNodeDef3(DataHandle nodeDefHandle,
                                                 const IShaderSource& source,
@@ -379,7 +379,7 @@ void ShaderGraph2::addInputSocketsFromNode3(DataHandle nodeHandle,
     }
 }
 
-// ─── addDefaultGeomNode2 ─────────────────────────────────────────────────────
+// --- addDefaultGeomNode2 -----------------------------------------------------
 
 void ShaderGraph2::addDefaultGeomNode2(ShaderInput* input, const GeomPropDef& geomprop,
                                         const IShaderSource& source, GenContext& context)

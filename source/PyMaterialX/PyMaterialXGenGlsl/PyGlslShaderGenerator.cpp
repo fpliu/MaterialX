@@ -38,7 +38,10 @@ void bindPyGlslShaderGenerator(py::module& mod)
 {
     py::class_<mx::GlslShaderGenerator, mx::HwShaderGenerator, mx::GlslShaderGeneratorPtr>(mod, "GlslShaderGenerator")
         .def_static("create", &GlslShaderGenerator_create)
-        .def("generate", &mx::GlslShaderGenerator::generate)
+        .def("generate", static_cast<mx::ShaderPtr (mx::GlslShaderGenerator::*)(const mx::string&, mx::ElementPtr, mx::GenContext&) const>(
+                 &mx::GlslShaderGenerator::generate))
+        .def("generate", static_cast<mx::ShaderPtr (mx::GlslShaderGenerator::*)(const mx::string&, mx::ShaderGraphPtr, mx::GenContext&) const>(
+                 &mx::GlslShaderGenerator::generate))
         .def("getTarget", &mx::GlslShaderGenerator::getTarget)
         .def("getVersion", &mx::GlslShaderGenerator::getVersion);
 }
@@ -58,7 +61,10 @@ void bindPyEsslShaderGenerator(py::module& mod)
 {
     py::class_<mx::EsslShaderGenerator, mx::GlslShaderGenerator, mx::EsslShaderGeneratorPtr>(mod, "EsslShaderGenerator")
         .def_static("create", &EsslShaderGenerator_create)
-        .def("generate", &mx::EsslShaderGenerator::generate)
+        .def("generate", static_cast<mx::ShaderPtr (mx::EsslShaderGenerator::*)(const mx::string&, mx::ElementPtr, mx::GenContext&) const>(
+                 &mx::EsslShaderGenerator::generate))
+        .def("generate", static_cast<mx::ShaderPtr (mx::EsslShaderGenerator::*)(const mx::string&, mx::ShaderGraphPtr, mx::GenContext&) const>(
+                 &mx::EsslShaderGenerator::generate))
         .def("getTarget", &mx::EsslShaderGenerator::getTarget)
         .def("getVersion", &mx::EsslShaderGenerator::getVersion);
 }
@@ -69,7 +75,10 @@ void bindPyVkShaderGenerator(py::module& mod)
 {
     py::class_<mx::VkShaderGenerator, mx::GlslShaderGenerator, mx::VkShaderGeneratorPtr>(mod, "VkShaderGenerator")
         .def_static("create", &VkShaderGenerator_create)
-        .def("generate", &mx::VkShaderGenerator::generate)
+        .def("generate", static_cast<mx::ShaderPtr (mx::VkShaderGenerator::*)(const mx::string&, mx::ElementPtr, mx::GenContext&) const>(
+                 &mx::VkShaderGenerator::generate))
+        .def("generate", static_cast<mx::ShaderPtr (mx::VkShaderGenerator::*)(const mx::string&, mx::ShaderGraphPtr, mx::GenContext&) const>(
+                 &mx::VkShaderGenerator::generate))
         .def("getTarget", &mx::VkShaderGenerator::getTarget)
         .def("getVersion", &mx::VkShaderGenerator::getVersion);
 }

@@ -10,19 +10,19 @@
 /// Abstract interface for providing shader graph data to MaterialXGenShader2.
 ///
 /// IShaderSource decouples shader graph construction from the MaterialX data
-/// model.  Any system that can answer the queries below — a MaterialX Document,
-/// a USD/Hydra HdMaterialNetwork, a runtime node graph, etc. — can drive shader
+/// model.  Any system that can answer the queries below - a MaterialX Document,
+/// a USD/Hydra HdMaterialNetwork, a runtime node graph, etc. - can drive shader
 /// generation without ever constructing a MaterialX Element hierarchy.
 ///
 /// ## Handle contract
 ///
 /// Every object in the graph (nodes, inputs, outputs, NodeDefs, GeomPropDefs)
-/// is represented by a DataHandle — an opaque uint64_t whose interpretation is
+/// is represented by a DataHandle - an opaque uint64_t whose interpretation is
 /// entirely up to the implementing class.  Implementations may store:
-///   • a raw pointer cast to uint64_t
-///   • a stable index into a flat array
-///   • a string hash
-///   • a packed (type, index) pair
+///   * a raw pointer cast to uint64_t
+///   * a stable index into a flat array
+///   * a string hash
+///   * a packed (type, index) pair
 ///
 /// Handles are valid for the lifetime of the IShaderSource that issued them.
 /// They are not transferable across IShaderSource instances.
@@ -56,7 +56,7 @@ class MX_GENSHADER2_API IShaderSource
 
     /// Returns a handle to the root of the graph being generated.
     /// This corresponds to the ElementPtr passed to ShaderGenerator::generate()
-    /// — typically an Output element or a surface/material Node.
+    /// - typically an Output element or a surface/material Node.
     virtual DataHandle getRootElement() const = 0;
 
     // --- Element classification -----------------------------------------------
@@ -287,20 +287,20 @@ class MX_GENSHADER2_API IShaderSource
     // existing MaterialX Element API for steps not yet fully expressible through
     // the pure IShaderSource queries above.
     //
-    // getMxDocument()     — no longer required by ShaderGraphBuilder.
+    // getMxDocument()     - no longer required by ShaderGraphBuilder.
     //                       Retained for compatibility.  Passing nullptr to the
     //                       ShaderGraph2 constructor is now safe for GLSL/MDL.
     //
-    // getMxNodeDef()      — required by both build() entry points and
+    // getMxNodeDef()      - required by both build() entry points and
     //                       createConnectedNodes().  NodeDefs live in the loaded
     //                       library, so any backend that can drive generation will
     //                       have them available.
     //
-    // getMxNodeDefByHandle() — required by addDefaultGeomNode2() to construct
+    // getMxNodeDefByHandle() - required by addDefaultGeomNode2() to construct
     //                       geomprop shader nodes.  Must be implemented alongside
     //                       getNodeDefByName() for correct geomprop support.
     //
-    // getMxNode()         — no longer required by ShaderGraphBuilder.
+    // getMxNode()         - no longer required by ShaderGraphBuilder.
     //                       Retained for compatibility; callers that need
     //                       HwImageNode::setValues (UDIM UV normalization) still
     //                       call createNode(ConstNodePtr) manually.

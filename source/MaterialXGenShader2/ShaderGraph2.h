@@ -13,7 +13,7 @@
 /// Several ShaderGraph methods required for graph construction
 /// (finalize, addInputSockets, addOutputSockets) are protected in the base
 /// class.  ShaderGraph2 exposes them via public forwarding methods so that
-/// ShaderGraphBuilder — living in a different module — can call them.
+/// ShaderGraphBuilder - living in a different module - can call them.
 ///
 /// ShaderGraph2 IS-A ShaderGraph: it can be stored in a ShaderGraphPtr and
 /// used anywhere a ShaderGraph* is expected.
@@ -26,7 +26,7 @@
 
 MATERIALX_NAMESPACE_BEGIN
 
-/// Forward declaration — full type only needed in ShaderGraph2.cpp.
+/// Forward declaration - full type only needed in ShaderGraph2.cpp.
 class IShaderSource;
 
 /// @class ShaderGraph2
@@ -84,7 +84,7 @@ class MX_GENSHADER2_API ShaderGraph2 : public ShaderGraph
     /// the ShaderGraph::createNode(ConstNodePtr) path for non-MX backends.
     ///
     /// Replicates:
-    ///   1. ShaderNode::initialize() — value/path/unit/colorspace copying
+    ///   1. ShaderNode::initialize() - value/path/unit/colorspace copying
     ///   2. Interface-name connections to graph input sockets
     ///   3. defaultgeomprop node creation (still uses ConstNodeDefPtr, which is
     ///      always available even for non-MX backends)

@@ -16,7 +16,10 @@ void bindPyShaderGenerator(py::module& mod)
 {
     py::class_<mx::ShaderGenerator, mx::ShaderGeneratorPtr>(mod, "ShaderGenerator")
         .def("getTarget", &mx::ShaderGenerator::getTarget)
-        .def("generate", &mx::ShaderGenerator::generate)
+        .def("generate", static_cast<mx::ShaderPtr (mx::ShaderGenerator::*)(const mx::string&, mx::ElementPtr, mx::GenContext&) const>(
+                 &mx::ShaderGenerator::generate))
+        .def("generate", static_cast<mx::ShaderPtr (mx::ShaderGenerator::*)(const mx::string&, mx::ShaderGraphPtr, mx::GenContext&) const>(
+                 &mx::ShaderGenerator::generate))
         .def("setColorManagementSystem", &mx::ShaderGenerator::setColorManagementSystem)
         .def("getColorManagementSystem", &mx::ShaderGenerator::getColorManagementSystem)
         .def("setUnitSystem", &mx::ShaderGenerator::setUnitSystem)

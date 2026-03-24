@@ -24,7 +24,7 @@ ShaderGraphBuilder::ShaderGraphBuilder(const IShaderSource& source, GenContext& 
 {
 }
 
-// ─── Public entry point ───────────────────────────────────────────────────────
+// --- Public entry point -------------------------------------------------------
 
 ShaderGraph2Ptr ShaderGraphBuilder::build(const string& name)
 {
@@ -83,7 +83,7 @@ ShaderGraph2Ptr ShaderGraphBuilder::build(const string& name)
                                   "' is neither a Node nor an Output");
 }
 
-// ─── Root setup ───────────────────────────────────────────────────────────────
+// --- Root setup ---------------------------------------------------------------
 
 void ShaderGraphBuilder::buildNodeRoot(ShaderGraph2& graph, DataHandle rootNode,
                                         ConstNodeDefPtr nodeDef)
@@ -93,7 +93,7 @@ void ShaderGraphBuilder::buildNodeRoot(ShaderGraph2& graph, DataHandle rootNode,
 
     // Use the simple createNode2 (name, nodeDef) overload so that
     // defaultgeomprop nodes and applyInputTransforms are NOT applied inside
-    // createNode — replicate the root-node setup from ShaderGraph::create() exactly:
+    // createNode - replicate the root-node setup from ShaderGraph::create() exactly:
     // manual value wiring first, then a single explicit applyInputTransforms at the end.
     const string rootName = _source.getElementName(rootNode);
     const string rootPath = _source.getElementPath(rootNode);
@@ -229,7 +229,7 @@ void ShaderGraphBuilder::buildOutputRoot(ShaderGraph2& graph, DataHandle rootOut
     if (!cs.empty()) outputSocket->setColorSpace(cs);
 }
 
-// ─── BFS traversal (replaces ShaderGraph::addUpstreamDependencies) ───────────
+// --- BFS traversal (replaces ShaderGraph::addUpstreamDependencies) -----------
 
 void ShaderGraphBuilder::addUpstreamDependencies(ShaderGraph2& graph, DataHandle rootElem)
 {
@@ -242,7 +242,7 @@ void ShaderGraphBuilder::addUpstreamDependencies(ShaderGraph2& graph, DataHandle
     };
 
     // KNOWN LIMITATION: assumes the graph is a DAG. A cycle between two or more
-    // nodes (A→B→A) will loop forever because only Output elements are tracked
+    // nodes (A->B->A) will loop forever because only Output elements are tracked
     // in processedOutputPaths; there is no visited set for node paths.
     // MaterialX documents are required to be acyclic, so this is not a concern
     // for well-formed inputs. A future revision should add a visitedNodePaths
@@ -251,7 +251,7 @@ void ShaderGraphBuilder::addUpstreamDependencies(ShaderGraph2& graph, DataHandle
     std::queue<WorkItem> worklist;
     std::set<string> processedOutputPaths; // avoid re-processing graph Output elements
 
-    // ── Lambda: seed worklist from a node's connected inputs ─────────────────
+    // -- Lambda: seed worklist from a node's connected inputs -----------------
     auto seedFromNode = [&](DataHandle nodeHandle)
     {
         size_t n = _source.getNodeInputCount(nodeHandle);
@@ -280,7 +280,7 @@ void ShaderGraphBuilder::addUpstreamDependencies(ShaderGraph2& graph, DataHandle
         seedFromNode(rootElem);
     }
 
-    // ── BFS ──────────────────────────────────────────────────────────────────
+    // -- BFS ------------------------------------------------------------------
     while (!worklist.empty())
     {
         WorkItem item = worklist.front();
@@ -323,14 +323,14 @@ void ShaderGraphBuilder::addUpstreamDependencies(ShaderGraph2& graph, DataHandle
     }
 }
 
-// ─── Single-edge node creation and connection ─────────────────────────────────
+// --- Single-edge node creation and connection ---------------------------------
 
 void ShaderGraphBuilder::createConnectedNodes(ShaderGraph2& graph,
                                                DataHandle downstreamElem,
                                                DataHandle upstreamNode,
                                                DataHandle connectingInput)
 {
-    // ── Create upstream ShaderNode if it doesn't exist ────────────────────────
+    // -- Create upstream ShaderNode if it doesn't exist ------------------------
     // Nodes are keyed by their short element name in _nodeMap (matching
     // ShaderGraph::createNode behavior) so that ShaderGraph::optimize() can
     // correctly erase bypassed nodes via _nodeMap.erase(node->getName()).
@@ -358,11 +358,11 @@ void ShaderGraphBuilder::createConnectedNodes(ShaderGraph2& graph,
         }
 
         // Initialize values, paths, interface connections, defaultgeomprops,
-        // and transform nodes — all driven through IShaderSource queries.
+        // and transform nodes - all driven through IShaderSource queries.
         graph.initializeNode2(upstreamNode, newNode, nodeDef, _source, _context);
     }
 
-    // ── Identify which output of the upstream node to connect from ────────────
+    // -- Identify which output of the upstream node to connect from ------------
     ShaderOutput* upstreamOutput = nullptr;
     if (isValidHandle(connectingInput))
     {
@@ -381,7 +381,7 @@ void ShaderGraphBuilder::createConnectedNodes(ShaderGraph2& graph,
             _source.getElementName(upstreamNode) + "'");
     }
 
-    // ── Wire connection to downstream node input or graph output socket ────────
+    // -- Wire connection to downstream node input or graph output socket --------
     if (_source.isNode(downstreamElem))
     {
         const string downstreamName = _source.getElementName(downstreamElem);
@@ -394,7 +394,7 @@ void ShaderGraphBuilder::createConnectedNodes(ShaderGraph2& graph,
         {
             throw ExceptionShaderGenError(
                 "ShaderGraphBuilder: node '" + downstream->getName() +
-                "' has itself as upstream — cycle detected");
+                "' has itself as upstream - cycle detected");
         }
         if (isValidHandle(connectingInput))
         {

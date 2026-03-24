@@ -59,7 +59,7 @@
 
 namespace mx = MaterialX;
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// --- Helpers ------------------------------------------------------------------
 
 static mx::DocumentPtr loadLibraries()
 {
@@ -84,7 +84,7 @@ static mx::GenContext makeGlslContext()
     return mx::GenContext(mx::GlslShaderGenerator::create());
 }
 
-// ─── Phase 1: MxElementAdapter unit tests ────────────────────────────────────
+// --- Phase 1: MxElementAdapter unit tests ------------------------------------
 
 TEST_CASE("GenShader2: MxElementAdapter - root element", "[genshader2][adapter]")
 {
@@ -185,7 +185,7 @@ TEST_CASE("GenShader2: MxElementAdapter - document queries", "[genshader2][adapt
     }
 }
 
-// ─── Graph parity tests ───────────────────────────────────────────────────────
+// --- Graph parity tests -------------------------------------------------------
 
 /// Compare two ShaderGraphs and verify structural equivalence:
 ///   - same node count
@@ -218,7 +218,7 @@ static void checkGraphParity(const mx::ShaderGraph& oldGraph, const mx::ShaderGr
         CHECK(newNode->numInputs()  == oldNode->numInputs());
         CHECK(newNode->numOutputs() == oldNode->numOutputs());
 
-        // Verify per-input connections and values — not just counts.
+        // Verify per-input connections and values - not just counts.
         for (size_t i = 0; i < oldNode->numInputs(); ++i)
         {
             const mx::ShaderInput* oldInput = oldNode->getInput(i);
@@ -300,7 +300,7 @@ static void runOutputParityTest(mx::DocumentPtr doc, mx::OutputPtr rootOutput,
     checkGraphParity(*oldGraph, *newGraph, shaderName);
 }
 
-// ─── Phase 4 bridge: NoMxNodeAdapter ─────────────────────────────────────────
+// --- Phase 4 bridge: NoMxNodeAdapter -----------------------------------------
 
 /// MxElementAdapter subclass that FAIL()s the test if getMxNode() is called.
 ///
@@ -315,7 +315,7 @@ class NoMxNodeAdapter : public mx::MxElementAdapter
 
     mx::ConstNodePtr getMxNode(mx::DataHandle /*node*/) const override
     {
-        FAIL("ShaderGraphBuilder called getMxNode() — Phase 4 invariant violated");
+        FAIL("ShaderGraphBuilder called getMxNode() - Phase 4 invariant violated");
         return nullptr;
     }
 };
@@ -390,7 +390,7 @@ TEST_CASE("GenShader2: Phase 4 - getMxNode not called - open_pbr_carpaint",
     runNodeParityTestNoMxNode(doc, rootNode, "phase4_open_pbr_carpaint");
 }
 
-// ─── Phase 4b bridge: CountingDocumentAdapter ────────────────────────────────
+// --- Phase 4b bridge: CountingDocumentAdapter --------------------------------
 
 /// MxElementAdapter subclass that counts calls to getMxDocument().
 ///
@@ -400,8 +400,8 @@ TEST_CASE("GenShader2: Phase 4 - getMxNode not called - open_pbr_carpaint",
 /// during graph construction.
 ///
 /// The invariant proven by these tests:
-///   • For a node-root graph, getMxDocument() is called ZERO times.
-///   • For an output-root graph, getMxDocument() is called ZERO times.
+///   * For a node-root graph, getMxDocument() is called ZERO times.
+///   * For an output-root graph, getMxDocument() is called ZERO times.
 ///
 /// Any count > 0 means a new getMxDocument() dependency was introduced.
 class CountingDocumentAdapter : public mx::MxElementAdapter
@@ -439,7 +439,7 @@ TEST_CASE("GenShader2: Phase 4c - getMxDocument called zero times (node-root) - 
     mx::ShaderGraph2Ptr newGraph = ctx.buildGraph("phase4b_marble");
     REQUIRE(newGraph);
 
-    // Phase 4c: getMxDocument() must not be called at all — the graph is built
+    // Phase 4c: getMxDocument() must not be called at all - the graph is built
     // entirely through IShaderSource queries.
     const auto& counter = static_cast<const CountingDocumentAdapter&>(ctx.getSource());
     CHECK(counter.callCount == 0);
@@ -465,14 +465,14 @@ TEST_CASE("GenShader2: Phase 4c - getMxDocument called zero times (output-root) 
         mx::ShaderGraph2Ptr newGraph = ctx.buildGraph("phase4b_brass_" + output->getName());
         REQUIRE(newGraph);
 
-        // Phase 4c: getMxDocument() must not be called at all — the graph is built
+        // Phase 4c: getMxDocument() must not be called at all - the graph is built
         // entirely through IShaderSource queries.
         const auto& counter = static_cast<const CountingDocumentAdapter&>(ctx.getSource());
         CHECK(counter.callCount == 0);
     }
 }
 
-// ─── StandardSurface ─────────────────────────────────────────────────────────
+// --- StandardSurface ---------------------------------------------------------
 
 TEST_CASE("GenShader2: graph parity - standard_surface_default", "[genshader2][parity]")
 {
@@ -519,7 +519,7 @@ TEST_CASE("GenShader2: graph parity - standard_surface_glass", "[genshader2][par
     runNodeParityTest(doc, rootNode, "test_standard_surface_glass");
 }
 
-// ─── OpenPBR ─────────────────────────────────────────────────────────────────
+// --- OpenPBR -----------------------------------------------------------------
 
 TEST_CASE("GenShader2: graph parity - open_pbr_default", "[genshader2][parity]")
 {
@@ -551,7 +551,7 @@ TEST_CASE("GenShader2: graph parity - open_pbr_carpaint", "[genshader2][parity]"
     runNodeParityTest(doc, rootNode, "test_open_pbr_carpaint");
 }
 
-// ─── GltfPbr ─────────────────────────────────────────────────────────────────
+// --- GltfPbr -----------------------------------------------------------------
 
 TEST_CASE("GenShader2: graph parity - gltf_pbr_default", "[genshader2][parity]")
 {
@@ -568,12 +568,12 @@ TEST_CASE("GenShader2: graph parity - gltf_pbr_default", "[genshader2][parity]")
     runNodeParityTest(doc, rootNode, "test_gltf_pbr_default");
 }
 
-// ─── Output-rooted (NodeGraph output) ────────────────────────────────────────
+// --- Output-rooted (NodeGraph output) ----------------------------------------
 
 TEST_CASE("GenShader2: graph parity - nodegraph output root", "[genshader2][parity]")
 {
     // standard_surface_brass_tiled.mtlx contains NG_brass1 with outputs
-    // out_color and out_roughness — exercise the buildOutputRoot path.
+    // out_color and out_roughness - exercise the buildOutputRoot path.
     mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
     mx::FilePath mtlxFile = searchPath.find(
         "resources/Materials/Examples/StandardSurface/standard_surface_brass_tiled.mtlx");
@@ -590,7 +590,7 @@ TEST_CASE("GenShader2: graph parity - nodegraph output root", "[genshader2][pari
     }
 }
 
-// ─── Shader emit parity helpers ───────────────────────────────────────────────
+// --- Shader emit parity helpers -----------------------------------------------
 
 /// Compare generated shader source stage-by-stage.
 static void checkShaderParity(const mx::Shader& oldShader, const mx::Shader& newShader,
@@ -653,7 +653,7 @@ static void checkShaderParityRelaxed(const mx::Shader& oldShader, const mx::Shad
     }
 }
 
-// ─── GLSL emit parity ─────────────────────────────────────────────────────────
+// --- GLSL emit parity ---------------------------------------------------------
 
 TEST_CASE("GenShader2: emit parity GLSL - standard_surface_default", "[genshader2][emit]")
 {
@@ -744,7 +744,7 @@ TEST_CASE("GenShader2: emit parity GLSL - open_pbr_default", "[genshader2][emit]
     checkShaderParity(*oldShader, *newShader, "GLSL open_pbr_default");
 }
 
-// ─── MDL emit parity ──────────────────────────────────────────────────────────
+// --- MDL emit parity ----------------------------------------------------------
 
 #ifdef MATERIALX_BUILD_GEN_MDL
 
@@ -813,7 +813,7 @@ TEST_CASE("GenShader2: emit parity MDL - open_pbr_default", "[genshader2][emit]"
 
 #endif // MATERIALX_BUILD_GEN_MDL
 
-// ─── OSL emit parity ──────────────────────────────────────────────────────────
+// --- OSL emit parity ----------------------------------------------------------
 
 #ifdef MATERIALX_BUILD_GEN_OSL
 
@@ -925,7 +925,7 @@ TEST_CASE("GenShader2: emit parity OSL - open_pbr_default", "[genshader2][emit]"
 
 #endif // MATERIALX_BUILD_GEN_OSL
 
-// ─── MSL emit parity ──────────────────────────────────────────────────────────
+// --- MSL emit parity ----------------------------------------------------------
 
 #ifdef MATERIALX_BUILD_GEN_MSL
 
@@ -994,7 +994,7 @@ TEST_CASE("GenShader2: emit parity MSL - open_pbr_default", "[genshader2][emit]"
 
 #endif // MATERIALX_BUILD_GEN_MSL
 
-// ─── Full examples sweep ───────────────────────────────────────────────────────
+// --- Full examples sweep -------------------------------------------------------
 
 /// Collect all .mtlx files under resources/Materials/Examples (all subdirs).
 static mx::FilePathVec collectExampleMtlx(const mx::FileSearchPath& searchPath)
@@ -1027,7 +1027,7 @@ TEST_CASE("GenShader2: emit parity GLSL - all examples", "[genshader2][emit][swe
     mx::FilePathVec mtlxFiles = collectExampleMtlx(searchPath);
     if (mtlxFiles.empty())
     {
-        WARN("No example materials found under resources/Materials/Examples — skipping sweep");
+        WARN("No example materials found under resources/Materials/Examples - skipping sweep");
         return;
     }
 
@@ -1053,7 +1053,7 @@ TEST_CASE("GenShader2: emit parity GLSL - all examples", "[genshader2][emit][swe
             const std::string label = makeLabel(mtlxFile, node->getName());
             INFO("Testing: " << label);
 
-            // ── Old path ───────────────────────────────────────────────────
+            // -- Old path ---------------------------------------------------
             mx::GenContext oldCtx = makeGlslContext();
             oldCtx.registerSourceCodeSearchPath(searchPath);
             mx::ShaderPtr oldShader;
@@ -1065,7 +1065,7 @@ TEST_CASE("GenShader2: emit parity GLSL - all examples", "[genshader2][emit][swe
             }
             if (!oldShader) { WARN("Old path returned null for: " + label); continue; }
 
-            // ── New path ───────────────────────────────────────────────────
+            // -- New path ---------------------------------------------------
             auto adapter = std::make_unique<mx::MxElementAdapter>(doc, node);
             mx::GenContextCreate ctx(mx::GlslShaderGenerator::create(), std::move(adapter));
             ctx.getGenContext().registerSourceCodeSearchPath(searchPath);

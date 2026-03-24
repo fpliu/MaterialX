@@ -30,7 +30,7 @@ ShaderPtr GenContextCreate::buildShader(const string& name)
     {
         throw ExceptionShaderGenError("GenContextCreate::buildShader: buildGraph returned nullptr for '" + name + "'.");
     }
-    // Provide the document lazily — after buildGraph() — so that getMxDocument()
+    // Provide the document lazily - after buildGraph() - so that getMxDocument()
     // is not called during graph construction (required by Phase 4c tests).
     // HwShaderGenerator::createShader(ShaderGraphPtr) uses graph->getDocument() to
     // look up GeomPropDefs for HW geomProp insertion.

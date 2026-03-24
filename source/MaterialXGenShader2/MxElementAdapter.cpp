@@ -13,7 +13,7 @@
 
 MATERIALX_NAMESPACE_BEGIN
 
-// ─── Construction ─────────────────────────────────────────────────────────────
+// --- Construction -------------------------------------------------------------
 
 MxElementAdapter::MxElementAdapter(ConstDocumentPtr document, ConstElementPtr root)
     : _document(document)
@@ -21,14 +21,14 @@ MxElementAdapter::MxElementAdapter(ConstDocumentPtr document, ConstElementPtr ro
 {
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
+// --- Root ---------------------------------------------------------------------
 
 DataHandle MxElementAdapter::getRootElement() const
 {
     return toHandle(_root.get());
 }
 
-// ─── Element classification ───────────────────────────────────────────────────
+// --- Element classification ---------------------------------------------------
 
 bool MxElementAdapter::isNode(DataHandle elem) const
 {
@@ -48,7 +48,7 @@ bool MxElementAdapter::isNodeGraph(DataHandle elem) const
     return e && e->isA<NodeGraph>();
 }
 
-// ─── Element identity ─────────────────────────────────────────────────────────
+// --- Element identity ---------------------------------------------------------
 
 string MxElementAdapter::getElementName(DataHandle elem) const
 {
@@ -62,7 +62,7 @@ string MxElementAdapter::getElementPath(DataHandle elem) const
     return e ? e->getNamePath() : EMPTY_STRING;
 }
 
-// ─── Node topology ────────────────────────────────────────────────────────────
+// --- Node topology ------------------------------------------------------------
 
 size_t MxElementAdapter::getNodeInputCount(DataHandle node) const
 {
@@ -131,7 +131,7 @@ DataHandle MxElementAdapter::getNodeParentGraph(DataHandle node) const
     return toHandle(parent.get());
 }
 
-// ─── Node definition lookup ───────────────────────────────────────────────────
+// --- Node definition lookup ---------------------------------------------------
 
 string MxElementAdapter::getNodeDefName(DataHandle node) const
 {
@@ -157,7 +157,7 @@ DataHandle MxElementAdapter::getNodeDefByName(const string& nodeDefName) const
     return toHandle(_document->getNodeDef(nodeDefName).get());
 }
 
-// ─── NodeDef interface ────────────────────────────────────────────────────────
+// --- NodeDef interface --------------------------------------------------------
 
 string MxElementAdapter::getNodeDefType(DataHandle nodeDef) const
 {
@@ -266,7 +266,7 @@ void MxElementAdapter::getNodeDefAttributeNames(DataHandle nodeDef, StringVec& n
     names = e->getAttributeNames();
 }
 
-// ─── NodeGraph interface ──────────────────────────────────────────────────────
+// --- NodeGraph interface ------------------------------------------------------
 
 DataHandle MxElementAdapter::getNodeGraphNodeDef(DataHandle nodeGraph) const
 {
@@ -314,7 +314,7 @@ DataHandle MxElementAdapter::getOutputParentNodeGraph(DataHandle output) const
     return toHandle(parent.get());
 }
 
-// ─── Port queries ─────────────────────────────────────────────────────────────
+// --- Port queries -------------------------------------------------------------
 
 string MxElementAdapter::getPortName(DataHandle port) const
 {
@@ -381,7 +381,7 @@ void MxElementAdapter::getPortAttributeNames(DataHandle port, StringVec& names) 
     names = e->getAttributeNames();
 }
 
-// ─── Interface binding ────────────────────────────────────────────────────────
+// --- Interface binding --------------------------------------------------------
 
 bool MxElementAdapter::portHasInterfaceName(DataHandle port) const
 {
@@ -408,7 +408,7 @@ DataHandle MxElementAdapter::getPortInterfaceInput(DataHandle port) const
     return toHandle(inp->getInterfaceInput().get());
 }
 
-// ─── Geometric default property ───────────────────────────────────────────────
+// --- Geometric default property -----------------------------------------------
 
 bool MxElementAdapter::portHasDefaultGeomProp(DataHandle port) const
 {
@@ -427,7 +427,7 @@ DataHandle MxElementAdapter::getPortDefaultGeomProp(DataHandle port) const
     return toHandle(inp->getDefaultGeomProp().get());
 }
 
-// ─── Unit metadata ────────────────────────────────────────────────────────────
+// --- Unit metadata ------------------------------------------------------------
 
 string MxElementAdapter::getPortUnit(DataHandle port) const
 {
@@ -453,7 +453,7 @@ string MxElementAdapter::getPortActiveUnit(DataHandle port) const
     return inp ? inp->getActiveUnit() : EMPTY_STRING;
 }
 
-// ─── Color space metadata ─────────────────────────────────────────────────────
+// --- Color space metadata -----------------------------------------------------
 
 string MxElementAdapter::getPortColorSpace(DataHandle port) const
 {
@@ -471,7 +471,7 @@ string MxElementAdapter::getPortActiveColorSpace(DataHandle port) const
     return inp ? inp->getActiveColorSpace() : EMPTY_STRING;
 }
 
-// ─── Uniformity ───────────────────────────────────────────────────────────────
+// --- Uniformity ---------------------------------------------------------------
 
 bool MxElementAdapter::portIsUniform(DataHandle port) const
 {
@@ -481,7 +481,7 @@ bool MxElementAdapter::portIsUniform(DataHandle port) const
     return inp && inp->getIsUniform();
 }
 
-// ─── GeomPropDef queries ──────────────────────────────────────────────────────
+// --- GeomPropDef queries ------------------------------------------------------
 
 string MxElementAdapter::getGeomPropDefName(DataHandle geomPropDef) const
 {
@@ -519,7 +519,7 @@ string MxElementAdapter::getGeomPropDefIndex(DataHandle geomPropDef) const
     return gp ? gp->getIndex() : EMPTY_STRING;
 }
 
-// ─── Document-level queries ───────────────────────────────────────────────────
+// --- Document-level queries ---------------------------------------------------
 
 ConstNodeDefPtr MxElementAdapter::getMxNodeDef(DataHandle node) const
 {

@@ -18,11 +18,11 @@
 /// Most of the graph construction is now driven through pure IShaderSource
 /// queries.  Two bridge methods on IShaderSource are still required:
 ///
-///   • getMxNodeDef() — needed to obtain a ConstNodeDefPtr for every node
+///   * getMxNodeDef() - needed to obtain a ConstNodeDefPtr for every node
 ///     (both root and upstream).  NodeDefs live in the loaded shader library;
 ///     any backend that can drive generation will have them available.
 ///
-///   • getMxDocument() — no longer required by ShaderGraphBuilder.  The graph
+///   * getMxDocument() - no longer required by ShaderGraphBuilder.  The graph
 ///     is built entirely through IShaderSource queries (Phase 4b/4c).
 ///     Retained in IShaderSource for compatibility with buildShader().
 ///

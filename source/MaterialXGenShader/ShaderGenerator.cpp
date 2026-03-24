@@ -523,7 +523,7 @@ void ShaderGenerator::createVariables(ShaderGraphPtr graph, GenContext& context,
     }
 }
 
-ShaderPtr ShaderGenerator::generate(const string& name, ShaderGraphPtr /*graph*/, GenContext& /*context*/) const
+ShaderPtr ShaderGenerator::generate(const string& /*name*/, ShaderGraphPtr /*graph*/, GenContext& /*context*/) const
 {
     throw ExceptionShaderGenError(
         "ShaderGenerator '" + getTarget() + "' does not support pre-built graph generation. "

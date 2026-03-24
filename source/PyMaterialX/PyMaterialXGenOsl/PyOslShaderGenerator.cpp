@@ -30,5 +30,8 @@ void bindPyOslShaderGenerator(py::module& mod)
     py::class_<mx::OslShaderGenerator, mx::ShaderGenerator, mx::OslShaderGeneratorPtr>(mod, "OslShaderGenerator")
         .def_static("create", &OslShaderGenerator_create)
         .def("getTarget", &mx::OslShaderGenerator::getTarget)
-        .def("generate", &mx::OslShaderGenerator::generate);
+        .def("generate", static_cast<mx::ShaderPtr (mx::OslShaderGenerator::*)(const mx::string&, mx::ElementPtr, mx::GenContext&) const>(
+                 &mx::OslShaderGenerator::generate))
+        .def("generate", static_cast<mx::ShaderPtr (mx::OslShaderGenerator::*)(const mx::string&, mx::ShaderGraphPtr, mx::GenContext&) const>(
+                 &mx::OslShaderGenerator::generate));
 }

@@ -61,7 +61,7 @@ class MX_GENSHADER2_API GenContextCreate
 
     /// Builds the ShaderGraph via buildGraph() and emits shader source code
     /// by calling ShaderGenerator::generate(name, ShaderGraphPtr, context).
-    /// The graph is constructed exactly once — no redundant work when both
+    /// The graph is constructed exactly once - no redundant work when both
     /// buildGraph() and buildShader() are used together.
     ///
     /// Requires the active ShaderGenerator to implement the ShaderGraphPtr
