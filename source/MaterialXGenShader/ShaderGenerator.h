@@ -46,6 +46,12 @@ class MX_GENSHADER_API ShaderGenerator
         return nullptr;
     }
 
+    /// Generate a shader from a pre-built ShaderGraph, bypassing graph construction.
+    /// Subclasses that support this path override this method; the default throws.
+    /// Use this overload together with GenContextCreate::buildGraph() to avoid
+    /// building the graph twice when buildShader() follows buildGraph().
+    virtual ShaderPtr generate(const string& name, ShaderGraphPtr graph, GenContext& context) const;
+
     /// Start a new scope using the given bracket type.
     virtual void emitScopeBegin(ShaderStage& stage, Syntax::Punctuation punc = Syntax::CURLY_BRACKETS) const;
 

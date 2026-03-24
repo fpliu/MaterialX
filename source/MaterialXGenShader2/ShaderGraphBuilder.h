@@ -69,7 +69,7 @@ class MX_GENSHADER2_API ShaderGraphBuilder
     ShaderGraph2Ptr build(const string& name);
 
   private:
-    // ── Graph traversal (replaces ShaderGraph::addUpstreamDependencies) ───────
+    // -- Graph traversal (replaces ShaderGraph::addUpstreamDependencies) -------
 
     /// BFS upstream from rootElem, calling createConnectedNodes for every edge.
     void addUpstreamDependencies(ShaderGraph2& graph, DataHandle rootElem);
@@ -81,7 +81,7 @@ class MX_GENSHADER2_API ShaderGraphBuilder
                               DataHandle upstreamNode,
                               DataHandle connectingInput);
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
+    // -- Helpers ---------------------------------------------------------------
 
     /// Build the root-node case: root is a Node element (the common case for
     /// surface/material shaders).  Populates sockets, creates the root

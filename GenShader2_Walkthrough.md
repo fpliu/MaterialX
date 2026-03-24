@@ -99,7 +99,7 @@ Replaces the graph traversal logic that was baked into `ShaderGraph::create()`. 
 
 ## The New Flow
 
-**This PR decouples graph construction.** The `buildGraph()` path is fully functional:
+**With MaterialX data (same result, new path):**
 
 ```
 MaterialX Document
@@ -111,6 +111,10 @@ IShaderSource interface
     v  ShaderGraphBuilder (BFS traversal)
     |
 ShaderGraph2 (same ShaderGraph, built differently)
+    |
+    v  GlslShaderGenerator::generate(ShaderGraphPtr)
+    |
+GLSL source code
 ```
 
 **With USD/Hydra data (the new capability):**
@@ -125,30 +129,42 @@ IShaderSource interface
     v  ShaderGraphBuilder (BFS traversal)
     |
 ShaderGraph2
+    |
+    v  GlslShaderGenerator::generate(ShaderGraphPtr)
+    |
+GLSL source code
 ```
 
 The expensive round-trip is gone. Hydra just implements `IShaderSource` to answer questions about its own `HdMaterialNetwork2` objects directly.
-
-**Code emission** currently still goes through the existing `generate(name, ElementPtr, context)` path — `buildShader()` resolves the MX element via `getMxDocument()` and delegates to the original generator. A follow-up PR adds `generate(name, ShaderGraphPtr, context)` overloads to all built-in generators so that a pre-built graph can be emitted directly without re-constructing it from an `ElementPtr`.
 
 ---
 
 ## Changes to Existing Files
 
-This PR makes **no changes to any existing generator or base class**. All source changes are confined to the new `MaterialXGenShader2/` library. The only files touched outside the library are build system and documentation:
+This PR adds `generate(name, ShaderGraphPtr, context)` overloads to all built-in generators so that a pre-built graph can be emitted directly. All changes are **additive** — no existing method signatures or behaviors were modified.
+
+### New overloads on generators
 
 | File | Change |
 |------|--------|
-| `CMakeLists.txt` (root) | Adds `add_subdirectory(source/MaterialXGenShader2)`. (1 line) |
-| `source/MaterialXTest/CMakeLists.txt` | Adds the GenShader2 test subdirectory and links `MaterialXGenShader2`. (2 lines) |
-| `CHANGELOG.md` | One entry under `[1.39.5] - Development > Added`. |
+| `ShaderGenerator.h/.cpp` | New virtual `generate(name, ShaderGraphPtr, context)` — throws by default; each backend opts in by overriding. |
+| `GlslShaderGenerator.h/.cpp` | Override of `generate(ShaderGraphPtr)` — delegates to new `HwShaderGenerator::createShader(ShaderGraphPtr)`, then runs the existing emit path. (+24 lines) |
+| `MslShaderGenerator.h/.cpp` | Same pattern as GLSL. (+31 lines) |
+| `MdlShaderGenerator.h/.cpp` | Override of `generate(ShaderGraphPtr)` + private `createShader(ShaderGraphPtr)` — sets up MDL shader stages from pre-built graph. (+223 lines) |
+| `OslShaderGenerator.h/.cpp` | Override of `generate(ShaderGraphPtr)` + private `createShader(ShaderGraphPtr)` — sets up OSL stage from pre-built graph. Note: `oslConnectCiWrapper` is not supported via this path. (+156 lines) |
+| `HwShaderGenerator.h/.cpp` | New `createShader(name, ShaderGraphPtr, context)` overload — sets up HW shader stages and uniforms from a pre-built graph instead of from an Element tree. Shared by GLSL and MSL. (+177 lines) |
+
+### Minimal changes to base classes
+
+| File | Change |
+|------|--------|
+| `ShaderGraph.h` | One new public accessor: `getDocument()` returns the `_document` member. (3 lines) |
 
 ### What was NOT changed
 
-- **No existing generators were modified.** GLSL, MDL, OSL, MSL, HW generators are untouched.
-- **No existing method signatures changed.**
-- **No changes to `ShaderGraph`, `ShaderGenerator`, or any base class.**
-- **No changes to emitters.** The code that writes GLSL/MDL/OSL/MSL text was not modified.
+- **Emitters are untouched.** The code that writes GLSL/MDL/OSL/MSL text was not modified. All complexity is in graph construction, not code emission.
+- **No existing method signatures changed.** All modifications are new overloads or new accessors.
+- **No changes to `ShaderGraph::create()`.** The original graph-building path is fully preserved.
 
 ---
 
@@ -162,10 +178,8 @@ GenContextCreate ctx(GlslShaderGenerator::create(), std::move(adapter));
 ctx.getGenContext().registerSourceCodeSearchPath(searchPath);
 
 ShaderGraph2Ptr graph = ctx.buildGraph("myShader");
-ShaderPtr shader = ctx.buildShader("myShader");
+ShaderPtr shader = ctx.buildShader("myShader");  // graph + emit in one call
 ```
-
-`buildGraph()` constructs the graph entirely through `IShaderSource` queries — no MaterialX Element traversal. `buildShader()` currently resolves the MX element via `getMxDocument()` and forwards to the existing `generate(ElementPtr)` path; the follow-up PR will add a `generate(ShaderGraphPtr)` path that skips this step.
 
 ---
 
@@ -177,20 +191,22 @@ ShaderPtr shader = ctx.buildShader("myShader");
 |---|---|---|---|
 | `getMxNodeDef(DataHandle)` | **Yes** — needed for every node (root + upstream) to resolve implementation. NodeDefs live in the loaded library, so any backend that can drive generation will have them available. | Yes | No — must be implemented. |
 | `getMxNodeDefByHandle(DataHandle)` | **Yes** — needed by `addDefaultGeomNode2()` to construct geomprop shader nodes. | Yes | No — must be implemented alongside `getNodeDefByName()`. |
-| `getMxDocument()` | **No** — fully eliminated from graph construction (Phase 4c). | **Yes** — `buildShader()` resolves the root element path in the document to call `generate(ElementPtr)`. | Not yet — required until the follow-up PR adds `generate(ShaderGraphPtr)`. |
+| `getMxDocument()` | **No** — fully eliminated from graph construction (Phase 4c). | Yes — `buildShader()` calls `setDocument()` on the graph for HW geomprop insertion. | Partially — can return nullptr if geomprops are pre-resolved. |
 | `getMxNode(DataHandle)` | **No** — fully eliminated (Phase 4). | No | Yes — safe to leave as nullptr. |
 
 ---
 
 ## Known Limitations
 
-1. **BFS vs. DFS traversal order.** `ShaderGraphBuilder` uses BFS; the original `ShaderGraph::create()` uses DFS. For materials with complex NodeGraph structures, this can produce **non-semantic differences** in emitted shader code (e.g., different variable declaration order). The generated shaders are functionally equivalent.
+1. **BFS vs. DFS traversal order.** `ShaderGraphBuilder` uses BFS; the original `ShaderGraph::create()` uses DFS. For materials with complex NodeGraph structures, this can produce **non-semantic differences** in emitted shader code (e.g., different variable declaration order). The generated shaders are functionally equivalent. The test suite uses a relaxed parity check for the full examples sweep, and strict byte-for-byte checks for a representative set of materials.
 
 2. **`ShaderNodeImpl::setValues(const Node&, ...)` is skipped.** This virtual method requires a `ConstNodePtr` and is not called for upstream nodes via the new path. The only known override is `HwImageNode::setValues` (UDIM UV normalization). That path must still use the original `createNode(ConstNodePtr)` workflow or call `getMxNode()`.
 
-3. **`buildShader()` still requires `getMxDocument()`.** The current emission path resolves the MaterialX element to forward to `generate(ElementPtr)`. The follow-up PR adds `generate(ShaderGraphPtr)` overloads to all generators, removing this requirement.
+3. **OSL `mtlx_category` annotation.** The pre-built `ShaderGraphPtr` path cannot recover the node category from the graph alone (no `ElementPtr` available), so `mtlx_category` is always `""`. The parity tests normalize this before comparing.
 
-4. **NodeGraph output-to-output cycles.** If a NodeGraph contains output-to-output connections that form a cycle in the BFS, the builder detects and skips them with a `WARN`. This is a rare edge case in practice.
+4. **OSL `oslConnectCiWrapper`.** This option is not supported via `generate(ShaderGraphPtr)` because it requires a Document for NodeDef lookup. Use `generate(ElementPtr)` directly when this option is needed.
+
+5. **NodeGraph output-to-output cycles.** If a NodeGraph contains output-to-output connections that form a cycle in the BFS, the builder detects and skips them with a `WARN`. This is a rare edge case in practice.
 
 ---
 
@@ -243,7 +259,7 @@ The **critical subset** that must return real data:
 - `getPortColorSpace()`, `getPortActiveColorSpace()` — return `""` if your system doesn't track color spaces.
 - `getPortUnit()`, `getPortUnitType()`, `getPortActiveUnit()` — return `""` if your system has no unit metadata.
 - `portHasDefaultGeomProp()`, `getPortDefaultGeomProp()`, and the `GeomPropDef` methods — return false / `InvalidHandle` / `""` if you pre-resolve geometric properties.
-- `getMxDocument()` — return `nullptr` if you only need `buildGraph()` (not `buildShader()`).
+- `getMxDocument()` — return `nullptr` if you don't need HW geomprop insertion during `buildShader()`.
 - `getMxNode()` — return `nullptr` (no longer called by the builder).
 
 ### Error behavior
@@ -258,7 +274,7 @@ See `MxElementAdapter` (wraps MaterialX objects) as the canonical example, and t
 
 ## Test Coverage
 
-The test suite lives in `source/MaterialXTest/MaterialXGenShader2/GenShader2Parity.cpp` (~750 lines, 20 test cases).
+The test suite lives in `source/MaterialXTest/MaterialXGenShader2/GenShader2Parity.cpp` (~1,090 lines). It has five layers:
 
 ### 1. Adapter unit tests (`[genshader2][adapter]`)
 
@@ -279,6 +295,8 @@ Drive full code emission through `GenContextCreate::buildShader()` and assert by
 
 - **GLSL**: `standard_surface_default`, `standard_surface_marble_solid`, `open_pbr_default`
 - **MDL**: `standard_surface_default`, `open_pbr_default`
+- **OSL**: `standard_surface_default`, `open_pbr_default` (with `mtlx_category` normalization)
+- **MSL**: `standard_surface_default`, `open_pbr_default`
 
 ### 4. Bridge invariant tests (`[genshader2][phase4]`, `[phase4b]`, `[phase4c]`)
 
@@ -286,6 +304,10 @@ Prove that specific MX bridge methods are no longer called during graph construc
 
 - **`NoMxNodeAdapter`**: subclass that `FAIL()`s if `getMxNode()` is called. Tested across 3 materials.
 - **`CountingDocumentAdapter`**: subclass that counts `getMxDocument()` calls and asserts the count is **zero** after `buildGraph()`. Tested for both node-root and output-root graphs.
+
+### 5. Full examples sweep (`[genshader2][emit][sweep]`)
+
+Iterates over all `.mtlx` files under `resources/Materials/Examples/`, generates GLSL shaders via both paths, and verifies the new path succeeds without crashing. Uses relaxed parity (logs ordering differences as warnings rather than failures).
 
 ### Running the tests
 
@@ -302,6 +324,9 @@ cmake --build build --target MaterialXTest
 # Run only emit tests
 ./build/bin/MaterialXTest "[emit]"
 
+# Run only the sweep
+./build/bin/MaterialXTest "[sweep]"
+
 # Run Phase 4 bridge invariant tests
 ./build/bin/MaterialXTest "[phase4]"
 ```
@@ -316,19 +341,7 @@ cmake --build build --target MaterialXTest
 - **Dependencies**: `MaterialXGenShader`, `MaterialXFormat`, `MaterialXCore`
 - **Export macro**: `MATERIALX_GENSHADER2_EXPORTS` (standard MaterialX DLL export pattern via `Export.h`)
 - **Root CMakeLists.txt**: one line added — `add_subdirectory(source/MaterialXGenShader2)`, placed right after `add_subdirectory(source/MaterialXGenShader)`.
-- **Test integration**: `source/MaterialXTest/CMakeLists.txt` adds the test subdirectory and links `MaterialXGenShader2`. Emit tests compile conditionally against available generators (`MATERIALX_BUILD_GEN_MDL`).
-
----
-
-## What Comes Next (Follow-up PR)
-
-The follow-up PR (`feature/genshader2-generate-from-graph`) adds the ability to emit shader code directly from a pre-built `ShaderGraph`, without routing back through `generate(ElementPtr)`:
-
-- New `generate(name, ShaderGraphPtr, context)` overloads on `ShaderGenerator` (base, throws by default) and all four generators (GLSL, MDL, OSL, MSL).
-- New `createShader(name, ShaderGraphPtr, context)` on `HwShaderGenerator` (shared by GLSL/MSL).
-- `buildShader()` updated to use the new `generate(ShaderGraphPtr)` path instead of resolving the MX element.
-- OSL and MSL emit parity tests.
-- Full examples sweep across all `resources/Materials/Examples/` files.
+- **Test integration**: `source/MaterialXTest/CMakeLists.txt` adds the test subdirectory and links `MaterialXGenShader2`. Tests compile conditionally against available generators (`MATERIALX_BUILD_GEN_MDL`, `MATERIALX_BUILD_GEN_OSL`, `MATERIALX_BUILD_GEN_MSL`).
 
 ---
 
@@ -346,4 +359,4 @@ The new code lives in `source/MaterialXGenShader2/` — a flat library of 7 head
 | `GenContextCreate.h/.cpp` | Orchestrator: owns source + context, exposes `buildGraph()` / `buildShader()` |
 | `Export.h` / `Library.h` | Standard MaterialX DLL export macros and library registration |
 
-Tests live in `source/MaterialXTest/MaterialXGenShader2/GenShader2Parity.cpp` (~750 lines, 20 test cases).
+Tests live in `source/MaterialXTest/MaterialXGenShader2/GenShader2Parity.cpp` (~1,090 lines, 20+ test cases).

@@ -54,6 +54,11 @@ class MX_GENSHADER2_API ShaderGraph2 : public ShaderGraph
     /// Exposes the protected _classification field for ShaderGraphBuilder.
     void setClassification2(uint32_t classification) { _classification = classification; }
 
+    /// Sets the protected _document field. Called by GenContextCreate::buildShader()
+    /// to provide the document for HW geomProp insertion, without triggering
+    /// getMxDocument() during buildGraph() (required by Phase 4c tests).
+    void setDocument(ConstDocumentPtr doc) { _document = doc; }
+
     /// Exposes the protected simple createNode overload that creates a ShaderNode
     /// without adding defaultgeomprop nodes or running applyInputTransforms.
     /// This mirrors the call used in ShaderGraph::create() for the root node.
@@ -107,6 +112,14 @@ class MX_GENSHADER2_API ShaderGraph2 : public ShaderGraph
     void addInputSocketsFromNode3(DataHandle nodeHandle,
                                   const IShaderSource& source, GenContext& context);
 
+    /// Replicates ShaderGraph::addDefaultGeomNode() using IShaderSource queries
+    /// instead of _document->getNodeDef().
+    /// Called from both initializeNode2 (for upstream nodes) and
+    /// ShaderGraphBuilder::buildNodeRoot (for the root node).
+    /// @note Requires source.getMxNodeDefByHandle() to return a valid NodeDef.
+    void addDefaultGeomNode2(ShaderInput* input, const GeomPropDef& geomprop,
+                              const IShaderSource& source, GenContext& context);
+
   private:
     /// Replicates ShaderGraph::populateUnitTransformMap() using IShaderSource
     /// port queries instead of a ValueElementPtr.
@@ -118,12 +131,6 @@ class MX_GENSHADER2_API ShaderGraph2 : public ShaderGraph
     /// Shared implementation used by all addInputSocketsFrom*3 variants.
     void addInputSocketFromPort3(DataHandle portHandle,
                                   const IShaderSource& source, GenContext& context);
-
-    /// Replicates ShaderGraph::addDefaultGeomNode() using IShaderSource queries
-    /// instead of _document->getNodeDef().
-    /// @note Requires source.getMxNodeDefByHandle() to return a valid NodeDef.
-    void addDefaultGeomNode2(ShaderInput* input, const GeomPropDef& geomprop,
-                              const IShaderSource& source, GenContext& context);
 };
 
 using ShaderGraph2Ptr = shared_ptr<ShaderGraph2>;

@@ -87,6 +87,12 @@ class MX_GENHW_API HwShaderGenerator : public ShaderGenerator
     /// Create and initialize a new HW shader for shader generation.
     virtual ShaderPtr createShader(const string& name, ElementPtr element, GenContext& context) const;
 
+    /// Create and initialize a new HW shader from a pre-built ShaderGraph,
+    /// bypassing graph construction and geomprop insertion (both already done
+    /// by ShaderGraphBuilder). Called by the generate(ShaderGraphPtr) overloads
+    /// in GLSL and MSL generators.
+    virtual ShaderPtr createShader(const string& name, ShaderGraphPtr graph, GenContext& context) const;
+
     void toVec4(TypeDesc type, string& variable) const;
 };
 

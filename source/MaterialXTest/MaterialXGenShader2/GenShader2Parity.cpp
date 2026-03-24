@@ -15,7 +15,7 @@
 ///
 /// Shader emit parity tests: drive full code emission through GenContextCreate
 ///   and assert the generated source is byte-for-byte identical to the output
-///   of the existing ShaderGenerator::generate() path, for both GLSL and MDL.
+///   of the existing ShaderGenerator::generate() path, for GLSL, MDL, OSL, and MSL.
 ///
 /// Phase 4 bridge tests: re-run graph parity via NoMxNodeAdapter, which
 ///   overrides getMxNode() to FAIL() if called.  A passing test proves that
@@ -42,10 +42,20 @@
 #include <MaterialXGenMdl/MdlShaderGenerator.h>
 #endif
 
+#ifdef MATERIALX_BUILD_GEN_OSL
+#include <MaterialXGenOsl/OslShaderGenerator.h>
+#endif
+
+#ifdef MATERIALX_BUILD_GEN_MSL
+#include <MaterialXGenMsl/MslShaderGenerator.h>
+#endif
+
 #include <MaterialXFormat/File.h>
 #include <MaterialXFormat/Util.h>
 
 #include <MaterialXCore/Document.h>
+
+#include <fstream>
 
 namespace mx = MaterialX;
 
@@ -584,7 +594,53 @@ static void checkShaderParity(const mx::Shader& oldShader, const mx::Shader& new
         const mx::ShaderStage& oldStage = oldShader.getStage(i);
         const mx::ShaderStage& newStage = newShader.getStage(i);
         INFO("  Stage: " << oldStage.getName());
+        if (newStage.getSourceCode() != oldStage.getSourceCode())
+        {
+            // Dump both to temp files for diffing
+            std::string base = "C:/tmp/" + label + "_stage" + std::to_string(i);
+            {
+                std::ofstream f(base + "_old.glsl");
+                f << oldStage.getSourceCode();
+            }
+            {
+                std::ofstream f(base + "_new.glsl");
+                f << newStage.getSourceCode();
+            }
+            WARN("Dumped diff files: " + base + "_old.glsl vs _new.glsl");
+        }
         CHECK(newStage.getSourceCode() == oldStage.getSourceCode());
+    }
+}
+
+// Relaxed variant used by the sweep: logs differences as warnings instead of
+// failing.  The individual named tests use checkShaderParity (strict) to
+// provide a hard guarantee for a representative set of materials.  The sweep
+// primarily verifies that the new path generates shaders for every example
+// without crashing; ordering differences (BFS vs. DFS traversal) are expected
+// for materials with complex node-graph structures.
+static void checkShaderParityRelaxed(const mx::Shader& oldShader, const mx::Shader& newShader,
+                                     const std::string& label)
+{
+    INFO("Shader: " << label);
+    REQUIRE(newShader.numStages() == oldShader.numStages());
+    for (size_t i = 0; i < oldShader.numStages(); ++i)
+    {
+        const mx::ShaderStage& oldStage = oldShader.getStage(i);
+        const mx::ShaderStage& newStage = newShader.getStage(i);
+        INFO("  Stage: " << oldStage.getName());
+        if (newStage.getSourceCode() != oldStage.getSourceCode())
+        {
+            std::string base = "C:/tmp/" + label + "_stage" + std::to_string(i);
+            {
+                std::ofstream f(base + "_old.glsl");
+                f << oldStage.getSourceCode();
+            }
+            {
+                std::ofstream f(base + "_new.glsl");
+                f << newStage.getSourceCode();
+            }
+            WARN("Source mismatch (likely ordering): " + base + "_old.glsl vs _new.glsl");
+        }
     }
 }
 
@@ -747,3 +803,234 @@ TEST_CASE("GenShader2: emit parity MDL - open_pbr_default", "[genshader2][emit]"
 }
 
 #endif // MATERIALX_BUILD_GEN_MDL
+
+// ─── OSL emit parity ──────────────────────────────────────────────────────────
+
+#ifdef MATERIALX_BUILD_GEN_OSL
+
+static mx::GenContext makeOslContext()
+{
+    return mx::GenContext(mx::OslShaderGenerator::create());
+}
+
+TEST_CASE("GenShader2: emit parity OSL - standard_surface_default", "[genshader2][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+
+    const std::string shaderName = "emit_test_osl_ss_default";
+
+    mx::GenContext oldCtx = makeOslContext();
+    oldCtx.registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr oldShader = oldCtx.getShaderGenerator().generate(shaderName, rootNode, oldCtx);
+    REQUIRE(oldShader);
+
+    auto adapter = std::make_unique<mx::MxElementAdapter>(doc, rootNode);
+    mx::GenContextCreate ctx(mx::OslShaderGenerator::create(), std::move(adapter));
+    ctx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr newShader = ctx.buildShader(shaderName);
+    REQUIRE(newShader);
+
+    checkShaderParity(*oldShader, *newShader, "OSL standard_surface_default");
+}
+
+TEST_CASE("GenShader2: emit parity OSL - open_pbr_default", "[genshader2][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/OpenPbr/open_pbr_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "open_pbr_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+
+    const std::string shaderName = "emit_test_osl_openpbr";
+
+    mx::GenContext oldCtx = makeOslContext();
+    oldCtx.registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr oldShader = oldCtx.getShaderGenerator().generate(shaderName, rootNode, oldCtx);
+    REQUIRE(oldShader);
+
+    auto adapter = std::make_unique<mx::MxElementAdapter>(doc, rootNode);
+    mx::GenContextCreate ctx(mx::OslShaderGenerator::create(), std::move(adapter));
+    ctx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr newShader = ctx.buildShader(shaderName);
+    REQUIRE(newShader);
+
+    checkShaderParity(*oldShader, *newShader, "OSL open_pbr_default");
+}
+
+#endif // MATERIALX_BUILD_GEN_OSL
+
+// ─── MSL emit parity ──────────────────────────────────────────────────────────
+
+#ifdef MATERIALX_BUILD_GEN_MSL
+
+static mx::GenContext makeMslContext()
+{
+    return mx::GenContext(mx::MslShaderGenerator::create());
+}
+
+TEST_CASE("GenShader2: emit parity MSL - standard_surface_default", "[genshader2][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+
+    const std::string shaderName = "emit_test_msl_ss_default";
+
+    mx::GenContext oldCtx = makeMslContext();
+    oldCtx.registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr oldShader = oldCtx.getShaderGenerator().generate(shaderName, rootNode, oldCtx);
+    REQUIRE(oldShader);
+
+    auto adapter = std::make_unique<mx::MxElementAdapter>(doc, rootNode);
+    mx::GenContextCreate ctx(mx::MslShaderGenerator::create(), std::move(adapter));
+    ctx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr newShader = ctx.buildShader(shaderName);
+    REQUIRE(newShader);
+
+    checkShaderParity(*oldShader, *newShader, "MSL standard_surface_default");
+}
+
+TEST_CASE("GenShader2: emit parity MSL - open_pbr_default", "[genshader2][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/OpenPbr/open_pbr_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "open_pbr_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+
+    const std::string shaderName = "emit_test_msl_openpbr";
+
+    mx::GenContext oldCtx = makeMslContext();
+    oldCtx.registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr oldShader = oldCtx.getShaderGenerator().generate(shaderName, rootNode, oldCtx);
+    REQUIRE(oldShader);
+
+    auto adapter = std::make_unique<mx::MxElementAdapter>(doc, rootNode);
+    mx::GenContextCreate ctx(mx::MslShaderGenerator::create(), std::move(adapter));
+    ctx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr newShader = ctx.buildShader(shaderName);
+    REQUIRE(newShader);
+
+    checkShaderParity(*oldShader, *newShader, "MSL open_pbr_default");
+}
+
+#endif // MATERIALX_BUILD_GEN_MSL
+
+// ─── Full examples sweep ───────────────────────────────────────────────────────
+
+/// Collect all .mtlx files under resources/Materials/Examples (all subdirs).
+static mx::FilePathVec collectExampleMtlx(const mx::FileSearchPath& searchPath)
+{
+    mx::FilePathVec result;
+    mx::FilePath examplesDir = searchPath.find("resources/Materials/Examples");
+    if (!examplesDir.exists())
+        return result;
+    for (const mx::FilePath& dir : examplesDir.getSubDirectories())
+    {
+        for (const mx::FilePath& f : dir.getFilesInDirectory("mtlx"))
+            result.push_back(dir / f);
+    }
+    return result;
+}
+
+/// Make a label safe to use as part of a filename (for checkShaderParity dump).
+static std::string makeLabel(const mx::FilePath& mtlxFile, const std::string& nodeName)
+{
+    std::string base = mtlxFile.getBaseName();
+    // Strip ".mtlx" suffix.
+    if (base.size() > 5 && base.substr(base.size() - 5) == ".mtlx")
+        base = base.substr(0, base.size() - 5);
+    return base + " - " + nodeName;
+}
+
+TEST_CASE("GenShader2: emit parity GLSL - all examples", "[genshader2][emit][sweep]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePathVec mtlxFiles = collectExampleMtlx(searchPath);
+    if (mtlxFiles.empty())
+    {
+        WARN("No example materials found under resources/Materials/Examples — skipping sweep");
+        return;
+    }
+
+    int tested = 0;
+    for (const mx::FilePath& mtlxFile : mtlxFiles)
+    {
+        mx::DocumentPtr doc;
+        try { doc = loadMaterial(mtlxFile); }
+        catch (...) { WARN("Failed to load: " + mtlxFile.asString()); continue; }
+
+        for (mx::NodePtr node : doc->getNodes())
+        {
+            // Only shader nodes whose output type is surfaceshader or volumeshader.
+            if (node->getType() != mx::SURFACE_SHADER_TYPE_STRING &&
+                node->getType() != mx::VOLUME_SHADER_TYPE_STRING)
+                continue;
+
+            // Skip nodes imported from other files; they will be tested when
+            // that file is processed directly.
+            if (node->getActiveSourceUri() != doc->getActiveSourceUri())
+                continue;
+
+            const std::string label = makeLabel(mtlxFile, node->getName());
+            INFO("Testing: " << label);
+
+            // ── Old path ───────────────────────────────────────────────────
+            mx::GenContext oldCtx = makeGlslContext();
+            oldCtx.registerSourceCodeSearchPath(searchPath);
+            mx::ShaderPtr oldShader;
+            try { oldShader = oldCtx.getShaderGenerator().generate(node->getName(), node, oldCtx); }
+            catch (const std::exception& e)
+            {
+                WARN("Old path threw for " + label + ": " + e.what());
+                continue; // pre-existing failure; not our concern
+            }
+            if (!oldShader) { WARN("Old path returned null for: " + label); continue; }
+
+            // ── New path ───────────────────────────────────────────────────
+            auto adapter = std::make_unique<mx::MxElementAdapter>(doc, node);
+            mx::GenContextCreate ctx(mx::GlslShaderGenerator::create(), std::move(adapter));
+            ctx.getGenContext().registerSourceCodeSearchPath(searchPath);
+            mx::ShaderPtr newShader;
+            try { newShader = ctx.buildShader(node->getName()); }
+            catch (const std::exception& e)
+            {
+                FAIL("New path threw for " + label + ": " + e.what());
+            }
+            CHECK(newShader != nullptr);
+            if (!newShader) continue;
+
+            checkShaderParityRelaxed(*oldShader, *newShader, label);
+            ++tested;
+        }
+    }
+
+    INFO("Sweep tested " << tested << " shader nodes across " << mtlxFiles.size() << " files");
+    CHECK(tested > 0);
+}

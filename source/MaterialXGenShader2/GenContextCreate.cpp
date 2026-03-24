@@ -25,25 +25,17 @@ ShaderGraph2Ptr GenContextCreate::buildGraph(const string& name)
 
 ShaderPtr GenContextCreate::buildShader(const string& name)
 {
-    // Resolve the MaterialX root element via the MX compatibility bridge.
-    // TODO: once emission is decoupled from ElementPtr, drive this step
-    //       directly from the IShaderSource + pre-built ShaderGraph2.
-    ConstDocumentPtr doc = _source->getMxDocument();
-    if (!doc)
+    ShaderGraph2Ptr graph = buildGraph(name);
+    if (!graph)
     {
-        throw ExceptionShaderGenError("GenContextCreate::buildShader: getMxDocument() returned nullptr. "
-                                      "Non-MX backends must provide their own buildShader() implementation.");
+        throw ExceptionShaderGenError("GenContextCreate::buildShader: buildGraph returned nullptr for '" + name + "'.");
     }
-
-    DataHandle root = _source->getRootElement();
-    ElementPtr mxElem = doc->getDescendant(_source->getElementPath(root));
-    if (!mxElem)
-    {
-        throw ExceptionShaderGenError("GenContextCreate::buildShader: could not resolve root element '" +
-                                      _source->getElementPath(root) + "' in document.");
-    }
-
-    return _genContext.getShaderGenerator().generate(name, mxElem, _genContext);
+    // Provide the document lazily — after buildGraph() — so that getMxDocument()
+    // is not called during graph construction (required by Phase 4c tests).
+    // HwShaderGenerator::createShader(ShaderGraphPtr) uses graph->getDocument() to
+    // look up GeomPropDefs for HW geomProp insertion.
+    graph->setDocument(_source->getMxDocument());
+    return _genContext.getShaderGenerator().generate(name, graph, _genContext);
 }
 
 MATERIALX_NAMESPACE_END

@@ -1,0 +1,745 @@
+-----------------------------------------------------------------------
+Scanning target: genmdl
+-----------------------------------------------------------------------
+Scanning implementations: 1663
+-----------------------------------------------------------------------
+Scanning nodedefs: 736
+Missing: 0 implementations out of: 736 nodedefs. Skipped: 24
+
+Temporarily skipping implementation required for nodedef: ND_surfacematerial, Node : surfacematerial.
+Temporarily skipping implementation required for nodedef: ND_volumematerial, Node : volumematerial.
+Found impl and src for nodedef: ND_surface_unlit, Node: surface_unlit. Impl: IM_surface_unlit_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_surface_unlit({{emission}}, {{emission_color}}, {{transmission}}, {{transmission_color}}, {{opacity}}).
+Found generator impl for nodedef: ND_image_float, Node: ND_image_float. Impl: IM_image_float_genmdl.
+Found generator impl for nodedef: ND_image_color3, Node: ND_image_color3. Impl: IM_image_color3_genmdl.
+Found generator impl for nodedef: ND_image_color4, Node: ND_image_color4. Impl: IM_image_color4_genmdl.
+Found generator impl for nodedef: ND_image_vector2, Node: ND_image_vector2. Impl: IM_image_vector2_genmdl.
+Found generator impl for nodedef: ND_image_vector3, Node: ND_image_vector3. Impl: IM_image_vector3_genmdl.
+Found generator impl for nodedef: ND_image_vector4, Node: ND_image_vector4. Impl: IM_image_vector4_genmdl.
+Found NodeGraph impl for nodedef: ND_tiledimage_float, Node: tiledimage. Graph Impl: NG_tiledimage_float. Graph Nodedef Impl: NG_tiledimage_float.
+Found NodeGraph impl for nodedef: ND_tiledimage_color3, Node: tiledimage. Graph Impl: NG_tiledimage_color3. Graph Nodedef Impl: NG_tiledimage_color3.
+Found NodeGraph impl for nodedef: ND_tiledimage_color4, Node: tiledimage. Graph Impl: NG_tiledimage_color4. Graph Nodedef Impl: NG_tiledimage_color4.
+Found NodeGraph impl for nodedef: ND_tiledimage_vector2, Node: tiledimage. Graph Impl: NG_tiledimage_vector2. Graph Nodedef Impl: NG_tiledimage_vector2.
+Found NodeGraph impl for nodedef: ND_tiledimage_vector3, Node: tiledimage. Graph Impl: NG_tiledimage_vector3. Graph Nodedef Impl: NG_tiledimage_vector3.
+Found NodeGraph impl for nodedef: ND_tiledimage_vector4, Node: tiledimage. Graph Impl: NG_tiledimage_vector4. Graph Nodedef Impl: NG_tiledimage_vector4.
+Found NodeGraph impl for nodedef: ND_latlongimage, Node: latlongimage. Graph Impl: NG_latlongimage. Graph Nodedef Impl: NG_latlongimage.
+Found impl and src for nodedef: ND_hextiledimage_color3, Node: hextiledimage. Impl: IM_hextiledimage_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_hextiledimage_color3({{file}}, {{default}}, {{texcoord}}, {{tiling}}, {{rotation}}, {{rotationrange}}, {{scale}}, {{scalerange}}, {{offset}}, {{offsetrange}}, {{falloff}}, {{falloffcontrast}}, {{lumacoeffs}}).
+Found impl and src for nodedef: ND_hextiledimage_color4, Node: hextiledimage. Impl: IM_hextiledimage_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_hextiledimage_color4({{file}}, {{default}}, {{texcoord}}, {{tiling}}, {{rotation}}, {{rotationrange}}, {{scale}}, {{scalerange}}, {{offset}}, {{offsetrange}}, {{falloff}}, {{falloffcontrast}}, {{lumacoeffs}}).
+Found NodeGraph impl for nodedef: ND_triplanarprojection_float, Node: triplanarprojection. Graph Impl: NG_triplanarprojection_float. Graph Nodedef Impl: NG_triplanarprojection_float.
+Found NodeGraph impl for nodedef: ND_triplanarprojection_color3, Node: triplanarprojection. Graph Impl: NG_triplanarprojection_color3. Graph Nodedef Impl: NG_triplanarprojection_color3.
+Found NodeGraph impl for nodedef: ND_triplanarprojection_color4, Node: triplanarprojection. Graph Impl: NG_triplanarprojection_color4. Graph Nodedef Impl: NG_triplanarprojection_color4.
+Found NodeGraph impl for nodedef: ND_triplanarprojection_vector2, Node: triplanarprojection. Graph Impl: NG_triplanarprojection_vector2. Graph Nodedef Impl: NG_triplanarprojection_vector2.
+Found NodeGraph impl for nodedef: ND_triplanarprojection_vector3, Node: triplanarprojection. Graph Impl: NG_triplanarprojection_vector3. Graph Nodedef Impl: NG_triplanarprojection_vector3.
+Found NodeGraph impl for nodedef: ND_triplanarprojection_vector4, Node: triplanarprojection. Graph Impl: NG_triplanarprojection_vector4. Graph Nodedef Impl: NG_triplanarprojection_vector4.
+Found impl and src for nodedef: ND_constant_float, Node: constant. Impl: IM_constant_float_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_color3, Node: constant. Impl: IM_constant_color3_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_color4, Node: constant. Impl: IM_constant_color4_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_vector2, Node: constant. Impl: IM_constant_vector2_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_vector3, Node: constant. Impl: IM_constant_vector3_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_vector4, Node: constant. Impl: IM_constant_vector4_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_boolean, Node: constant. Impl: IM_constant_boolean_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_integer, Node: constant. Impl: IM_constant_integer_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_matrix33, Node: constant. Impl: IM_constant_matrix33_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_matrix44, Node: constant. Impl: IM_constant_matrix44_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_string, Node: constant. Impl: IM_constant_string_genmdl. Source: {{value}}.
+Found impl and src for nodedef: ND_constant_filename, Node: constant. Impl: IM_constant_filename_genmdl. Source: {{value}}.
+Found NodeGraph impl for nodedef: ND_ramp, Node: ramp. Graph Impl: NG_ramp. Graph Nodedef Impl: NG_ramp.
+Found NodeGraph impl for nodedef: ND_ramp_gradient, Node: ramp_gradient. Graph Impl: NG_ramp_gradient. Graph Nodedef Impl: NG_ramp_gradient.
+Found impl and src for nodedef: ND_ramplr_float, Node: ramplr. Impl: IM_ramplr_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramplr_float(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramplr_color3, Node: ramplr. Impl: IM_ramplr_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramplr_color3(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramplr_color4, Node: ramplr. Impl: IM_ramplr_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramplr_color4(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramplr_vector2, Node: ramplr. Impl: IM_ramplr_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramplr_vector2(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramplr_vector3, Node: ramplr. Impl: IM_ramplr_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramplr_vector3(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramplr_vector4, Node: ramplr. Impl: IM_ramplr_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramplr_vector4(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramptb_float, Node: ramptb. Impl: IM_ramptb_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramptb_float(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramptb_color3, Node: ramptb. Impl: IM_ramptb_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramptb_color3(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramptb_color4, Node: ramptb. Impl: IM_ramptb_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramptb_color4(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramptb_vector2, Node: ramptb. Impl: IM_ramptb_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramptb_vector2(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramptb_vector3, Node: ramptb. Impl: IM_ramptb_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramptb_vector3(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_ramptb_vector4, Node: ramptb. Impl: IM_ramptb_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ramptb_vector4(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_texcoord:{{texcoord}}).
+Found NodeGraph impl for nodedef: ND_ramp4_float, Node: ramp4. Graph Impl: NG_ramp4_float. Graph Nodedef Impl: NG_ramp4_float.
+Found NodeGraph impl for nodedef: ND_ramp4_color3, Node: ramp4. Graph Impl: NG_ramp4_color3. Graph Nodedef Impl: NG_ramp4_color3.
+Found NodeGraph impl for nodedef: ND_ramp4_color4, Node: ramp4. Graph Impl: NG_ramp4_color4. Graph Nodedef Impl: NG_ramp4_color4.
+Found NodeGraph impl for nodedef: ND_ramp4_vector2, Node: ramp4. Graph Impl: NG_ramp4_vector2. Graph Nodedef Impl: NG_ramp4_vector2.
+Found NodeGraph impl for nodedef: ND_ramp4_vector3, Node: ramp4. Graph Impl: NG_ramp4_vector3. Graph Nodedef Impl: NG_ramp4_vector3.
+Found NodeGraph impl for nodedef: ND_ramp4_vector4, Node: ramp4. Graph Impl: NG_ramp4_vector4. Graph Nodedef Impl: NG_ramp4_vector4.
+Found impl and src for nodedef: ND_splitlr_float, Node: splitlr. Impl: IM_splitlr_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splitlr_float(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splitlr_color3, Node: splitlr. Impl: IM_splitlr_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splitlr_color3(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splitlr_color4, Node: splitlr. Impl: IM_splitlr_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splitlr_color4(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splitlr_vector2, Node: splitlr. Impl: IM_splitlr_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splitlr_vector2(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splitlr_vector3, Node: splitlr. Impl: IM_splitlr_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splitlr_vector3(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splitlr_vector4, Node: splitlr. Impl: IM_splitlr_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splitlr_vector4(mxp_valuel:{{valuel}}, mxp_valuer:{{valuer}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splittb_float, Node: splittb. Impl: IM_splittb_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splittb_float(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splittb_color3, Node: splittb. Impl: IM_splittb_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splittb_color3(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splittb_color4, Node: splittb. Impl: IM_splittb_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splittb_color4(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splittb_vector2, Node: splittb. Impl: IM_splittb_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splittb_vector2(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splittb_vector3, Node: splittb. Impl: IM_splittb_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splittb_vector3(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_splittb_vector4, Node: splittb. Impl: IM_splittb_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_splittb_vector4(mxp_valuet:{{valuet}}, mxp_valueb:{{valueb}}, mxp_center:{{center}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_noise2d_float, Node: noise2d. Impl: IM_noise2d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise2d_float(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_texcoord:{{texcoord}}).
+Found NodeGraph impl for nodedef: ND_noise2d_color3, Node: noise2d. Graph Impl: NG_noise2d_color3. Graph Nodedef Impl: NG_noise2d_color3.
+Found NodeGraph impl for nodedef: ND_noise2d_color4, Node: noise2d. Graph Impl: NG_noise2d_color4. Graph Nodedef Impl: NG_noise2d_color4.
+Found impl and src for nodedef: ND_noise2d_vector2, Node: noise2d. Impl: IM_noise2d_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise2d_float2(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_noise2d_vector3, Node: noise2d. Impl: IM_noise2d_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise2d_float3(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_noise2d_vector4, Node: noise2d. Impl: IM_noise2d_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise2d_float4(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_texcoord:{{texcoord}}).
+Found NodeGraph impl for nodedef: ND_noise2d_color3FA, Node: noise2d. Graph Impl: NG_noise2d_color3FA. Graph Nodedef Impl: NG_noise2d_color3FA.
+Found NodeGraph impl for nodedef: ND_noise2d_color4FA, Node: noise2d. Graph Impl: NG_noise2d_color4FA. Graph Nodedef Impl: NG_noise2d_color4FA.
+Found NodeGraph impl for nodedef: ND_noise2d_vector2FA, Node: noise2d. Graph Impl: NG_noise2d_vector2FA. Graph Nodedef Impl: NG_noise2d_vector2FA.
+Found NodeGraph impl for nodedef: ND_noise2d_vector3FA, Node: noise2d. Graph Impl: NG_noise2d_vector3FA. Graph Nodedef Impl: NG_noise2d_vector3FA.
+Found NodeGraph impl for nodedef: ND_noise2d_vector4FA, Node: noise2d. Graph Impl: NG_noise2d_vector4FA. Graph Nodedef Impl: NG_noise2d_vector4FA.
+Found impl and src for nodedef: ND_noise3d_float, Node: noise3d. Impl: IM_noise3d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise3d_float(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_position:{{position}}).
+Found NodeGraph impl for nodedef: ND_noise3d_color3, Node: noise3d. Graph Impl: NG_noise3d_color3. Graph Nodedef Impl: NG_noise3d_color3.
+Found NodeGraph impl for nodedef: ND_noise3d_color4, Node: noise3d. Graph Impl: NG_noise3d_color4. Graph Nodedef Impl: NG_noise3d_color4.
+Found impl and src for nodedef: ND_noise3d_vector2, Node: noise3d. Impl: IM_noise3d_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise3d_float2(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_position:{{position}}).
+Found impl and src for nodedef: ND_noise3d_vector3, Node: noise3d. Impl: IM_noise3d_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise3d_float3(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_position:{{position}}).
+Found impl and src for nodedef: ND_noise3d_vector4, Node: noise3d. Impl: IM_noise3d_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_noise3d_float4(mxp_amplitude:{{amplitude}}, mxp_pivot:{{pivot}}, mxp_position:{{position}}).
+Found NodeGraph impl for nodedef: ND_noise3d_color3FA, Node: noise3d. Graph Impl: NG_noise3d_color3FA. Graph Nodedef Impl: NG_noise3d_color3FA.
+Found NodeGraph impl for nodedef: ND_noise3d_color4FA, Node: noise3d. Graph Impl: NG_noise3d_color4FA. Graph Nodedef Impl: NG_noise3d_color4FA.
+Found NodeGraph impl for nodedef: ND_noise3d_vector2FA, Node: noise3d. Graph Impl: NG_noise3d_vector2FA. Graph Nodedef Impl: NG_noise3d_vector2FA.
+Found NodeGraph impl for nodedef: ND_noise3d_vector3FA, Node: noise3d. Graph Impl: NG_noise3d_vector3FA. Graph Nodedef Impl: NG_noise3d_vector3FA.
+Found NodeGraph impl for nodedef: ND_noise3d_vector4FA, Node: noise3d. Graph Impl: NG_noise3d_vector4FA. Graph Nodedef Impl: NG_noise3d_vector4FA.
+Found impl and src for nodedef: ND_fractal2d_float, Node: fractal2d. Impl: IM_fractal2d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal2d_float(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_texcoord:{{texcoord}}).
+Found NodeGraph impl for nodedef: ND_fractal2d_color3, Node: fractal2d. Graph Impl: NG_fractal2d_color3. Graph Nodedef Impl: NG_fractal2d_color3.
+Found NodeGraph impl for nodedef: ND_fractal2d_color4, Node: fractal2d. Graph Impl: NG_fractal2d_color4. Graph Nodedef Impl: NG_fractal2d_color4.
+Found impl and src for nodedef: ND_fractal2d_vector2, Node: fractal2d. Impl: IM_fractal2d_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal2d_float2(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_fractal2d_vector3, Node: fractal2d. Impl: IM_fractal2d_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal2d_float3(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_fractal2d_vector4, Node: fractal2d. Impl: IM_fractal2d_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal2d_float4(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_texcoord:{{texcoord}}).
+Found NodeGraph impl for nodedef: ND_fractal2d_color3FA, Node: fractal2d. Graph Impl: NG_fractal2d_color3FA. Graph Nodedef Impl: NG_fractal2d_color3FA.
+Found NodeGraph impl for nodedef: ND_fractal2d_color4FA, Node: fractal2d. Graph Impl: NG_fractal2d_color4FA. Graph Nodedef Impl: NG_fractal2d_color4FA.
+Found NodeGraph impl for nodedef: ND_fractal2d_vector2FA, Node: fractal2d. Graph Impl: NG_fractal2d_vector2FA. Graph Nodedef Impl: NG_fractal2d_vector2FA.
+Found NodeGraph impl for nodedef: ND_fractal2d_vector3FA, Node: fractal2d. Graph Impl: NG_fractal2d_vector3FA. Graph Nodedef Impl: NG_fractal2d_vector3FA.
+Found NodeGraph impl for nodedef: ND_fractal2d_vector4FA, Node: fractal2d. Graph Impl: NG_fractal2d_vector4FA. Graph Nodedef Impl: NG_fractal2d_vector4FA.
+Found impl and src for nodedef: ND_fractal3d_float, Node: fractal3d. Impl: IM_fractal3d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal3d_float(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_position:{{position}}).
+Found NodeGraph impl for nodedef: ND_fractal3d_color3, Node: fractal3d. Graph Impl: NG_fractal3d_color3. Graph Nodedef Impl: NG_fractal3d_color3.
+Found NodeGraph impl for nodedef: ND_fractal3d_color4, Node: fractal3d. Graph Impl: NG_fractal3d_color4. Graph Nodedef Impl: NG_fractal3d_color4.
+Found impl and src for nodedef: ND_fractal3d_vector2, Node: fractal3d. Impl: IM_fractal3d_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal3d_float2(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_position:{{position}}).
+Found impl and src for nodedef: ND_fractal3d_vector3, Node: fractal3d. Impl: IM_fractal3d_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal3d_float3(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_position:{{position}}).
+Found impl and src for nodedef: ND_fractal3d_vector4, Node: fractal3d. Impl: IM_fractal3d_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fractal3d_float4(mxp_amplitude:{{amplitude}}, mxp_octaves:{{octaves}}, mxp_lacunarity:{{lacunarity}}, mxp_diminish:{{diminish}}, mxp_position:{{position}}).
+Found NodeGraph impl for nodedef: ND_fractal3d_color3FA, Node: fractal3d. Graph Impl: NG_fractal3d_color3FA. Graph Nodedef Impl: NG_fractal3d_color3FA.
+Found NodeGraph impl for nodedef: ND_fractal3d_color4FA, Node: fractal3d. Graph Impl: NG_fractal3d_color4FA. Graph Nodedef Impl: NG_fractal3d_color4FA.
+Found NodeGraph impl for nodedef: ND_fractal3d_vector2FA, Node: fractal3d. Graph Impl: NG_fractal3d_vector2FA. Graph Nodedef Impl: NG_fractal3d_vector2FA.
+Found NodeGraph impl for nodedef: ND_fractal3d_vector3FA, Node: fractal3d. Graph Impl: NG_fractal3d_vector3FA. Graph Nodedef Impl: NG_fractal3d_vector3FA.
+Found NodeGraph impl for nodedef: ND_fractal3d_vector4FA, Node: fractal3d. Graph Impl: NG_fractal3d_vector4FA. Graph Nodedef Impl: NG_fractal3d_vector4FA.
+Found impl and src for nodedef: ND_cellnoise2d_float, Node: cellnoise2d. Impl: IM_cellnoise2d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_cellnoise2d_float(mxp_texcoord:{{texcoord}}).
+Found impl and src for nodedef: ND_cellnoise3d_float, Node: cellnoise3d. Impl: IM_cellnoise3d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_cellnoise3d_float(mxp_position:{{position}}).
+Found impl and src for nodedef: ND_worleynoise2d_float, Node: worleynoise2d. Impl: IM_worleynoise2d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_worleynoise2d_float(mxp_texcoord:{{texcoord}}, mxp_jitter:{{jitter}}).
+Found impl and src for nodedef: ND_worleynoise2d_vector2, Node: worleynoise2d. Impl: IM_worleynoise2d_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_worleynoise2d_float2(mxp_texcoord:{{texcoord}}, mxp_jitter:{{jitter}}).
+Found impl and src for nodedef: ND_worleynoise2d_vector3, Node: worleynoise2d. Impl: IM_worleynoise2d_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_worleynoise2d_float3(mxp_texcoord:{{texcoord}}, mxp_jitter:{{jitter}}).
+Found impl and src for nodedef: ND_worleynoise3d_float, Node: worleynoise3d. Impl: IM_worleynoise3d_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_worleynoise3d_float(mxp_position:{{position}}, mxp_jitter:{{jitter}}).
+Found impl and src for nodedef: ND_worleynoise3d_vector2, Node: worleynoise3d. Impl: IM_worleynoise3d_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_worleynoise3d_float2(mxp_position:{{position}}, mxp_jitter:{{jitter}}).
+Found impl and src for nodedef: ND_worleynoise3d_vector3, Node: worleynoise3d. Impl: IM_worleynoise3d_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_worleynoise3d_float3(mxp_position:{{position}}, mxp_jitter:{{jitter}}).
+Found NodeGraph impl for nodedef: ND_unifiednoise2d_float, Node: unifiednoise2d. Graph Impl: NG_unifiednoise2d_float. Graph Nodedef Impl: NG_unifiednoise2d_float.
+Found NodeGraph impl for nodedef: ND_unifiednoise3d_float, Node: unifiednoise3d. Graph Impl: NG_unifiednoise3d_float. Graph Nodedef Impl: NG_unifiednoise3d_float.
+Found impl and src for nodedef: ND_flake2d, Node: flake2d. Impl: IM_flake2d_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_flake2d(mxp_size:{{size}}, mxp_roughness:{{roughness}}, mxp_coverage:{{coverage}}, mxp_texcoord:{{texcoord}}, mxp_normal:{{normal}}, mxp_tangent:{{tangent}}, mxp_bitangent:{{bitangent}}).
+Found impl and src for nodedef: ND_flake3d, Node: flake3d. Impl: IM_flake3d_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_flake3d(mxp_size:{{size}}, mxp_roughness:{{roughness}}, mxp_coverage:{{coverage}}, mxp_position:{{position}}, mxp_normal:{{normal}}, mxp_tangent:{{tangent}}, mxp_bitangent:{{bitangent}}).
+Found NodeGraph impl for nodedef: ND_randomfloat_float, Node: randomfloat. Graph Impl: NG_randomfloat_float. Graph Nodedef Impl: NG_randomfloat_float.
+Found NodeGraph impl for nodedef: ND_randomfloat_integer, Node: randomfloat. Graph Impl: NG_randomfloat_integer. Graph Nodedef Impl: NG_randomfloat_integer.
+Found NodeGraph impl for nodedef: ND_randomcolor_float, Node: randomcolor. Graph Impl: NG_randomcolor_float. Graph Nodedef Impl: NG_randomcolor_float.
+Found NodeGraph impl for nodedef: ND_randomcolor_integer, Node: randomcolor. Graph Impl: NG_randomcolor_integer. Graph Nodedef Impl: NG_randomcolor_integer.
+Found NodeGraph impl for nodedef: ND_checkerboard_color3, Node: checkerboard. Graph Impl: NG_checkerboard_color3. Graph Nodedef Impl: NG_checkerboard_color3.
+Found NodeGraph impl for nodedef: ND_line_float, Node: line. Graph Impl: NG_line_float. Graph Nodedef Impl: NG_line_float.
+Found NodeGraph impl for nodedef: ND_circle_float, Node: circle. Graph Impl: NG_circle_float. Graph Nodedef Impl: NG_circle_float.
+Found NodeGraph impl for nodedef: ND_cloverleaf_float, Node: cloverleaf. Graph Impl: NG_cloverleaf_float. Graph Nodedef Impl: NG_cloverleaf_float.
+Found NodeGraph impl for nodedef: ND_hexagon_float, Node: hexagon. Graph Impl: NG_hexagon_float. Graph Nodedef Impl: NG_hexagon_float.
+Found NodeGraph impl for nodedef: ND_grid_color3, Node: grid. Graph Impl: NG_grid_color3. Graph Nodedef Impl: NG_grid_color3.
+Found NodeGraph impl for nodedef: ND_crosshatch_color3, Node: crosshatch. Graph Impl: NG_crosshatch_color3. Graph Nodedef Impl: NG_crosshatch_color3.
+Found NodeGraph impl for nodedef: ND_tiledcircles_color3, Node: tiledcircles. Graph Impl: NG_tiledcircles_color3. Graph Nodedef Impl: NG_tiledcircles_color3.
+Found NodeGraph impl for nodedef: ND_tiledcloverleafs_color3, Node: tiledcloverleafs. Graph Impl: NG_tiledcloverleafs_color3. Graph Nodedef Impl: NG_tiledcloverleafs_color3.
+Found NodeGraph impl for nodedef: ND_tiledhexagons_color3, Node: tiledhexagons. Graph Impl: NG_tiledhexagons_color3. Graph Nodedef Impl: NG_tiledhexagons_color3.
+Found impl and src for nodedef: ND_position_vector3, Node: position. Impl: IM_position_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_position_vector3(mxp_space:{{space}}).
+Found impl and src for nodedef: ND_normal_vector3, Node: normal. Impl: IM_normal_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_normal_vector3(mxp_space:{{space}}).
+Found impl and src for nodedef: ND_tangent_vector3, Node: tangent. Impl: IM_tangent_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_tangent_vector3(mxp_space:{{space}}, mxp_index:{{index}}).
+Found impl and src for nodedef: ND_bitangent_vector3, Node: bitangent. Impl: IM_bitangent_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_bitangent_vector3(mxp_space:{{space}}, mxp_index:{{index}}).
+Found impl and src for nodedef: ND_texcoord_vector2, Node: texcoord. Impl: IM_texcoord_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_texcoord_vector2(mxp_index:{{index}}).
+Found impl and src for nodedef: ND_texcoord_vector3, Node: texcoord. Impl: IM_texcoord_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_texcoord_vector3(mxp_index:{{index}}).
+Found impl and src for nodedef: ND_geomcolor_float, Node: geomcolor. Impl: IM_geomcolor_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_geomcolor_float(mxp_index:{{index}}).
+Found impl and src for nodedef: ND_geomcolor_color3, Node: geomcolor. Impl: IM_geomcolor_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_geomcolor_color3(mxp_index:{{index}}).
+Found impl and src for nodedef: ND_geomcolor_color4, Node: geomcolor. Impl: IM_geomcolor_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_geomcolor_color4(mxp_index:{{index}}).
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_integer, Node : geompropvalue.
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_boolean, Node : geompropvalue.
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_float, Node : geompropvalue.
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_color3, Node : geompropvalue.
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_color4, Node : geompropvalue.
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_vector2, Node : geompropvalue.
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_vector3, Node : geompropvalue.
+Temporarily skipping implementation required for nodedef: ND_geompropvalue_vector4, Node : geompropvalue.
+Found impl and src for nodedef: ND_geompropvalueuniform_string, Node: geompropvalueuniform. Impl: IM_geompropvalue_string_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_geompropvalue_string(mxp_geomprop:{{geomprop}}, mxp_default:{{default}}).
+Found impl and src for nodedef: ND_geompropvalueuniform_filename, Node: geompropvalueuniform. Impl: IM_geompropvalue_filename_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_geompropvalue_string(mxp_geomprop:{{geomprop}}, mxp_default:{{default}}).
+Found NodeGraph impl for nodedef: ND_bump_vector3, Node: bump. Graph Impl: NG_bump_vector3. Graph Nodedef Impl: NG_bump_vector3.
+Found impl and src for nodedef: ND_frame_float, Node: frame. Impl: IM_frame_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_frame_float().
+Found impl and src for nodedef: ND_time_float, Node: time. Impl: IM_time_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_time_float().
+Found impl and src for nodedef: ND_add_float, Node: add. Impl: IM_add_float_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_integer, Node: add. Impl: IM_add_integer_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_color3, Node: add. Impl: IM_add_color3_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_color4, Node: add. Impl: IM_add_color4_genmdl. Source: mx_add({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_add_vector2, Node: add. Impl: IM_add_vector2_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_vector3, Node: add. Impl: IM_add_vector3_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_vector4, Node: add. Impl: IM_add_vector4_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_matrix33, Node: add. Impl: IM_add_matrix33_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_matrix44, Node: add. Impl: IM_add_matrix44_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_color3FA, Node: add. Impl: IM_add_color3FA_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_color4FA, Node: add. Impl: IM_add_color4FA_genmdl. Source: mx_add({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_add_vector2FA, Node: add. Impl: IM_add_vector2FA_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_vector3FA, Node: add. Impl: IM_add_vector3FA_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_vector4FA, Node: add. Impl: IM_add_vector4FA_genmdl. Source: {{in1}} + {{in2}}.
+Found impl and src for nodedef: ND_add_matrix33FA, Node: add. Impl: IM_add_matrix33FA_genmdl. Source: {{in1}} + float3x3({{in2}}).
+Found impl and src for nodedef: ND_add_matrix44FA, Node: add. Impl: IM_add_matrix44FA_genmdl. Source: {{in1}} + float4x4({{in2}}).
+Found impl and src for nodedef: ND_subtract_float, Node: subtract. Impl: IM_subtract_float_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_integer, Node: subtract. Impl: IM_subtract_integer_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_color3, Node: subtract. Impl: IM_subtract_color3_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_color4, Node: subtract. Impl: IM_subtract_color4_genmdl. Source: mx_subtract({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_subtract_vector2, Node: subtract. Impl: IM_subtract_vector2_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_vector3, Node: subtract. Impl: IM_subtract_vector3_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_vector4, Node: subtract. Impl: IM_subtract_vector4_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_matrix33, Node: subtract. Impl: IM_subtract_matrix33_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_matrix44, Node: subtract. Impl: IM_subtract_matrix44_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_color3FA, Node: subtract. Impl: IM_subtract_color3FA_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_color4FA, Node: subtract. Impl: IM_subtract_color4FA_genmdl. Source: mx_subtract({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_subtract_vector2FA, Node: subtract. Impl: IM_subtract_vector2FA_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_vector3FA, Node: subtract. Impl: IM_subtract_vector3FA_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_vector4FA, Node: subtract. Impl: IM_subtract_vector4FA_genmdl. Source: {{in1}} - {{in2}}.
+Found impl and src for nodedef: ND_subtract_matrix33FA, Node: subtract. Impl: IM_subtract_matrix33FA_genmdl. Source: {{in1}} - float3x3({{in2}}).
+Found impl and src for nodedef: ND_subtract_matrix44FA, Node: subtract. Impl: IM_subtract_matrix44FA_genmdl. Source: {{in1}} - float4x4({{in2}}).
+Found impl and src for nodedef: ND_multiply_float, Node: multiply. Impl: IM_multiply_float_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_color3, Node: multiply. Impl: IM_multiply_color3_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_color4, Node: multiply. Impl: IM_multiply_color4_genmdl. Source: mx_multiply({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_multiply_vector2, Node: multiply. Impl: IM_multiply_vector2_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_vector3, Node: multiply. Impl: IM_multiply_vector3_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_vector4, Node: multiply. Impl: IM_multiply_vector4_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_matrix33, Node: multiply. Impl: IM_multiply_matrix33_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_matrix44, Node: multiply. Impl: IM_multiply_matrix44_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_color3FA, Node: multiply. Impl: IM_multiply_color3FA_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_color4FA, Node: multiply. Impl: IM_multiply_color4FA_genmdl. Source: mx_multiply({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_multiply_vector2FA, Node: multiply. Impl: IM_multiply_vector2FA_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_vector3FA, Node: multiply. Impl: IM_multiply_vector3FA_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_multiply_vector4FA, Node: multiply. Impl: IM_multiply_vector4FA_genmdl. Source: {{in1}} * {{in2}}.
+Found impl and src for nodedef: ND_divide_float, Node: divide. Impl: IM_divide_float_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_color3, Node: divide. Impl: IM_divide_color3_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_color4, Node: divide. Impl: IM_divide_color4_genmdl. Source: mx_divide({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_divide_vector2, Node: divide. Impl: IM_divide_vector2_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_vector3, Node: divide. Impl: IM_divide_vector3_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_vector4, Node: divide. Impl: IM_divide_vector4_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_matrix33, Node: divide. Impl: IM_divide_matrix33_genmdl. Source: {{in1}}.
+Found impl and src for nodedef: ND_divide_matrix44, Node: divide. Impl: IM_divide_matrix44_genmdl. Source: {{in1}}.
+Found impl and src for nodedef: ND_divide_color3FA, Node: divide. Impl: IM_divide_color3FA_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_color4FA, Node: divide. Impl: IM_divide_color4FA_genmdl. Source: mx_divide({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_divide_vector2FA, Node: divide. Impl: IM_divide_vector2FA_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_vector3FA, Node: divide. Impl: IM_divide_vector3FA_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_divide_vector4FA, Node: divide. Impl: IM_divide_vector4FA_genmdl. Source: {{in1}} / {{in2}}.
+Found impl and src for nodedef: ND_modulo_float, Node: modulo. Impl: IM_modulo_float_genmdl. Source: mx_mod({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_color3, Node: modulo. Impl: IM_modulo_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_modulo_color3({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_color4, Node: modulo. Impl: IM_modulo_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_modulo_color4({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_vector2, Node: modulo. Impl: IM_modulo_vector2_genmdl. Source: mx_mod({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_vector3, Node: modulo. Impl: IM_modulo_vector3_genmdl. Source: mx_mod({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_vector4, Node: modulo. Impl: IM_modulo_vector4_genmdl. Source: mx_mod({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_color3FA, Node: modulo. Impl: IM_modulo_color3FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_modulo_color3FA({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_color4FA, Node: modulo. Impl: IM_modulo_color4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_modulo_color4FA({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_vector2FA, Node: modulo. Impl: IM_modulo_vector2FA_genmdl. Source: mx_mod({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_vector3FA, Node: modulo. Impl: IM_modulo_vector3FA_genmdl. Source: mx_mod({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_modulo_vector4FA, Node: modulo. Impl: IM_modulo_vector4FA_genmdl. Source: mx_mod({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_fract_float, Node: fract. Impl: IM_fract_float_genmdl. Source: math::frac({{in}}).
+Found impl and src for nodedef: ND_fract_color3, Node: fract. Impl: IM_fract_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fract_color3({{in}}).
+Found impl and src for nodedef: ND_fract_color4, Node: fract. Impl: IM_fract_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_fract_color4({{in}}).
+Found impl and src for nodedef: ND_fract_vector2, Node: fract. Impl: IM_fract_vector2_genmdl. Source: math::frac({{in}}).
+Found impl and src for nodedef: ND_fract_vector3, Node: fract. Impl: IM_fract_vector3_genmdl. Source: math::frac({{in}}).
+Found impl and src for nodedef: ND_fract_vector4, Node: fract. Impl: IM_fract_vector4_genmdl. Source: math::frac({{in}}).
+Found impl and src for nodedef: ND_invert_float, Node: invert. Impl: IM_invert_float_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_color3, Node: invert. Impl: IM_invert_color3_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_color4, Node: invert. Impl: IM_invert_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_invert_color4({{in}}, {{amount}}).
+Found impl and src for nodedef: ND_invert_vector2, Node: invert. Impl: IM_invert_vector2_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_vector3, Node: invert. Impl: IM_invert_vector3_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_vector4, Node: invert. Impl: IM_invert_vector4_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_color3FA, Node: invert. Impl: IM_invert_color3FA_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_color4FA, Node: invert. Impl: IM_invert_color4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_invert_color4FA({{in}}, {{amount}}).
+Found impl and src for nodedef: ND_invert_vector2FA, Node: invert. Impl: IM_invert_vector2FA_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_vector3FA, Node: invert. Impl: IM_invert_vector3FA_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_invert_vector4FA, Node: invert. Impl: IM_invert_vector4FA_genmdl. Source: {{amount}} - {{in}}.
+Found impl and src for nodedef: ND_absval_float, Node: absval. Impl: IM_absval_float_genmdl. Source: math::abs({{in}}).
+Found impl and src for nodedef: ND_absval_color3, Node: absval. Impl: IM_absval_color3_genmdl. Source: math::abs({{in}}).
+Found impl and src for nodedef: ND_absval_color4, Node: absval. Impl: IM_absval_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_absval_color4({{in}}).
+Found impl and src for nodedef: ND_absval_vector2, Node: absval. Impl: IM_absval_vector2_genmdl. Source: math::abs({{in}}).
+Found impl and src for nodedef: ND_absval_vector3, Node: absval. Impl: IM_absval_vector3_genmdl. Source: math::abs({{in}}).
+Found impl and src for nodedef: ND_absval_vector4, Node: absval. Impl: IM_absval_vector4_genmdl. Source: math::abs({{in}}).
+Found impl and src for nodedef: ND_floor_float, Node: floor. Impl: IM_floor_float_genmdl. Source: math::floor({{in}}).
+Found impl and src for nodedef: ND_floor_color3, Node: floor. Impl: IM_floor_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_floor_color3({{in}}).
+Found impl and src for nodedef: ND_floor_color4, Node: floor. Impl: IM_floor_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_floor_color4({{in}}).
+Found impl and src for nodedef: ND_floor_vector2, Node: floor. Impl: IM_floor_vector2_genmdl. Source: math::floor({{in}}).
+Found impl and src for nodedef: ND_floor_vector3, Node: floor. Impl: IM_floor_vector3_genmdl. Source: math::floor({{in}}).
+Found impl and src for nodedef: ND_floor_vector4, Node: floor. Impl: IM_floor_vector4_genmdl. Source: math::floor({{in}}).
+Found impl and src for nodedef: ND_floor_integer, Node: floor. Impl: IM_floor_integer_genmdl. Source: int(math::floor({{in}})).
+Found impl and src for nodedef: ND_ceil_float, Node: ceil. Impl: IM_ceil_float_genmdl. Source: math::ceil({{in}}).
+Found impl and src for nodedef: ND_ceil_color3, Node: ceil. Impl: IM_ceil_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ceil_color3({{in}}).
+Found impl and src for nodedef: ND_ceil_color4, Node: ceil. Impl: IM_ceil_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ceil_color4({{in}}).
+Found impl and src for nodedef: ND_ceil_vector2, Node: ceil. Impl: IM_ceil_vector2_genmdl. Source: math::ceil({{in}}).
+Found impl and src for nodedef: ND_ceil_vector3, Node: ceil. Impl: IM_ceil_vector3_genmdl. Source: math::ceil({{in}}).
+Found impl and src for nodedef: ND_ceil_vector4, Node: ceil. Impl: IM_ceil_vector4_genmdl. Source: math::ceil({{in}}).
+Found impl and src for nodedef: ND_ceil_integer, Node: ceil. Impl: IM_ceil_integer_genmdl. Source: int(math::ceil({{in}})).
+Found impl and src for nodedef: ND_round_float, Node: round. Impl: IM_round_float_genmdl. Source: math::round({{in}}).
+Found impl and src for nodedef: ND_round_color3, Node: round. Impl: IM_round_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_round_color3({{in}}).
+Found impl and src for nodedef: ND_round_color4, Node: round. Impl: IM_round_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_round_color4({{in}}).
+Found impl and src for nodedef: ND_round_vector2, Node: round. Impl: IM_round_vector2_genmdl. Source: math::round({{in}}).
+Found impl and src for nodedef: ND_round_vector3, Node: round. Impl: IM_round_vector3_genmdl. Source: math::round({{in}}).
+Found impl and src for nodedef: ND_round_vector4, Node: round. Impl: IM_round_vector4_genmdl. Source: math::round({{in}}).
+Found impl and src for nodedef: ND_round_integer, Node: round. Impl: IM_round_integer_genmdl. Source: int(math::round({{in}})).
+Found impl and src for nodedef: ND_power_float, Node: power. Impl: IM_power_float_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_color3, Node: power. Impl: IM_power_color3_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_color4, Node: power. Impl: IM_power_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_power_color4({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_vector2, Node: power. Impl: IM_power_vector2_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_vector3, Node: power. Impl: IM_power_vector3_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_vector4, Node: power. Impl: IM_power_vector4_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_color3FA, Node: power. Impl: IM_power_color3FA_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_color4FA, Node: power. Impl: IM_power_color4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_power_color4FA({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_vector2FA, Node: power. Impl: IM_power_vector2FA_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_vector3FA, Node: power. Impl: IM_power_vector3FA_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_power_vector4FA, Node: power. Impl: IM_power_vector4FA_genmdl. Source: math::pow({{in1}}, {{in2}}).
+Found NodeGraph impl for nodedef: ND_safepower_float, Node: safepower. Graph Impl: NG_safepower_float. Graph Nodedef Impl: NG_safepower_float.
+Found NodeGraph impl for nodedef: ND_safepower_color3, Node: safepower. Graph Impl: NG_safepower_color3. Graph Nodedef Impl: NG_safepower_color3.
+Found NodeGraph impl for nodedef: ND_safepower_color4, Node: safepower. Graph Impl: NG_safepower_color4. Graph Nodedef Impl: NG_safepower_color4.
+Found NodeGraph impl for nodedef: ND_safepower_vector2, Node: safepower. Graph Impl: NG_safepower_vector2. Graph Nodedef Impl: NG_safepower_vector2.
+Found NodeGraph impl for nodedef: ND_safepower_vector3, Node: safepower. Graph Impl: NG_safepower_vector3. Graph Nodedef Impl: NG_safepower_vector3.
+Found NodeGraph impl for nodedef: ND_safepower_vector4, Node: safepower. Graph Impl: NG_safepower_vector4. Graph Nodedef Impl: NG_safepower_vector4.
+Found NodeGraph impl for nodedef: ND_safepower_color3FA, Node: safepower. Graph Impl: NG_safepower_color3FA. Graph Nodedef Impl: NG_safepower_color3FA.
+Found NodeGraph impl for nodedef: ND_safepower_color4FA, Node: safepower. Graph Impl: NG_safepower_color4FA. Graph Nodedef Impl: NG_safepower_color4FA.
+Found NodeGraph impl for nodedef: ND_safepower_vector2FA, Node: safepower. Graph Impl: NG_safepower_vector2FA. Graph Nodedef Impl: NG_safepower_vector2FA.
+Found NodeGraph impl for nodedef: ND_safepower_vector3FA, Node: safepower. Graph Impl: NG_safepower_vector3FA. Graph Nodedef Impl: NG_safepower_vector3FA.
+Found NodeGraph impl for nodedef: ND_safepower_vector4FA, Node: safepower. Graph Impl: NG_safepower_vector4FA. Graph Nodedef Impl: NG_safepower_vector4FA.
+Found impl and src for nodedef: ND_sin_float, Node: sin. Impl: IM_sin_float_genmdl. Source: math::sin({{in}}).
+Found impl and src for nodedef: ND_cos_float, Node: cos. Impl: IM_cos_float_genmdl. Source: math::cos({{in}}).
+Found impl and src for nodedef: ND_tan_float, Node: tan. Impl: IM_tan_float_genmdl. Source: math::tan({{in}}).
+Found impl and src for nodedef: ND_asin_float, Node: asin. Impl: IM_asin_float_genmdl. Source: math::asin({{in}}).
+Found impl and src for nodedef: ND_acos_float, Node: acos. Impl: IM_acos_float_genmdl. Source: math::acos({{in}}).
+Found impl and src for nodedef: ND_atan2_float, Node: atan2. Impl: IM_atan2_float_genmdl. Source: math::atan2({{iny}}, {{inx}}).
+Found impl and src for nodedef: ND_sin_vector2, Node: sin. Impl: IM_sin_vector2_genmdl. Source: math::sin({{in}}).
+Found impl and src for nodedef: ND_cos_vector2, Node: cos. Impl: IM_cos_vector2_genmdl. Source: math::cos({{in}}).
+Found impl and src for nodedef: ND_tan_vector2, Node: tan. Impl: IM_tan_vector2_genmdl. Source: math::tan({{in}}).
+Found impl and src for nodedef: ND_asin_vector2, Node: asin. Impl: IM_asin_vector2_genmdl. Source: math::asin({{in}}).
+Found impl and src for nodedef: ND_acos_vector2, Node: acos. Impl: IM_acos_vector2_genmdl. Source: math::acos({{in}}).
+Found impl and src for nodedef: ND_atan2_vector2, Node: atan2. Impl: IM_atan2_vector2_genmdl. Source: math::atan2({{iny}}, {{inx}}).
+Found impl and src for nodedef: ND_sin_vector3, Node: sin. Impl: IM_sin_vector3_genmdl. Source: math::sin({{in}}).
+Found impl and src for nodedef: ND_cos_vector3, Node: cos. Impl: IM_cos_vector3_genmdl. Source: math::cos({{in}}).
+Found impl and src for nodedef: ND_tan_vector3, Node: tan. Impl: IM_tan_vector3_genmdl. Source: math::tan({{in}}).
+Found impl and src for nodedef: ND_asin_vector3, Node: asin. Impl: IM_asin_vector3_genmdl. Source: math::asin({{in}}).
+Found impl and src for nodedef: ND_acos_vector3, Node: acos. Impl: IM_acos_vector3_genmdl. Source: math::acos({{in}}).
+Found impl and src for nodedef: ND_atan2_vector3, Node: atan2. Impl: IM_atan2_vector3_genmdl. Source: math::atan2({{iny}}, {{inx}}).
+Found impl and src for nodedef: ND_sin_vector4, Node: sin. Impl: IM_sin_vector4_genmdl. Source: math::sin({{in}}).
+Found impl and src for nodedef: ND_cos_vector4, Node: cos. Impl: IM_cos_vector4_genmdl. Source: math::cos({{in}}).
+Found impl and src for nodedef: ND_tan_vector4, Node: tan. Impl: IM_tan_vector4_genmdl. Source: math::tan({{in}}).
+Found impl and src for nodedef: ND_asin_vector4, Node: asin. Impl: IM_asin_vector4_genmdl. Source: math::asin({{in}}).
+Found impl and src for nodedef: ND_acos_vector4, Node: acos. Impl: IM_acos_vector4_genmdl. Source: math::acos({{in}}).
+Found impl and src for nodedef: ND_atan2_vector4, Node: atan2. Impl: IM_atan2_vector4_genmdl. Source: math::atan2({{iny}}, {{inx}}).
+Found impl and src for nodedef: ND_sqrt_float, Node: sqrt. Impl: IM_sqrt_float_genmdl. Source: math::sqrt({{in}}).
+Found impl and src for nodedef: ND_ln_float, Node: ln. Impl: IM_ln_float_genmdl. Source: math::log({{in}}).
+Found impl and src for nodedef: ND_exp_float, Node: exp. Impl: IM_exp_float_genmdl. Source: math::exp({{in}}).
+Found impl and src for nodedef: ND_sqrt_vector2, Node: sqrt. Impl: IM_sqrt_vector2_genmdl. Source: math::sqrt({{in}}).
+Found impl and src for nodedef: ND_ln_vector2, Node: ln. Impl: IM_ln_vector2_genmdl. Source: math::log({{in}}).
+Found impl and src for nodedef: ND_exp_vector2, Node: exp. Impl: IM_exp_vector2_genmdl. Source: math::exp({{in}}).
+Found impl and src for nodedef: ND_sqrt_vector3, Node: sqrt. Impl: IM_sqrt_vector3_genmdl. Source: math::sqrt({{in}}).
+Found impl and src for nodedef: ND_ln_vector3, Node: ln. Impl: IM_ln_vector3_genmdl. Source: math::log({{in}}).
+Found impl and src for nodedef: ND_exp_vector3, Node: exp. Impl: IM_exp_vector3_genmdl. Source: math::exp({{in}}).
+Found impl and src for nodedef: ND_sqrt_vector4, Node: sqrt. Impl: IM_sqrt_vector4_genmdl. Source: math::sqrt({{in}}).
+Found impl and src for nodedef: ND_ln_vector4, Node: ln. Impl: IM_ln_vector4_genmdl. Source: math::log({{in}}).
+Found impl and src for nodedef: ND_exp_vector4, Node: exp. Impl: IM_exp_vector4_genmdl. Source: math::exp({{in}}).
+Found impl and src for nodedef: ND_sign_float, Node: sign. Impl: IM_sign_float_genmdl. Source: math::sign({{in}}).
+Found impl and src for nodedef: ND_sign_color3, Node: sign. Impl: IM_sign_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_sign_color3({{in}}).
+Found impl and src for nodedef: ND_sign_color4, Node: sign. Impl: IM_sign_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_sign_color4({{in}}).
+Found impl and src for nodedef: ND_sign_vector2, Node: sign. Impl: IM_sign_vector2_genmdl. Source: math::sign({{in}}).
+Found impl and src for nodedef: ND_sign_vector3, Node: sign. Impl: IM_sign_vector3_genmdl. Source: math::sign({{in}}).
+Found impl and src for nodedef: ND_sign_vector4, Node: sign. Impl: IM_sign_vector4_genmdl. Source: math::sign({{in}}).
+Found impl and src for nodedef: ND_clamp_float, Node: clamp. Impl: IM_clamp_float_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_color3, Node: clamp. Impl: IM_clamp_color3_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_color4, Node: clamp. Impl: IM_clamp_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_clamp_color4({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_vector2, Node: clamp. Impl: IM_clamp_vector2_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_vector3, Node: clamp. Impl: IM_clamp_vector3_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_vector4, Node: clamp. Impl: IM_clamp_vector4_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_color3FA, Node: clamp. Impl: IM_clamp_color3FA_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_color4FA, Node: clamp. Impl: IM_clamp_color4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_clamp_color4FA({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_vector2FA, Node: clamp. Impl: IM_clamp_vector2FA_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_vector3FA, Node: clamp. Impl: IM_clamp_vector3FA_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_clamp_vector4FA, Node: clamp. Impl: IM_clamp_vector4FA_genmdl. Source: math::clamp({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_min_float, Node: min. Impl: IM_min_float_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_color3, Node: min. Impl: IM_min_color3_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_color4, Node: min. Impl: IM_min_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_min_color4({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_vector2, Node: min. Impl: IM_min_vector2_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_vector3, Node: min. Impl: IM_min_vector3_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_vector4, Node: min. Impl: IM_min_vector4_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_color3FA, Node: min. Impl: IM_min_color3FA_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_color4FA, Node: min. Impl: IM_min_color4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_min_color4({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_vector2FA, Node: min. Impl: IM_min_vector2FA_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_vector3FA, Node: min. Impl: IM_min_vector3FA_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_min_vector4FA, Node: min. Impl: IM_min_vector4FA_genmdl. Source: math::min({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_float, Node: max. Impl: IM_max_float_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_color3, Node: max. Impl: IM_max_color3_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_color4, Node: max. Impl: IM_max_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_max_color4({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_vector2, Node: max. Impl: IM_max_vector2_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_vector3, Node: max. Impl: IM_max_vector3_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_vector4, Node: max. Impl: IM_max_vector4_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_color3FA, Node: max. Impl: IM_max_color3FA_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_color4FA, Node: max. Impl: IM_max_color4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_max_color4({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_vector2FA, Node: max. Impl: IM_max_vector2FA_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_vector3FA, Node: max. Impl: IM_max_vector3FA_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_max_vector4FA, Node: max. Impl: IM_max_vector4FA_genmdl. Source: math::max({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_normalize_vector2, Node: normalize. Impl: IM_normalize_vector2_genmdl. Source: math::normalize({{in}}).
+Found impl and src for nodedef: ND_normalize_vector3, Node: normalize. Impl: IM_normalize_vector3_genmdl. Source: math::normalize({{in}}).
+Found impl and src for nodedef: ND_normalize_vector4, Node: normalize. Impl: IM_normalize_vector4_genmdl. Source: math::normalize({{in}}).
+Found impl and src for nodedef: ND_magnitude_vector2, Node: magnitude. Impl: IM_magnitude_vector2_genmdl. Source: math::length({{in}}).
+Found impl and src for nodedef: ND_magnitude_vector3, Node: magnitude. Impl: IM_magnitude_vector3_genmdl. Source: math::length({{in}}).
+Found impl and src for nodedef: ND_magnitude_vector4, Node: magnitude. Impl: IM_magnitude_vector4_genmdl. Source: math::length({{in}}).
+Found NodeGraph impl for nodedef: ND_distance_vector2, Node: distance. Graph Impl: NG_distance_vector2. Graph Nodedef Impl: NG_distance_vector2.
+Found NodeGraph impl for nodedef: ND_distance_vector3, Node: distance. Graph Impl: NG_distance_vector3. Graph Nodedef Impl: NG_distance_vector3.
+Found NodeGraph impl for nodedef: ND_distance_vector4, Node: distance. Graph Impl: NG_distance_vector4. Graph Nodedef Impl: NG_distance_vector4.
+Found impl and src for nodedef: ND_dotproduct_vector2, Node: dotproduct. Impl: IM_dotproduct_vector2_genmdl. Source: math::dot({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_dotproduct_vector3, Node: dotproduct. Impl: IM_dotproduct_vector3_genmdl. Source: math::dot({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_dotproduct_vector4, Node: dotproduct. Impl: IM_dotproduct_vector4_genmdl. Source: math::dot({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_crossproduct_vector3, Node: crossproduct. Impl: IM_crossproduct_vector3_genmdl. Source: math::cross({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_transformpoint_vector3, Node: transformpoint. Impl: IM_transformpoint_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_transformpoint_vector3({{in}}, {{fromspace}}, {{tospace}}).
+Found impl and src for nodedef: ND_transformvector_vector3, Node: transformvector. Impl: IM_transformvector_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_transformvector_vector3({{in}}, {{fromspace}}, {{tospace}}).
+Found impl and src for nodedef: ND_transformnormal_vector3, Node: transformnormal. Impl: IM_transformnormal_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_transformnormal_vector3({{in}}, {{fromspace}}, {{tospace}}).
+Found impl and src for nodedef: ND_transformmatrix_vector2M3, Node: transformmatrix. Impl: IM_transformmatrix_vector2M3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_transformmatrix_vector2M3({{in}}, {{mat}}).
+Found impl and src for nodedef: ND_transformmatrix_vector3, Node: transformmatrix. Impl: IM_transformmatrix_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_transformmatrix_vector3({{in}}, {{mat}}).
+Found impl and src for nodedef: ND_transformmatrix_vector3M4, Node: transformmatrix. Impl: IM_transformmatrix_vector3M4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_transformmatrix_vector3M4({{in}}, {{mat}}).
+Found impl and src for nodedef: ND_transformmatrix_vector4, Node: transformmatrix. Impl: IM_transformmatrix_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_transformmatrix_vector4({{in}}, {{mat}}).
+Found impl and src for nodedef: ND_normalmap_float, Node: normalmap. Impl: IM_normalmap_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_normalmap_float(mxp_in:{{in}}, mxp_scale:{{scale}}, mxp_normal:{{normal}}, mxp_tangent:{{tangent}}, mxp_bitangent:{{bitangent}}).
+Found impl and src for nodedef: ND_normalmap_vector2, Node: normalmap. Impl: IM_normalmap_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_normalmap_vector2(mxp_in:{{in}}, mxp_scale:{{scale}}, mxp_normal:{{normal}}, mxp_tangent:{{tangent}}, mxp_bitangent:{{bitangent}}).
+Found impl and src for nodedef: ND_hextilednormalmap_vector3, Node: hextilednormalmap. Impl: IM_hextilednormalmap_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_hextilednormalmap_vector3({{file}}, {{default}}, {{texcoord}}, {{tiling}}, {{rotation}}, {{rotationrange}}, {{scale}}, {{scalerange}}, {{offset}}, {{offsetrange}}, {{falloff}},{{strength}}, {{flip_g}}, {{normal}}, {{tangent}}, {{bitangent}}).
+Found impl and src for nodedef: ND_transpose_matrix33, Node: transpose. Impl: IM_transpose_matrix33_genmdl. Source: math::transpose({{in}}).
+Found impl and src for nodedef: ND_transpose_matrix44, Node: transpose. Impl: IM_transpose_matrix44_genmdl. Source: math::transpose({{in}}).
+Found impl and src for nodedef: ND_determinant_matrix33, Node: determinant. Impl: IM_determinant_matrix33_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_determinant_matrix33({{in}}).
+Found impl and src for nodedef: ND_determinant_matrix44, Node: determinant. Impl: IM_determinant_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_determinant_matrix44({{in}}).
+Found impl and src for nodedef: ND_invertmatrix_matrix33, Node: invertmatrix. Impl: IM_invertmatrix_matrix33_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_invertmatrix_matrix33({{in}}).
+Found impl and src for nodedef: ND_invertmatrix_matrix44, Node: invertmatrix. Impl: IM_invertmatrix_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_invertmatrix_matrix44({{in}}).
+Found impl and src for nodedef: ND_rotate2d_vector2, Node: rotate2d. Impl: IM_rotate2d_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_rotate2d_vector2(mxp_in:{{in}}, mxp_amount:{{amount}}).
+Found impl and src for nodedef: ND_rotate3d_vector3, Node: rotate3d. Impl: IM_rotate3d_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_rotate3d_vector3(mxp_in:{{in}}, mxp_amount:{{amount}}, mxp_axis:{{axis}}).
+Found NodeGraph impl for nodedef: ND_place2d_vector2, Node: place2d. Graph Impl: NG_place2d_vector2. Graph Nodedef Impl: NG_place2d_vector2.
+Found NodeGraph impl for nodedef: ND_trianglewave_float, Node: trianglewave. Graph Impl: NG_trianglewave_float. Graph Nodedef Impl: NG_trianglewave_float.
+Found NodeGraph impl for nodedef: ND_reflect_vector3, Node: reflect. Graph Impl: NG_reflect_vector3. Graph Nodedef Impl: NG_reflect_vector3.
+Found NodeGraph impl for nodedef: ND_refract_vector3, Node: refract. Graph Impl: NG_refract_vector3. Graph Nodedef Impl: NG_refract_vector3.
+Found impl and src for nodedef: ND_remap_float, Node: remap. Impl: IM_remap_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_float({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_color3, Node: remap. Impl: IM_remap_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_color3({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_color4, Node: remap. Impl: IM_remap_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_color4({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_vector2, Node: remap. Impl: IM_remap_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_vector2({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_vector3, Node: remap. Impl: IM_remap_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_vector3({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_vector4, Node: remap. Impl: IM_remap_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_vector4({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_color3FA, Node: remap. Impl: IM_remap_color3FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_color3FA({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_color4FA, Node: remap. Impl: IM_remap_color4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_color4FA({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_vector2FA, Node: remap. Impl: IM_remap_vector2FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_vector2FA({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_vector3FA, Node: remap. Impl: IM_remap_vector3FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_vector3FA({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_remap_vector4FA, Node: remap. Impl: IM_remap_vector4FA_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_remap_vector4FA({{in}}, {{inlow}}, {{inhigh}}, {{outlow}}, {{outhigh}}).
+Found impl and src for nodedef: ND_smoothstep_float, Node: smoothstep. Impl: IM_smoothstep_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_smoothstep_float({{in}}, {{low}}, {{high}}).
+Found NodeGraph impl for nodedef: ND_smoothstep_color3, Node: smoothstep. Graph Impl: NG_smoothstep_color3. Graph Nodedef Impl: NG_smoothstep_color3.
+Found NodeGraph impl for nodedef: ND_smoothstep_color4, Node: smoothstep. Graph Impl: NG_smoothstep_color4. Graph Nodedef Impl: NG_smoothstep_color4.
+Found impl and src for nodedef: ND_smoothstep_vector2, Node: smoothstep. Impl: IM_smoothstep_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_smoothstep_vector2({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_smoothstep_vector3, Node: smoothstep. Impl: IM_smoothstep_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_smoothstep_vector3({{in}}, {{low}}, {{high}}).
+Found impl and src for nodedef: ND_smoothstep_vector4, Node: smoothstep. Impl: IM_smoothstep_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_smoothstep_vector4({{in}}, {{low}}, {{high}}).
+Found NodeGraph impl for nodedef: ND_smoothstep_color3FA, Node: smoothstep. Graph Impl: NG_smoothstep_color3FA. Graph Nodedef Impl: NG_smoothstep_color3FA.
+Found NodeGraph impl for nodedef: ND_smoothstep_color4FA, Node: smoothstep. Graph Impl: NG_smoothstep_color4FA. Graph Nodedef Impl: NG_smoothstep_color4FA.
+Found NodeGraph impl for nodedef: ND_smoothstep_vector2FA, Node: smoothstep. Graph Impl: NG_smoothstep_vector2FA. Graph Nodedef Impl: NG_smoothstep_vector2FA.
+Found NodeGraph impl for nodedef: ND_smoothstep_vector3FA, Node: smoothstep. Graph Impl: NG_smoothstep_vector3FA. Graph Nodedef Impl: NG_smoothstep_vector3FA.
+Found NodeGraph impl for nodedef: ND_smoothstep_vector4FA, Node: smoothstep. Graph Impl: NG_smoothstep_vector4FA. Graph Nodedef Impl: NG_smoothstep_vector4FA.
+Found impl and src for nodedef: ND_luminance_color3, Node: luminance. Impl: IM_luminance_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_luminance_color3({{in}}, {{lumacoeffs}}).
+Found impl and src for nodedef: ND_luminance_color4, Node: luminance. Impl: IM_luminance_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_luminance_color4({{in}}, {{lumacoeffs}}).
+Found impl and src for nodedef: ND_rgbtohsv_color3, Node: rgbtohsv. Impl: IM_rgbtohsv_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_rgbtohsv_color3({{in}}).
+Found impl and src for nodedef: ND_rgbtohsv_color4, Node: rgbtohsv. Impl: IM_rgbtohsv_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_rgbtohsv_color4({{in}}).
+Found impl and src for nodedef: ND_hsvtorgb_color3, Node: hsvtorgb. Impl: IM_hsvtorgb_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_hsvtorgb_color3({{in}}).
+Found impl and src for nodedef: ND_hsvtorgb_color4, Node: hsvtorgb. Impl: IM_hsvtorgb_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_hsvtorgb_color4({{in}}).
+Found NodeGraph impl for nodedef: ND_contrast_float, Node: contrast. Graph Impl: NG_contrast_float. Graph Nodedef Impl: NG_contrast_float.
+Found NodeGraph impl for nodedef: ND_contrast_color3, Node: contrast. Graph Impl: NG_contrast_color3. Graph Nodedef Impl: NG_contrast_color3.
+Found NodeGraph impl for nodedef: ND_contrast_color4, Node: contrast. Graph Impl: NG_contrast_color4. Graph Nodedef Impl: NG_contrast_color4.
+Found NodeGraph impl for nodedef: ND_contrast_vector2, Node: contrast. Graph Impl: NG_contrast_vector2. Graph Nodedef Impl: NG_contrast_vector2.
+Found NodeGraph impl for nodedef: ND_contrast_vector3, Node: contrast. Graph Impl: NG_contrast_vector3. Graph Nodedef Impl: NG_contrast_vector3.
+Found NodeGraph impl for nodedef: ND_contrast_vector4, Node: contrast. Graph Impl: NG_contrast_vector4. Graph Nodedef Impl: NG_contrast_vector4.
+Found NodeGraph impl for nodedef: ND_contrast_color3FA, Node: contrast. Graph Impl: NG_contrast_color3FA. Graph Nodedef Impl: NG_contrast_color3FA.
+Found NodeGraph impl for nodedef: ND_contrast_color4FA, Node: contrast. Graph Impl: NG_contrast_color4FA. Graph Nodedef Impl: NG_contrast_color4FA.
+Found NodeGraph impl for nodedef: ND_contrast_vector2FA, Node: contrast. Graph Impl: NG_contrast_vector2FA. Graph Nodedef Impl: NG_contrast_vector2FA.
+Found NodeGraph impl for nodedef: ND_contrast_vector3FA, Node: contrast. Graph Impl: NG_contrast_vector3FA. Graph Nodedef Impl: NG_contrast_vector3FA.
+Found NodeGraph impl for nodedef: ND_contrast_vector4FA, Node: contrast. Graph Impl: NG_contrast_vector4FA. Graph Nodedef Impl: NG_contrast_vector4FA.
+Found NodeGraph impl for nodedef: ND_range_float, Node: range. Graph Impl: NG_range_float. Graph Nodedef Impl: NG_range_float.
+Found NodeGraph impl for nodedef: ND_range_color3, Node: range. Graph Impl: NG_range_color3. Graph Nodedef Impl: NG_range_color3.
+Found NodeGraph impl for nodedef: ND_range_color4, Node: range. Graph Impl: NG_range_color4. Graph Nodedef Impl: NG_range_color4.
+Found NodeGraph impl for nodedef: ND_range_vector2, Node: range. Graph Impl: NG_range_vector2. Graph Nodedef Impl: NG_range_vector2.
+Found NodeGraph impl for nodedef: ND_range_vector3, Node: range. Graph Impl: NG_range_vector3. Graph Nodedef Impl: NG_range_vector3.
+Found NodeGraph impl for nodedef: ND_range_vector4, Node: range. Graph Impl: NG_range_vector4. Graph Nodedef Impl: NG_range_vector4.
+Found NodeGraph impl for nodedef: ND_range_color3FA, Node: range. Graph Impl: NG_range_color3FA. Graph Nodedef Impl: NG_range_color3FA.
+Found NodeGraph impl for nodedef: ND_range_color4FA, Node: range. Graph Impl: NG_range_color4FA. Graph Nodedef Impl: NG_range_color4FA.
+Found NodeGraph impl for nodedef: ND_range_vector2FA, Node: range. Graph Impl: NG_range_vector2FA. Graph Nodedef Impl: NG_range_vector2FA.
+Found NodeGraph impl for nodedef: ND_range_vector3FA, Node: range. Graph Impl: NG_range_vector3FA. Graph Nodedef Impl: NG_range_vector3FA.
+Found NodeGraph impl for nodedef: ND_range_vector4FA, Node: range. Graph Impl: NG_range_vector4FA. Graph Nodedef Impl: NG_range_vector4FA.
+Found NodeGraph impl for nodedef: ND_hsvadjust_color3, Node: hsvadjust. Graph Impl: NG_hsvadjust_color3. Graph Nodedef Impl: NG_hsvadjust_color3.
+Found NodeGraph impl for nodedef: ND_hsvadjust_color4, Node: hsvadjust. Graph Impl: NG_hsvadjust_color4. Graph Nodedef Impl: NG_hsvadjust_color4.
+Found NodeGraph impl for nodedef: ND_saturate_color3, Node: saturate. Graph Impl: NG_saturate_color3. Graph Nodedef Impl: NG_saturate_color3.
+Found NodeGraph impl for nodedef: ND_saturate_color4, Node: saturate. Graph Impl: NG_saturate_color4. Graph Nodedef Impl: NG_saturate_color4.
+Found NodeGraph impl for nodedef: ND_colorcorrect_color3, Node: colorcorrect. Graph Impl: NG_colorcorrect_color3. Graph Nodedef Impl: NG_colorcorrect_color3.
+Found NodeGraph impl for nodedef: ND_colorcorrect_color4, Node: colorcorrect. Graph Impl: NG_colorcorrect_color4. Graph Nodedef Impl: NG_colorcorrect_color4.
+Found impl and src for nodedef: ND_premult_color4, Node: premult. Impl: IM_premult_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_premult_color4({{in}}).
+Found impl and src for nodedef: ND_unpremult_color4, Node: unpremult. Impl: IM_unpremult_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_unpremult_color4({{in}}).
+Found impl and src for nodedef: ND_plus_float, Node: plus. Impl: IM_plus_float_genmdl. Source: ({{mix}}*({{bg}} + {{fg}})) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_plus_color3, Node: plus. Impl: IM_plus_color3_genmdl. Source: ({{mix}}*({{bg}} + {{fg}})) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_plus_color4, Node: plus. Impl: IM_plus_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_plus_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_minus_float, Node: minus. Impl: IM_minus_float_genmdl. Source: ({{mix}}*({{bg}} - {{fg}})) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_minus_color3, Node: minus. Impl: IM_minus_color3_genmdl. Source: ({{mix}}*({{bg}} - {{fg}})) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_minus_color4, Node: minus. Impl: IM_minus_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_minus_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_difference_float, Node: difference. Impl: IM_difference_float_genmdl. Source: ({{mix}}*math::abs({{bg}} - {{fg}})) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_difference_color3, Node: difference. Impl: IM_difference_color3_genmdl. Source: ({{mix}}*math::abs({{bg}} - {{fg}})) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_difference_color4, Node: difference. Impl: IM_difference_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_difference_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_burn_float, Node: burn. Impl: IM_burn_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_burn_float({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_burn_color3, Node: burn. Impl: IM_burn_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_burn_color3({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_burn_color4, Node: burn. Impl: IM_burn_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_burn_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_dodge_float, Node: dodge. Impl: IM_dodge_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_dodge_float({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_dodge_color3, Node: dodge. Impl: IM_dodge_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_dodge_color3({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_dodge_color4, Node: dodge. Impl: IM_dodge_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_dodge_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_screen_float, Node: screen. Impl: IM_screen_float_genmdl. Source: ({{mix}}*((1.0 - (1.0 - {{fg}}) * (1 - {{bg}})))) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_screen_color3, Node: screen. Impl: IM_screen_color3_genmdl. Source: ({{mix}}*((1.0 - (1.0 - {{fg}}) * (1 - {{bg}})))) + ((1.0-{{mix}})*{{bg}}).
+Found impl and src for nodedef: ND_screen_color4, Node: screen. Impl: IM_screen_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_screen_color4({{fg}}, {{bg}}, {{mix}}).
+Found NodeGraph impl for nodedef: ND_overlay_float, Node: overlay. Graph Impl: NG_overlay_float. Graph Nodedef Impl: NG_overlay_float.
+Found NodeGraph impl for nodedef: ND_overlay_color3, Node: overlay. Graph Impl: NG_overlay_color3. Graph Nodedef Impl: NG_overlay_color3.
+Found NodeGraph impl for nodedef: ND_overlay_color4, Node: overlay. Graph Impl: NG_overlay_color4. Graph Nodedef Impl: NG_overlay_color4.
+Found impl and src for nodedef: ND_disjointover_color4, Node: disjointover. Impl: IM_disjointover_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_disjointover_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_in_color4, Node: in. Impl: IM_in_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_in_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_mask_color4, Node: mask. Impl: IM_mask_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_mask_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_matte_color4, Node: matte. Impl: IM_matte_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_matte_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_out_color4, Node: out. Impl: IM_out_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_out_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_over_color4, Node: over. Impl: IM_over_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_over_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_inside_float, Node: inside. Impl: IM_inside_float_genmdl. Source: {{in}} * {{mask}}.
+Found impl and src for nodedef: ND_inside_color3, Node: inside. Impl: IM_inside_color3_genmdl. Source: {{in}} * {{mask}}.
+Found impl and src for nodedef: ND_inside_color4, Node: inside. Impl: IM_inside_color4_genmdl. Source: mx_multiply({{in}}, {{mask}}).
+Found impl and src for nodedef: ND_outside_float, Node: outside. Impl: IM_outside_float_genmdl. Source: {{in}} * (1.0 - {{mask}}).
+Found impl and src for nodedef: ND_outside_color3, Node: outside. Impl: IM_outside_color3_genmdl. Source: {{in}} * (1.0 - {{mask}}).
+Found impl and src for nodedef: ND_outside_color4, Node: outside. Impl: IM_outside_color4_genmdl. Source: mx_multiply({{in}}, 1.0 - {{mask}}).
+Found impl and src for nodedef: ND_mix_float, Node: mix. Impl: IM_mix_float_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_color3, Node: mix. Impl: IM_mix_color3_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_color3_color3, Node: mix. Impl: IM_mix_color3_color3_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_color4, Node: mix. Impl: IM_mix_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_mix_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_color4_color4, Node: mix. Impl: IM_mix_color4_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_mix_color4_color4({{fg}}, {{bg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_vector2, Node: mix. Impl: IM_mix_vector2_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_vector2_vector2, Node: mix. Impl: IM_mix_vector2_vector2_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_vector3, Node: mix. Impl: IM_mix_vector3_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_vector3_vector3, Node: mix. Impl: IM_mix_vector3_vector3_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_vector4, Node: mix. Impl: IM_mix_vector4_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_vector4_vector4, Node: mix. Impl: IM_mix_vector4_vector4_genmdl. Source: math::lerp({{bg}}, {{fg}}, {{mix}}).
+Found impl and src for nodedef: ND_mix_surfaceshader, Node: mix. Impl: IM_mix_surfaceshader_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_mix_surfaceshader({{fg}}, {{bg}}, {{mix}}).
+Temporarily skipping implementation required for nodedef: ND_mix_displacementshader, Node : mix.
+Temporarily skipping implementation required for nodedef: ND_mix_volumeshader, Node : mix.
+Found impl and src for nodedef: ND_ifgreater_float, Node: ifgreater. Impl: IM_ifgreater_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_float({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_integer, Node: ifgreater. Impl: IM_ifgreater_integer_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_integer({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_color3, Node: ifgreater. Impl: IM_ifgreater_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_color3({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_color4, Node: ifgreater. Impl: IM_ifgreater_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_color4({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_vector2, Node: ifgreater. Impl: IM_ifgreater_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_vector2({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_vector3, Node: ifgreater. Impl: IM_ifgreater_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_vector3({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_vector4, Node: ifgreater. Impl: IM_ifgreater_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_vector4({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_matrix33, Node: ifgreater. Impl: IM_ifgreater_matrix33_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_matrix33({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_matrix44, Node: ifgreater. Impl: IM_ifgreater_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_matrix44({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_boolean, Node: ifgreater. Impl: IM_ifgreater_boolean_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_boolean({{value1}}, {{value2}}).
+Found impl and src for nodedef: ND_ifgreater_floatI, Node: ifgreater. Impl: IM_ifgreater_floatI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_floatI({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_integerI, Node: ifgreater. Impl: IM_ifgreater_integerI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_integerI({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_color3I, Node: ifgreater. Impl: IM_ifgreater_color3I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_color3I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_color4I, Node: ifgreater. Impl: IM_ifgreater_color4I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_color4I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_vector2I, Node: ifgreater. Impl: IM_ifgreater_vector2I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_vector2I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_vector3I, Node: ifgreater. Impl: IM_ifgreater_vector3I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_vector3I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_vector4I, Node: ifgreater. Impl: IM_ifgreater_vector4I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_vector4I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_matrix33I, Node: ifgreater. Impl: IM_ifgreater_matrix33I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_matrix33I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_matrix44I, Node: ifgreater. Impl: IM_ifgreater_matrix44I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_matrix44I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreater_booleanI, Node: ifgreater. Impl: IM_ifgreater_booleanI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreater_booleanI({{value1}}, {{value2}}).
+Found impl and src for nodedef: ND_ifgreatereq_float, Node: ifgreatereq. Impl: IM_ifgreatereq_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_float({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_integer, Node: ifgreatereq. Impl: IM_ifgreatereq_integer_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_integer({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_color3, Node: ifgreatereq. Impl: IM_ifgreatereq_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_color3({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_color4, Node: ifgreatereq. Impl: IM_ifgreatereq_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_color4({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_vector2, Node: ifgreatereq. Impl: IM_ifgreatereq_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_vector2({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_vector3, Node: ifgreatereq. Impl: IM_ifgreatereq_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_vector3({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_vector4, Node: ifgreatereq. Impl: IM_ifgreatereq_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_vector4({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_matrix33, Node: ifgreatereq. Impl: IM_ifgreatereq_matrix33_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_matrix33({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_matrix44, Node: ifgreatereq. Impl: IM_ifgreatereq_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_matrix44({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_boolean, Node: ifgreatereq. Impl: IM_ifgreatereq_boolean_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_boolean({{value1}}, {{value2}}).
+Found impl and src for nodedef: ND_ifgreatereq_floatI, Node: ifgreatereq. Impl: IM_ifgreatereq_floatI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_floatI({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_integerI, Node: ifgreatereq. Impl: IM_ifgreatereq_integerI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_integerI({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_color3I, Node: ifgreatereq. Impl: IM_ifgreatereq_color3I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_color3I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_color4I, Node: ifgreatereq. Impl: IM_ifgreatereq_color4I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_color4I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_vector2I, Node: ifgreatereq. Impl: IM_ifgreatereq_vector2I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_vector2I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_vector3I, Node: ifgreatereq. Impl: IM_ifgreatereq_vector3I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_vector3I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_vector4I, Node: ifgreatereq. Impl: IM_ifgreatereq_vector4I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_vector4I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_matrix33I, Node: ifgreatereq. Impl: IM_ifgreatereq_matrix33I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_matrix33I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_matrix44I, Node: ifgreatereq. Impl: IM_ifgreatereq_matrix44I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_matrix44I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifgreatereq_booleanI, Node: ifgreatereq. Impl: IM_ifgreatereq_booleanI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifgreatereq_booleanI({{value1}}, {{value2}}).
+Found impl and src for nodedef: ND_ifequal_float, Node: ifequal. Impl: IM_ifequal_float_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_float({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_integer, Node: ifequal. Impl: IM_ifequal_integer_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_integer({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_color3, Node: ifequal. Impl: IM_ifequal_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_color3({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_color4, Node: ifequal. Impl: IM_ifequal_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_color4({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector2, Node: ifequal. Impl: IM_ifequal_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector2({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector3, Node: ifequal. Impl: IM_ifequal_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector3({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector4, Node: ifequal. Impl: IM_ifequal_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector4({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_matrix33, Node: ifequal. Impl: IM_ifequal_matrix33_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_matrix33({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_matrix44, Node: ifequal. Impl: IM_ifequal_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_matrix44({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_boolean, Node: ifequal. Impl: IM_ifequal_boolean4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_boolean({{value1}}, {{value2}}).
+Found impl and src for nodedef: ND_ifequal_floatI, Node: ifequal. Impl: IM_ifequal_floatI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_floatI({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_integerI, Node: ifequal. Impl: IM_ifequal_integerI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_integerI({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_color3I, Node: ifequal. Impl: IM_ifequal_color3I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_color3I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_color4I, Node: ifequal. Impl: IM_ifequal_color4I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_color4I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector2I, Node: ifequal. Impl: IM_ifequal_vector2I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector2I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector3I, Node: ifequal. Impl: IM_ifequal_vector3I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector3I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector4I, Node: ifequal. Impl: IM_ifequal_vector4I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector4I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_matrix33I, Node: ifequal. Impl: IM_ifequal_matrix33I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_matrix33I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_matrix44I, Node: ifequal. Impl: IM_ifequal_matrix44I_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_matrix44I({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_booleanI, Node: ifequal. Impl: IM_ifequal_booleanI_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_booleanI({{value1}}, {{value2}}).
+Found impl and src for nodedef: ND_ifequal_floatB, Node: ifequal. Impl: IM_ifequal_floatB_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_floatB({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_integerB, Node: ifequal. Impl: IM_ifequal_integerB_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_integerB({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_color3B, Node: ifequal. Impl: IM_ifequal_color3B_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_color3B({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_color4B, Node: ifequal. Impl: IM_ifequal_color4B_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_color4B({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector2B, Node: ifequal. Impl: IM_ifequal_vector2B_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector2B({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector3B, Node: ifequal. Impl: IM_ifequal_vector3B_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector3B({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_vector4B, Node: ifequal. Impl: IM_ifequal_vector4B_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_vector4B({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_matrix33B, Node: ifequal. Impl: IM_ifequal_matrix33B_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_matrix33B({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_matrix44B, Node: ifequal. Impl: IM_ifequal_matrix44B_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_matrix44B({{value1}}, {{value2}}, {{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_ifequal_booleanB, Node: ifequal. Impl: IM_ifequal_booleanB_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_ifequal_booleanB({{value1}}, {{value2}}).
+Found NodeGraph impl for nodedef: ND_switch_float, Node: switch. Graph Impl: NG_switch_float. Graph Nodedef Impl: NG_switch_float.
+Found NodeGraph impl for nodedef: ND_switch_color3, Node: switch. Graph Impl: NG_switch_color3. Graph Nodedef Impl: NG_switch_color3.
+Found NodeGraph impl for nodedef: ND_switch_color4, Node: switch. Graph Impl: NG_switch_color4. Graph Nodedef Impl: NG_switch_color4.
+Found NodeGraph impl for nodedef: ND_switch_vector2, Node: switch. Graph Impl: NG_switch_vector2. Graph Nodedef Impl: NG_switch_vector2.
+Found NodeGraph impl for nodedef: ND_switch_vector3, Node: switch. Graph Impl: NG_switch_vector3. Graph Nodedef Impl: NG_switch_vector3.
+Found NodeGraph impl for nodedef: ND_switch_vector4, Node: switch. Graph Impl: NG_switch_vector4. Graph Nodedef Impl: NG_switch_vector4.
+Found NodeGraph impl for nodedef: ND_switch_matrix33, Node: switch. Graph Impl: NG_switch_matrix33. Graph Nodedef Impl: NG_switch_matrix33.
+Found NodeGraph impl for nodedef: ND_switch_matrix44, Node: switch. Graph Impl: NG_switch_matrix44. Graph Nodedef Impl: NG_switch_matrix44.
+Found NodeGraph impl for nodedef: ND_switch_floatI, Node: switch. Graph Impl: NG_switch_floatI. Graph Nodedef Impl: NG_switch_floatI.
+Found NodeGraph impl for nodedef: ND_switch_color3I, Node: switch. Graph Impl: NG_switch_color3I. Graph Nodedef Impl: NG_switch_color3I.
+Found NodeGraph impl for nodedef: ND_switch_color4I, Node: switch. Graph Impl: NG_switch_color4I. Graph Nodedef Impl: NG_switch_color4I.
+Found NodeGraph impl for nodedef: ND_switch_vector2I, Node: switch. Graph Impl: NG_switch_vector2I. Graph Nodedef Impl: NG_switch_vector2I.
+Found NodeGraph impl for nodedef: ND_switch_vector3I, Node: switch. Graph Impl: NG_switch_vector3I. Graph Nodedef Impl: NG_switch_vector3I.
+Found NodeGraph impl for nodedef: ND_switch_vector4I, Node: switch. Graph Impl: NG_switch_vector4I. Graph Nodedef Impl: NG_switch_vector4I.
+Found NodeGraph impl for nodedef: ND_switch_matrix33I, Node: switch. Graph Impl: NG_switch_matrix33I. Graph Nodedef Impl: NG_switch_matrix33I.
+Found NodeGraph impl for nodedef: ND_switch_matrix44I, Node: switch. Graph Impl: NG_switch_matrix44I. Graph Nodedef Impl: NG_switch_matrix44I.
+Found NodeGraph impl for nodedef: ND_convert_float_color3, Node: convert. Graph Impl: NG_convert_float_color3. Graph Nodedef Impl: NG_convert_float_color3.
+Found NodeGraph impl for nodedef: ND_convert_float_color4, Node: convert. Graph Impl: NG_convert_float_color4. Graph Nodedef Impl: NG_convert_float_color4.
+Found NodeGraph impl for nodedef: ND_convert_float_vector2, Node: convert. Graph Impl: NG_convert_float_vector2. Graph Nodedef Impl: NG_convert_float_vector2.
+Found NodeGraph impl for nodedef: ND_convert_float_vector3, Node: convert. Graph Impl: NG_convert_float_vector3. Graph Nodedef Impl: NG_convert_float_vector3.
+Found NodeGraph impl for nodedef: ND_convert_float_vector4, Node: convert. Graph Impl: NG_convert_float_vector4. Graph Nodedef Impl: NG_convert_float_vector4.
+Found NodeGraph impl for nodedef: ND_convert_color3_color4, Node: convert. Graph Impl: NG_convert_color3_color4. Graph Nodedef Impl: NG_convert_color3_color4.
+Found NodeGraph impl for nodedef: ND_convert_color3_vector2, Node: convert. Graph Impl: NG_convert_color3_vector2. Graph Nodedef Impl: NG_convert_color3_vector2.
+Found NodeGraph impl for nodedef: ND_convert_color3_vector3, Node: convert. Graph Impl: NG_convert_color3_vector3. Graph Nodedef Impl: NG_convert_color3_vector3.
+Found NodeGraph impl for nodedef: ND_convert_color3_vector4, Node: convert. Graph Impl: NG_convert_color3_vector4. Graph Nodedef Impl: NG_convert_color3_vector4.
+Found NodeGraph impl for nodedef: ND_convert_color4_color3, Node: convert. Graph Impl: NG_convert_color4_color3. Graph Nodedef Impl: NG_convert_color4_color3.
+Found NodeGraph impl for nodedef: ND_convert_color4_vector2, Node: convert. Graph Impl: NG_convert_color4_vector2. Graph Nodedef Impl: NG_convert_color4_vector2.
+Found NodeGraph impl for nodedef: ND_convert_color4_vector3, Node: convert. Graph Impl: NG_convert_color4_vector3. Graph Nodedef Impl: NG_convert_color4_vector3.
+Found NodeGraph impl for nodedef: ND_convert_color4_vector4, Node: convert. Graph Impl: NG_convert_color4_vector4. Graph Nodedef Impl: NG_convert_color4_vector4.
+Found NodeGraph impl for nodedef: ND_convert_vector2_color3, Node: convert. Graph Impl: NG_convert_vector2_color3. Graph Nodedef Impl: NG_convert_vector2_color3.
+Found NodeGraph impl for nodedef: ND_convert_vector2_color4, Node: convert. Graph Impl: NG_convert_vector2_color4. Graph Nodedef Impl: NG_convert_vector2_color4.
+Found NodeGraph impl for nodedef: ND_convert_vector2_vector3, Node: convert. Graph Impl: NG_convert_vector2_vector3. Graph Nodedef Impl: NG_convert_vector2_vector3.
+Found NodeGraph impl for nodedef: ND_convert_vector2_vector4, Node: convert. Graph Impl: NG_convert_vector2_vector4. Graph Nodedef Impl: NG_convert_vector2_vector4.
+Found NodeGraph impl for nodedef: ND_convert_vector3_color3, Node: convert. Graph Impl: NG_convert_vector3_color3. Graph Nodedef Impl: NG_convert_vector3_color3.
+Found NodeGraph impl for nodedef: ND_convert_vector3_color4, Node: convert. Graph Impl: NG_convert_vector3_color4. Graph Nodedef Impl: NG_convert_vector3_color4.
+Found NodeGraph impl for nodedef: ND_convert_vector3_vector2, Node: convert. Graph Impl: NG_convert_vector3_vector2. Graph Nodedef Impl: NG_convert_vector3_vector2.
+Found NodeGraph impl for nodedef: ND_convert_vector3_vector4, Node: convert. Graph Impl: NG_convert_vector3_vector4. Graph Nodedef Impl: NG_convert_vector3_vector4.
+Found NodeGraph impl for nodedef: ND_convert_vector4_color3, Node: convert. Graph Impl: NG_convert_vector4_color3. Graph Nodedef Impl: NG_convert_vector4_color3.
+Found NodeGraph impl for nodedef: ND_convert_vector4_color4, Node: convert. Graph Impl: NG_convert_vector4_color4. Graph Nodedef Impl: NG_convert_vector4_color4.
+Found NodeGraph impl for nodedef: ND_convert_vector4_vector2, Node: convert. Graph Impl: NG_convert_vector4_vector2. Graph Nodedef Impl: NG_convert_vector4_vector2.
+Found NodeGraph impl for nodedef: ND_convert_vector4_vector3, Node: convert. Graph Impl: NG_convert_vector4_vector3. Graph Nodedef Impl: NG_convert_vector4_vector3.
+Found impl and src for nodedef: ND_convert_boolean_float, Node: convert. Impl: IM_convert_boolean_float_genmdl. Source: float({{in}}).
+Found NodeGraph impl for nodedef: ND_convert_boolean_color3, Node: convert. Graph Impl: NG_convert_boolean_color3. Graph Nodedef Impl: NG_convert_boolean_color3.
+Found NodeGraph impl for nodedef: ND_convert_boolean_color4, Node: convert. Graph Impl: NG_convert_boolean_color4. Graph Nodedef Impl: NG_convert_boolean_color4.
+Found NodeGraph impl for nodedef: ND_convert_boolean_vector2, Node: convert. Graph Impl: NG_convert_boolean_vector2. Graph Nodedef Impl: NG_convert_boolean_vector2.
+Found NodeGraph impl for nodedef: ND_convert_boolean_vector3, Node: convert. Graph Impl: NG_convert_boolean_vector3. Graph Nodedef Impl: NG_convert_boolean_vector3.
+Found NodeGraph impl for nodedef: ND_convert_boolean_vector4, Node: convert. Graph Impl: NG_convert_boolean_vector4. Graph Nodedef Impl: NG_convert_boolean_vector4.
+Found NodeGraph impl for nodedef: ND_convert_boolean_integer, Node: convert. Graph Impl: NG_convert_boolean_integer. Graph Nodedef Impl: NG_convert_boolean_integer.
+Found impl and src for nodedef: ND_convert_integer_float, Node: convert. Impl: IM_convert_integer_float_genmdl. Source: float({{in}}).
+Found NodeGraph impl for nodedef: ND_convert_integer_color3, Node: convert. Graph Impl: NG_convert_integer_color3. Graph Nodedef Impl: NG_convert_integer_color3.
+Found NodeGraph impl for nodedef: ND_convert_integer_color4, Node: convert. Graph Impl: NG_convert_integer_color4. Graph Nodedef Impl: NG_convert_integer_color4.
+Found NodeGraph impl for nodedef: ND_convert_integer_vector2, Node: convert. Graph Impl: NG_convert_integer_vector2. Graph Nodedef Impl: NG_convert_integer_vector2.
+Found NodeGraph impl for nodedef: ND_convert_integer_vector3, Node: convert. Graph Impl: NG_convert_integer_vector3. Graph Nodedef Impl: NG_convert_integer_vector3.
+Found NodeGraph impl for nodedef: ND_convert_integer_vector4, Node: convert. Graph Impl: NG_convert_integer_vector4. Graph Nodedef Impl: NG_convert_integer_vector4.
+Found NodeGraph impl for nodedef: ND_convert_integer_boolean, Node: convert. Graph Impl: NG_convert_integer_boolean. Graph Nodedef Impl: NG_convert_integer_boolean.
+Found NodeGraph impl for nodedef: ND_convert_color3_surfaceshader, Node: convert. Graph Impl: NG_convert_color3_surfaceshader. Graph Nodedef Impl: NG_convert_color3_surfaceshader.
+Found NodeGraph impl for nodedef: ND_convert_color4_surfaceshader, Node: convert. Graph Impl: NG_convert_color4_surfaceshader. Graph Nodedef Impl: NG_convert_color4_surfaceshader.
+Found NodeGraph impl for nodedef: ND_convert_float_surfaceshader, Node: convert. Graph Impl: NG_convert_float_surfaceshader. Graph Nodedef Impl: NG_convert_float_surfaceshader.
+Found NodeGraph impl for nodedef: ND_convert_vector2_surfaceshader, Node: convert. Graph Impl: NG_convert_vector2_surfaceshader. Graph Nodedef Impl: NG_convert_vector2_surfaceshader.
+Found NodeGraph impl for nodedef: ND_convert_vector3_surfaceshader, Node: convert. Graph Impl: NG_convert_vector3_surfaceshader. Graph Nodedef Impl: NG_convert_vector3_surfaceshader.
+Found NodeGraph impl for nodedef: ND_convert_vector4_surfaceshader, Node: convert. Graph Impl: NG_convert_vector4_surfaceshader. Graph Nodedef Impl: NG_convert_vector4_surfaceshader.
+Found NodeGraph impl for nodedef: ND_convert_integer_surfaceshader, Node: convert. Graph Impl: NG_convert_integer_surfaceshader. Graph Nodedef Impl: NG_convert_integer_surfaceshader.
+Found NodeGraph impl for nodedef: ND_convert_boolean_surfaceshader, Node: convert. Graph Impl: NG_convert_boolean_surfaceshader. Graph Nodedef Impl: NG_convert_boolean_surfaceshader.
+Found impl and src for nodedef: ND_combine2_vector2, Node: combine2. Impl: IM_combine2_vector2_genmdl. Source: float2( {{in1}},{{in2}} ).
+Found impl and src for nodedef: ND_combine2_color4CF, Node: combine2. Impl: IM_combine2_color4CF_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_combine2_color4CF({{in1}}, {{in2}}).
+Found impl and src for nodedef: ND_combine2_vector4VF, Node: combine2. Impl: IM_combine2_vector4VF_genmdl. Source: float4( {{in1}}[0],{{in1}}[1],{{in1}}[2],{{in2}} ).
+Found impl and src for nodedef: ND_combine2_vector4VV, Node: combine2. Impl: IM_combine2_vector4VV_genmdl. Source: float4( {{in1}}[0],{{in1}}[1],{{in2}}[0],{{in2}}[1] ).
+Found impl and src for nodedef: ND_combine3_color3, Node: combine3. Impl: IM_combine3_color3_genmdl. Source: color( {{in1}},{{in2}},{{in3}} ).
+Found impl and src for nodedef: ND_combine3_vector3, Node: combine3. Impl: IM_combine3_vector3_genmdl. Source: float3( {{in1}},{{in2}},{{in3}} ).
+Found impl and src for nodedef: ND_combine4_color4, Node: combine4. Impl: IM_combine4_color4_genmdl. Source: materialx::core::mk_color4( {{in1}},{{in2}},{{in3}},{{in4}} ).
+Found impl and src for nodedef: ND_combine4_vector4, Node: combine4. Impl: IM_combine4_vector4_genmdl. Source: float4( {{in1}},{{in2}},{{in3}},{{in4}} ).
+Found impl and src for nodedef: ND_creatematrix_vector3_matrix33, Node: creatematrix. Impl: IM_creatematrix_vector3_matrix33_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_creatematrix_vector3_matrix33({{in1}}, {{in2}}, {{in3}}).
+Found impl and src for nodedef: ND_creatematrix_vector3_matrix44, Node: creatematrix. Impl: IM_creatematrix_vector3_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_creatematrix_vector3_matrix44({{in1}}, {{in2}}, {{in3}}, {{in4}}).
+Found impl and src for nodedef: ND_creatematrix_vector4_matrix44, Node: creatematrix. Impl: IM_creatematrix_vector4_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_creatematrix_vector4_matrix44({{in1}}, {{in2}}, {{in3}}, {{in4}}).
+Found impl and src for nodedef: ND_extract_color3, Node: extract. Impl: IM_extract_color3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_extract_color3({{in}}, {{index}}).
+Found impl and src for nodedef: ND_extract_color4, Node: extract. Impl: IM_extract_color4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_extract_color4({{in}}, {{index}}).
+Found impl and src for nodedef: ND_extract_vector2, Node: extract. Impl: IM_extract_vector2_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_extract_vector2({{in}}, {{index}}).
+Found impl and src for nodedef: ND_extract_vector3, Node: extract. Impl: IM_extract_vector3_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_extract_vector3({{in}}, {{index}}).
+Found impl and src for nodedef: ND_extract_vector4, Node: extract. Impl: IM_extract_vector4_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_extract_vector4({{in}}, {{index}}).
+Found impl and src for nodedef: ND_extract_matrix33, Node: extract. Impl: IM_extract_matrix33_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_extract_matrix33({{in}}, {{index}}).
+Found impl and src for nodedef: ND_extract_matrix44, Node: extract. Impl: IM_extract_matrix44_genmdl. Source: materialx::stdlib_{{MDL_VERSION_SUFFIX}}::mx_extract_matrix44({{in}}, {{index}}).
+Found NodeGraph impl for nodedef: ND_separate2_vector2, Node: separate2. Graph Impl: NG_separate2_vector2. Graph Nodedef Impl: NG_separate2_vector2.
+Found NodeGraph impl for nodedef: ND_separate3_color3, Node: separate3. Graph Impl: NG_separate3_color3. Graph Nodedef Impl: NG_separate3_color3.
+Found NodeGraph impl for nodedef: ND_separate3_vector3, Node: separate3. Graph Impl: NG_separate3_vector3. Graph Nodedef Impl: NG_separate3_vector3.
+Found NodeGraph impl for nodedef: ND_separate4_color4, Node: separate4. Graph Impl: NG_separate4_color4. Graph Nodedef Impl: NG_separate4_color4.
+Found NodeGraph impl for nodedef: ND_separate4_vector4, Node: separate4. Graph Impl: NG_separate4_vector4. Graph Nodedef Impl: NG_separate4_vector4.
+Found NodeGraph impl for nodedef: ND_blur_float, Node: blur. Graph Impl: NG_blur_float. Graph Nodedef Impl: NG_blur_float.
+Found NodeGraph impl for nodedef: ND_blur_color3, Node: blur. Graph Impl: NG_blur_color3. Graph Nodedef Impl: NG_blur_color3.
+Found NodeGraph impl for nodedef: ND_blur_color4, Node: blur. Graph Impl: NG_blur_color4. Graph Nodedef Impl: NG_blur_color4.
+Found NodeGraph impl for nodedef: ND_blur_vector2, Node: blur. Graph Impl: NG_blur_vector2. Graph Nodedef Impl: NG_blur_vector2.
+Found NodeGraph impl for nodedef: ND_blur_vector3, Node: blur. Graph Impl: NG_blur_vector3. Graph Nodedef Impl: NG_blur_vector3.
+Found NodeGraph impl for nodedef: ND_blur_vector4, Node: blur. Graph Impl: NG_blur_vector4. Graph Nodedef Impl: NG_blur_vector4.
+Found generator impl for nodedef: ND_heighttonormal_vector3, Node: ND_heighttonormal_vector3. Impl: IM_heighttonormal_vector3_genmdl.
+Found impl and src for nodedef: ND_logical_and, Node: and. Impl: IM_logical_and_genmdl. Source: {{in1}} && {{in2}}.
+Found impl and src for nodedef: ND_logical_or, Node: or. Impl: IM_logical_or_genmdl. Source: {{in1}} || {{in2}}.
+Found NodeGraph impl for nodedef: ND_logical_xor, Node: xor. Graph Impl: NG_logical_xor. Graph Nodedef Impl: NG_logical_xor.
+Found impl and src for nodedef: ND_logical_not, Node: not. Impl: IM_logical_not_genmdl. Source: !{{in}}.
+No implementation required for nodedef: ND_dot_float, Node: dot.
+No implementation required for nodedef: ND_dot_color3, Node: dot.
+No implementation required for nodedef: ND_dot_color4, Node: dot.
+No implementation required for nodedef: ND_dot_vector2, Node: dot.
+No implementation required for nodedef: ND_dot_vector3, Node: dot.
+No implementation required for nodedef: ND_dot_vector4, Node: dot.
+No implementation required for nodedef: ND_dot_boolean, Node: dot.
+No implementation required for nodedef: ND_dot_integer, Node: dot.
+No implementation required for nodedef: ND_dot_matrix33, Node: dot.
+No implementation required for nodedef: ND_dot_matrix44, Node: dot.
+No implementation required for nodedef: ND_dot_string, Node: dot.
+No implementation required for nodedef: ND_dot_filename, Node: dot.
+No implementation required for nodedef: ND_dot_surfaceshader, Node: dot.
+No implementation required for nodedef: ND_dot_displacementshader, Node: dot.
+No implementation required for nodedef: ND_dot_volumeshader, Node: dot.
+No implementation required for nodedef: ND_dot_lightshader, Node: dot.
+Temporarily skipping implementation required for nodedef: ND_osl_set_ci, Node : osl_set_ci.
+Found impl and src for nodedef: ND_oren_nayar_diffuse_bsdf, Node: oren_nayar_diffuse_bsdf. Impl: IM_oren_nayar_diffuse_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_oren_nayar_diffuse_bsdf(mxp_weight:{{weight}}, mxp_color:{{color}}, mxp_roughness:{{roughness}}, mxp_normal:{{normal}}, mxp_energy_compensation:{{energy_compensation}}).
+Found impl and src for nodedef: ND_burley_diffuse_bsdf, Node: burley_diffuse_bsdf. Impl: IM_burley_diffuse_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_burley_diffuse_bsdf(mxp_weight:{{weight}}, mxp_color:{{color}}, mxp_roughness:{{roughness}}, mxp_normal:{{normal}}).
+Found impl and src for nodedef: ND_translucent_bsdf, Node: translucent_bsdf. Impl: IM_translucent_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_translucent_bsdf(mxp_weight:{{weight}}, mxp_color:{{color}}, mxp_normal:{{normal}}).
+Found generator impl for nodedef: ND_dielectric_bsdf, Node: ND_dielectric_bsdf. Impl: IM_dielectric_bsdf_genmdl.
+Found impl and src for nodedef: ND_conductor_bsdf, Node: conductor_bsdf. Impl: IM_conductor_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_conductor_bsdf(mxp_weight:{{weight}}, mxp_ior:{{ior}}, mxp_extinction:{{extinction}}, mxp_roughness:{{roughness}}, mxp_thinfilm_thickness:{{thinfilm_thickness}}, mxp_thinfilm_ior:{{thinfilm_ior}}, mxp_normal:{{normal}}, mxp_tangent:{{tangent}}, mxp_distribution:{{distribution}}).
+Found generator impl for nodedef: ND_generalized_schlick_bsdf, Node: ND_generalized_schlick_bsdf. Impl: IM_generalized_schlick_bsdf_genmdl.
+Found impl and src for nodedef: ND_subsurface_bsdf, Node: subsurface_bsdf. Impl: IM_subsurface_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_subsurface_bsdf(mxp_weight:{{weight}}, mxp_color:{{color}}, mxp_radius:{{radius}}, mxp_anisotropy:{{anisotropy}}, mxp_normal:{{normal}}).
+Found generator impl for nodedef: ND_sheen_bsdf, Node: ND_sheen_bsdf. Impl: IM_sheen_bsdf_genmdl.
+Found impl and src for nodedef: ND_chiang_hair_bsdf, Node: chiang_hair_bsdf. Impl: IM_chiang_hair_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_chiang_hair_bsdf(mxp_tint_R:{{tint_R}}, mxp_tint_TT:{{tint_TT}}, mxp_tint_TRT:{{tint_TRT}}, mxp_ior:{{ior}}, mxp_roughness_R:{{roughness_R}}, mxp_roughness_TT:{{roughness_TT}}, mxp_roughness_TRT:{{roughness_TRT}}, mxp_cuticle_angle:{{cuticle_angle}}, mxp_absorption_coefficient:{{absorption_coefficient}}, mxp_curve_direction:{{curve_direction}}).
+Found impl and src for nodedef: ND_uniform_edf, Node: uniform_edf. Impl: IM_uniform_edf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_uniform_edf(mxp_color:{{color}}).
+Temporarily skipping implementation required for nodedef: ND_conical_edf, Node : conical_edf.
+Temporarily skipping implementation required for nodedef: ND_measured_edf, Node : measured_edf.
+Found impl and src for nodedef: ND_generalized_schlick_edf, Node: generalized_schlick_edf. Impl: IM_generalized_schlick_edf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_generalized_schlick_edf(mxp_color0:{{color0}}, mxp_color90:{{color90}}, mxp_exponent:{{exponent}}, mxp_base:{{base}}).
+Temporarily skipping implementation required for nodedef: ND_absorption_vdf, Node : absorption_vdf.
+Found impl and src for nodedef: ND_anisotropic_vdf, Node: anisotropic_vdf. Impl: IM_anisotropic_vdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_anisotropic_vdf(mxp_absorption:{{absorption}}, mxp_scattering:{{scattering}}, mxp_anisotropy:{{anisotropy}}).
+Found generator impl for nodedef: ND_surface, Node: ND_surface. Impl: IM_surface_genmdl.
+Temporarily skipping implementation required for nodedef: ND_volume, Node : volume.
+Temporarily skipping implementation required for nodedef: ND_light, Node : light.
+Temporarily skipping implementation required for nodedef: ND_displacement_float, Node : displacement.
+Temporarily skipping implementation required for nodedef: ND_displacement_vector3, Node : displacement.
+Found generator impl for nodedef: ND_layer_bsdf, Node: ND_layer_bsdf. Impl: IM_layer_bsdf_genmdl.
+Found generator impl for nodedef: ND_layer_vdf, Node: ND_layer_vdf. Impl: IM_layer_vdf_genmdl.
+Found impl and src for nodedef: ND_mix_bsdf, Node: mix. Impl: IM_mix_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_mix_bsdf(mxp_fg:{{fg}}, mxp_bg:{{bg}}, mxp_mix:{{mix}}).
+Found impl and src for nodedef: ND_mix_edf, Node: mix. Impl: IM_mix_edf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_mix_edf(mxp_fg:{{fg}}, mxp_bg:{{bg}}, mxp_mix:{{mix}}).
+Temporarily skipping implementation required for nodedef: ND_mix_vdf, Node : mix.
+Found impl and src for nodedef: ND_add_bsdf, Node: add. Impl: IM_add_bsdf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_add_bsdf(mxp_in1:{{in1}}, mxp_in2:{{in2}}).
+Found impl and src for nodedef: ND_add_edf, Node: add. Impl: IM_add_edf_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_add_edf(mxp_in1:{{in1}}, mxp_in2:{{in2}}).
+Temporarily skipping implementation required for nodedef: ND_add_vdf, Node : add.
+Found impl and src for nodedef: ND_multiply_bsdfC, Node: multiply. Impl: IM_multiply_bsdfC_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_multiply_bsdf_color3(mxp_in1:{{in1}}, mxp_in2:{{in2}}).
+Found impl and src for nodedef: ND_multiply_bsdfF, Node: multiply. Impl: IM_multiply_bsdfF_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_multiply_bsdf_float(mxp_in1:{{in1}}, mxp_in2:{{in2}}).
+Found impl and src for nodedef: ND_multiply_edfC, Node: multiply. Impl: IM_multiply_edfC_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_multiply_edf_color3(mxp_in1:{{in1}}, mxp_in2:{{in2}}).
+Found impl and src for nodedef: ND_multiply_edfF, Node: multiply. Impl: IM_multiply_edfF_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_multiply_edf_float(mxp_in1:{{in1}}, mxp_in2:{{in2}}).
+Temporarily skipping implementation required for nodedef: ND_multiply_vdfC, Node : multiply.
+Temporarily skipping implementation required for nodedef: ND_multiply_vdfF, Node : multiply.
+Found impl and src for nodedef: ND_roughness_anisotropy, Node: roughness_anisotropy. Impl: IM_roughness_anisotropy_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_roughness_anisotropy(mxp_roughness:{{roughness}}, mxp_anisotropy:{{anisotropy}}).
+Found impl and src for nodedef: ND_roughness_dual, Node: roughness_dual. Impl: IM_roughness_dual_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_roughness_dual(mxp_roughness:{{roughness}}).
+Found NodeGraph impl for nodedef: ND_glossiness_anisotropy, Node: glossiness_anisotropy. Graph Impl: IMP_glossiness_anisotropy. Graph Nodedef Impl: IMP_glossiness_anisotropy.
+Found impl and src for nodedef: ND_blackbody, Node: blackbody. Impl: IM_blackbody_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_blackbody(mxp_temperature:{{temperature}}).
+Found impl and src for nodedef: ND_artistic_ior, Node: artistic_ior. Impl: IM_artistic_ior_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_artistic_ior(mxp_reflectivity:{{reflectivity}}, mxp_edge_color:{{edge_color}}).
+Found impl and src for nodedef: ND_deon_hair_absorption_from_melanin, Node: deon_hair_absorption_from_melanin. Impl: IM_deon_hair_absorption_from_melanin_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_deon_hair_absorption_from_melanin(mxp_melanin_concentration:{{melanin_concentration}}, mxp_melanin_redness:{{melanin_redness}}, mxp_eumelanin_color:{{eumelanin_color}}, mxp_pheomelanin_color:{{pheomelanin_color}}).
+Found impl and src for nodedef: ND_chiang_hair_absorption_from_color, Node: chiang_hair_absorption_from_color. Impl: IM_chiang_hair_absorption_from_color_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_chiang_hair_absorption_from_color(mxp_color:{{color}}, mxp_azimuthal_roughness:{{azimuthal_roughness}}).
+Found impl and src for nodedef: ND_chiang_hair_roughness, Node: chiang_hair_roughness. Impl: IM_chiang_hair_roughness_genmdl. Source: materialx::pbrlib_{{MDL_VERSION_SUFFIX}}::mx_chiang_hair_roughness(mxp_longitudinal:{{longitudinal}}, mxp_azimuthal:{{azimuthal}}, mxp_scale_TT:{{scale_TT}}, mxp_scale_TRT:{{scale_TRT}}).
+

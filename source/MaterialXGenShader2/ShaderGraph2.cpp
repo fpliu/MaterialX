@@ -258,11 +258,14 @@ void ShaderGraph2::initializeNode2(DataHandle nodeHandle,
             continue;
         }
 
-        // Skip if the node instance has an explicit connection to this input.
+        // Skip if the node instance has an explicit upstream node connection to this input.
+        // Do NOT skip for socket connections — if the socket has a defaultgeomprop, we must
+        // break the socket connection and replace it with a geomprop node (mirroring the
+        // geomProp loop in HwShaderGenerator::createShader that follows ShaderGraph::create).
         DataHandle nodeInpH = source.getNodeInputByName(nodeHandle, ndInput->getName());
         const bool hasNodeConnection = isValidHandle(nodeInpH) &&
                                        isValidHandle(source.getInputConnectedNode(nodeInpH));
-        if (hasNodeConnection || shaderInput->getConnection())
+        if (hasNodeConnection)
         {
             continue;
         }
@@ -270,6 +273,12 @@ void ShaderGraph2::initializeNode2(DataHandle nodeHandle,
         GeomPropDefPtr geomProp = ndInput->getDefaultGeomProp();
         if (geomProp)
         {
+            // Break any existing socket connection before adding the geomProp node,
+            // so the geomProp node drives this input directly.
+            if (shaderInput->getConnection())
+            {
+                shaderInput->breakConnection();
+            }
             addDefaultGeomNode2(shaderInput, *geomProp, source, context);
         }
     }

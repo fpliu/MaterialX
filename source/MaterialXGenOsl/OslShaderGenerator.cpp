@@ -268,6 +268,154 @@ ShaderPtr OslShaderGenerator::createShader(const string& name, ElementPtr elemen
     return shader;
 }
 
+ShaderPtr OslShaderGenerator::createShader(const string& name, ShaderGraphPtr graph, GenContext& context) const
+{
+    // Graph construction is already done by ShaderGraphBuilder.
+    // Apply the same OSL-specific surfaceshader wrapping as the ElementPtr overload.
+    const auto& outputSockets = graph->getOutputSockets();
+    const auto* singleOutput = outputSockets.size() == 1 ? outputSockets[0] : nullptr;
+    const bool isSurfaceShaderOutput = context.getOptions().oslImplicitSurfaceShaderConversion &&
+                                       singleOutput && singleOutput->getType() == Type::SURFACESHADER;
+    if (isSurfaceShaderOutput)
+        graph->inlineNodeBeforeOutput(outputSockets[0], "_surfacematerial_", "ND_surfacematerial", "surfaceshader", "out", context);
+
+    ShaderPtr shader = std::make_shared<Shader>(name, graph);
+
+    ShaderStagePtr stage = createStage(Stage::PIXEL, *shader);
+    stage->createUniformBlock(OSL::UNIFORMS);
+    stage->createInputBlock(OSL::INPUTS);
+    stage->createOutputBlock(OSL::OUTPUTS);
+
+    createVariables(graph, context, *shader);
+
+    VariableBlock& uniforms = stage->getUniformBlock(OSL::UNIFORMS);
+    for (ShaderGraphInputSocket* inputSocket : graph->getInputSockets())
+    {
+        if (inputSocket->getConnections().size() && graph->isEditable(*inputSocket))
+            uniforms.add(inputSocket->getSelf());
+    }
+
+    VariableBlock& outputs = stage->getOutputBlock(OSL::OUTPUTS);
+    for (ShaderGraphOutputSocket* outputSocket : graph->getOutputSockets())
+        outputs.add(outputSocket->getSelf());
+
+    return shader;
+}
+
+ShaderPtr OslShaderGenerator::generate(const string& name, ShaderGraphPtr graph, GenContext& context) const
+{
+    ShaderPtr shader = createShader(name, graph, context);
+
+    ScopedFloatFormatting fmt(Value::FloatFormatFixed);
+
+    // KNOWN LIMITATION: oslConnectCiWrapper is not supported in the pre-built graph
+    // path because addSetCiTerminalNode requires a document for NodeDef lookup.
+    // Use generate(ElementPtr) when oslConnectCiWrapper is needed.
+
+    ShaderStage& stage = shader->getStage(Stage::PIXEL);
+    ShaderGraph& g = shader->getGraph();
+
+    emitLibraryIncludes(stage, context);
+
+    emitTypeDefinitions(context, stage);
+    emitLine("#define M_FLOAT_EPS 1e-8", stage, false);
+    emitLine("closure color null_closure() { closure color null_closure = 0; return null_closure; } ", stage, false);
+    emitLineBreak(stage);
+
+    if (context.getOptions().fileTextureVerticalFlip)
+        _tokenSubstitutions[ShaderGenerator::T_FILE_TRANSFORM_UV] = "mx_transform_uv_vflip.osl";
+    else
+        _tokenSubstitutions[ShaderGenerator::T_FILE_TRANSFORM_UV] = "mx_transform_uv.osl";
+
+    emitFunctionDefinitions(g, context, stage);
+
+    const ShaderGraphOutputSocket* outputSocket0 = g.getOutputSocket(0);
+    if (outputSocket0->getType() == Type::SURFACESHADER)
+        emitString("surface ", stage);
+    else if (outputSocket0->getType() == Type::VOLUMESHADER)
+        emitString("volume ", stage);
+    else
+        emitString("shader ", stage);
+
+    string functionName = shader->getName();
+    setFunctionName(functionName, stage);
+    emitLine(functionName, stage, false);
+
+    const ShaderMetadataVecPtr& metadata = g.getMetadata();
+    bool haveShaderMetaData = metadata && metadata->size();
+
+    // Emit node info annotations. Category is unavailable without an ElementPtr;
+    // emit an empty string as a placeholder.
+    emitScopeBegin(stage, Syntax::DOUBLE_SQUARE_BRACKETS);
+    emitLine("string mtlx_category = \"\"" + Syntax::COMMA, stage, false);
+    emitLine("string mtlx_name = \"" + name + "\"" +
+                 (haveShaderMetaData ? Syntax::COMMA : EMPTY_STRING),
+             stage, false);
+    if (haveShaderMetaData)
+    {
+        for (size_t j = 0; j < metadata->size(); ++j)
+        {
+            const ShaderMetadata& data = (*metadata)[j];
+            const string& delim = (j == metadata->size() - 1) ? EMPTY_STRING : Syntax::COMMA;
+            const string& dataType = _syntax->getTypeName(data.type);
+            const string dataValue = _syntax->getValue(data.type, *data.value, true);
+            emitLine(dataType + " " + data.name + " = " + dataValue + delim, stage, false);
+        }
+    }
+    emitScopeEnd(stage, false, false);
+    emitLineEnd(stage, false);
+
+    emitScopeBegin(stage, Syntax::PARENTHESES);
+    emitShaderInputs(stage.getInputBlock(OSL::INPUTS), stage);
+    emitShaderInputs(stage.getUniformBlock(OSL::UNIFORMS), stage);
+    const VariableBlock& outputs = stage.getOutputBlock(OSL::OUTPUTS);
+    emitShaderOutputs(outputs, stage);
+    emitScopeEnd(stage);
+
+    emitFunctionBodyBegin(g, context, stage);
+
+    const VariableBlock& constants = stage.getConstantBlock();
+    if (constants.size())
+    {
+        emitVariableDeclarations(constants, _syntax->getConstantQualifier(), Syntax::SEMICOLON, context, stage);
+        emitLineBreak(stage);
+    }
+
+    VariableBlock& inputs = stage.getUniformBlock(OSL::UNIFORMS);
+    for (size_t i = 0; i < inputs.size(); ++i)
+    {
+        ShaderPort* input = inputs[i];
+        if (input->getType() == Type::FILENAME)
+        {
+            const string newVariableName = input->getVariable() + "_";
+            const string& type = _syntax->getTypeName(input->getType());
+            emitLine(type + newVariableName + " = {" + input->getVariable() + ", " + input->getVariable() + "_colorspace}", stage);
+            input->setVariable(newVariableName);
+        }
+    }
+
+    for (ShaderGraphOutputSocket* socket : g.getOutputSockets())
+    {
+        if (socket->getConnection())
+        {
+            const ShaderNode* upstream = socket->getConnection()->getNode();
+            if (upstream->getParent() == &g)
+                emitAllDependentFunctionCalls(*upstream, context, stage);
+        }
+    }
+
+    for (size_t i = 0; i < outputs.size(); ++i)
+    {
+        const ShaderGraphOutputSocket* outputSocket = g.getOutputSocket(i);
+        emitLine(outputSocket->getVariable() + " = " + getUpstreamResult(outputSocket, context), stage);
+    }
+
+    emitFunctionBodyEnd(g, context, stage);
+    replaceTokens(_tokenSubstitutions, stage);
+
+    return shader;
+}
+
 // TODO - determine it's better if this lives in ShaderGenerator as a useful API function
 void OslShaderGenerator::emitAllDependentFunctionCalls(const ShaderNode& node, GenContext& context, ShaderStage& stage) const
 {

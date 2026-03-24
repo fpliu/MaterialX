@@ -59,12 +59,15 @@ class MX_GENSHADER2_API GenContextCreate
     /// the same material element.
     ShaderGraph2Ptr buildGraph(const string& name);
 
-    /// Builds the ShaderGraph and emits shader source code, returning the
-    /// completed Shader equivalent to ShaderGenerator::generate().
+    /// Builds the ShaderGraph via buildGraph() and emits shader source code
+    /// by calling ShaderGenerator::generate(name, ShaderGraphPtr, context).
+    /// The graph is constructed exactly once — no redundant work when both
+    /// buildGraph() and buildShader() are used together.
     ///
-    /// For MX-backed sources the root element is resolved via getMxDocument()
-    /// and forwarded to the generator's existing generate() method.
-    /// @see TODO in GenContextCreate.cpp for the path to full MX independence.
+    /// Requires the active ShaderGenerator to implement the ShaderGraphPtr
+    /// overload of generate() (GLSL, MSL, MDL, and OSL all do).
+    /// Known limitation for OSL: oslConnectCiWrapper is not supported via this
+    /// path; use ShaderGenerator::generate(ElementPtr) directly if needed.
     ShaderPtr buildShader(const string& name);
 
   private:
