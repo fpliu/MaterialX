@@ -806,7 +806,7 @@ ShaderPtr MdlShaderGenerator::generate(const string& name, ShaderGraphPtr graph,
     setFunctionName(functionName, stage);
     emitLine(functionName, stage, false);
     emitScopeBegin(stage, Syntax::PARENTHESES);
-    emitShaderInputs(stage.getInputBlock(MDL::INPUTS), stage);
+    emitShaderInputs(nullptr, stage.getInputBlock(MDL::INPUTS), stage);
     emitScopeEnd(stage);
 
     emitLine("= let", stage, false);

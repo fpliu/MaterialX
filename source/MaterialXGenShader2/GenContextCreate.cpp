@@ -6,7 +6,7 @@
 #include <MaterialXGenShader2/GenContextCreate.h>
 #include <MaterialXGenShader2/ShaderGraphBuilder.h>
 
-#include <MaterialXGenShader/Exception.h>
+#include <MaterialXGenShader/ShaderGenerator.h>
 
 MATERIALX_NAMESPACE_BEGIN
 

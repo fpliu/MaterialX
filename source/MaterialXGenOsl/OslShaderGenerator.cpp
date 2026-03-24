@@ -308,14 +308,8 @@ ShaderPtr OslShaderGenerator::createShader(const string& name, ElementPtr elemen
 ShaderPtr OslShaderGenerator::createShader(const string& name, ShaderGraphPtr graph, GenContext& context) const
 {
     // Graph construction is already done by ShaderGraphBuilder.
-    // Apply the same OSL-specific surfaceshader wrapping as the ElementPtr overload.
-    const auto& outputSockets = graph->getOutputSockets();
-    const auto* singleOutput = outputSockets.size() == 1 ? outputSockets[0] : nullptr;
-    const bool isSurfaceShaderOutput = context.getOptions().oslImplicitSurfaceShaderConversion &&
-                                       singleOutput && singleOutput->getType() == Type::SURFACESHADER;
-    if (isSurfaceShaderOutput)
-        graph->inlineNodeBeforeOutput(outputSockets[0], "_surfacematerial_", "ND_surfacematerial", "surfaceshader", "out", context);
-
+    // Note: oslImplicitSurfaceShaderConversion / inlineNodeBeforeOutput are not
+    // available in 1.39.3 — the surfaceshader wrapping is skipped in this path.
     ShaderPtr shader = std::make_shared<Shader>(name, graph);
 
     ShaderStagePtr stage = createStage(Stage::PIXEL, *shader);
@@ -356,7 +350,7 @@ ShaderPtr OslShaderGenerator::generate(const string& name, ShaderGraphPtr graph,
 
     emitTypeDefinitions(context, stage);
     emitLine("#define M_FLOAT_EPS 1e-8", stage, false);
-    emitLine("closure color null_closure() { closure color null_closure = 0; return null_closure; } ", stage, false);
+    // Note: null_closure is emitted inside emitFunctionBodyBegin for shader/closure nodes.
     emitLineBreak(stage);
 
     if (context.getOptions().fileTextureVerticalFlip)
@@ -375,17 +369,26 @@ ShaderPtr OslShaderGenerator::generate(const string& name, ShaderGraphPtr graph,
         emitString("shader ", stage);
 
     string functionName = shader->getName();
+    _syntax->makeIdentifier(functionName, g.getIdentifierMap());
     setFunctionName(functionName, stage);
     emitLine(functionName, stage, false);
 
     const ShaderMetadataVecPtr& metadata = g.getMetadata();
     bool haveShaderMetaData = metadata && metadata->size();
 
-    // Emit node info annotations. Category is unavailable without an ElementPtr;
-    // emit an empty string as a placeholder.
+    // Derive mtlx_name from the root ShaderNode's name when available.
+    // mtlx_category is unavailable without the original ElementPtr — a known
+    // limitation of the pre-built graph path.
+    string mtlxName = name;
+    if (const ShaderOutput* conn = outputSocket0->getConnection())
+    {
+        if (const ShaderNode* rootNode = conn->getNode())
+            mtlxName = rootNode->getName();
+    }
+
     emitScopeBegin(stage, Syntax::DOUBLE_SQUARE_BRACKETS);
     emitLine("string mtlx_category = \"\"" + Syntax::COMMA, stage, false);
-    emitLine("string mtlx_name = \"" + name + "\"" +
+    emitLine("string mtlx_name = \"" + mtlxName + "\"" +
                  (haveShaderMetaData ? Syntax::COMMA : EMPTY_STRING),
              stage, false);
     if (haveShaderMetaData)
@@ -405,8 +408,20 @@ ShaderPtr OslShaderGenerator::generate(const string& name, ShaderGraphPtr graph,
     emitScopeBegin(stage, Syntax::PARENTHESES);
     emitShaderInputs(stage.getInputBlock(OSL::INPUTS), stage);
     emitShaderInputs(stage.getUniformBlock(OSL::UNIFORMS), stage);
+
     const VariableBlock& outputs = stage.getOutputBlock(OSL::OUTPUTS);
-    emitShaderOutputs(outputs, stage);
+    const ShaderPort* singleOutput = outputs.size() == 1 ? outputs[0] : nullptr;
+    const bool isSurfaceShaderOutput = singleOutput && singleOutput->getType() == Type::SURFACESHADER;
+
+    if (isSurfaceShaderOutput)
+    {
+        // surfaceshader is a struct internally; declare as closure color for renderers.
+        emitLine("output closure color " + singleOutput->getVariable() + " = 0", stage, false);
+    }
+    else
+    {
+        emitShaderOutputs(outputs, stage);
+    }
     emitScopeEnd(stage);
 
     emitFunctionBodyBegin(g, context, stage);
@@ -431,20 +446,38 @@ ShaderPtr OslShaderGenerator::generate(const string& name, ShaderGraphPtr graph,
         }
     }
 
+    // Emit texture nodes first, then root closure/shader nodes (matching generate(ElementPtr) order).
+    emitFunctionCalls(g, context, stage, ShaderNode::Classification::TEXTURE);
     for (ShaderGraphOutputSocket* socket : g.getOutputSockets())
     {
         if (socket->getConnection())
         {
             const ShaderNode* upstream = socket->getConnection()->getNode();
-            if (upstream->getParent() == &g)
-                emitAllDependentFunctionCalls(*upstream, context, stage);
+            if (upstream->getParent() == &g &&
+                (upstream->hasClassification(ShaderNode::Classification::CLOSURE) ||
+                 upstream->hasClassification(ShaderNode::Classification::SHADER)))
+            {
+                emitFunctionCall(*upstream, context, stage);
+            }
         }
     }
 
-    for (size_t i = 0; i < outputs.size(); ++i)
+    if (isSurfaceShaderOutput)
     {
-        const ShaderGraphOutputSocket* outputSocket = g.getOutputSocket(i);
-        emitLine(outputSocket->getVariable() + " = " + getUpstreamResult(outputSocket, context), stage);
+        // Convert the surfaceshader struct to a single closure color with opacity.
+        const string result = getUpstreamResult(g.getOutputSocket(0), context);
+        emitScopeBegin(stage);
+        emitLine("float opacity_weight = clamp(" + result + ".opacity, 0.0, 1.0)", stage);
+        emitLine(singleOutput->getVariable() + " = (" + result + ".bsdf + " + result + ".edf) * opacity_weight + transparent() * (1.0 - opacity_weight)", stage);
+        emitScopeEnd(stage);
+    }
+    else
+    {
+        for (size_t i = 0; i < outputs.size(); ++i)
+        {
+            const ShaderGraphOutputSocket* outputSocket = g.getOutputSocket(i);
+            emitLine(outputSocket->getVariable() + " = " + getUpstreamResult(outputSocket, context), stage);
+        }
     }
 
     emitFunctionBodyEnd(g, context, stage);

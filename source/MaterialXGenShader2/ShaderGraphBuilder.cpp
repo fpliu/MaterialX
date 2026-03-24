@@ -5,7 +5,7 @@
 
 #include <MaterialXGenShader2/ShaderGraphBuilder.h>
 
-#include <MaterialXGenShader/Exception.h>
+#include <MaterialXGenShader/ShaderGenerator.h>
 #include <MaterialXGenShader/ShaderNode.h>
 
 #include <MaterialXCore/Geom.h>
@@ -49,7 +49,7 @@ ShaderGraph2Ptr ShaderGraphBuilder::build(const string& name)
                                           _source.getElementName(root) + "'. Non-MX backends must override getMxNodeDef().");
         }
 
-        ShaderGraph2Ptr graph = std::make_shared<ShaderGraph2>(nullptr, name, nullptr, _context);
+        ShaderGraph2Ptr graph = std::make_shared<ShaderGraph2>(nullptr, name, nullptr, _context.getReservedWords());
         graph->setClassification2(0);
 
         buildNodeRoot(*graph, root, nodeDef);
@@ -65,7 +65,7 @@ ShaderGraph2Ptr ShaderGraphBuilder::build(const string& name)
 
     if (_source.isOutput(root))
     {
-        ShaderGraph2Ptr graph = std::make_shared<ShaderGraph2>(nullptr, name, nullptr, _context);
+        ShaderGraph2Ptr graph = std::make_shared<ShaderGraph2>(nullptr, name, nullptr, _context.getReservedWords());
         graph->setClassification2(0);
 
         buildOutputRoot(*graph, root);
@@ -91,13 +91,13 @@ void ShaderGraphBuilder::buildNodeRoot(ShaderGraph2& graph, DataHandle rootNode,
     graph.addInputSockets2(*nodeDef, _context);
     graph.addOutputSockets2(*nodeDef, _context);
 
-    // Use the simple createNode2 (name, id, nodeDef) overload so that
+    // Use the simple createNode2 (name, nodeDef) overload so that
     // defaultgeomprop nodes and applyInputTransforms are NOT applied inside
     // createNode — replicate the root-node setup from ShaderGraph::create() exactly:
     // manual value wiring first, then a single explicit applyInputTransforms at the end.
     const string rootName = _source.getElementName(rootNode);
-    const string uniqueId = _source.getElementPath(rootNode);
-    ShaderNode* shaderNode = graph.createNode2(rootName, uniqueId, nodeDef, _context);
+    const string rootPath = _source.getElementPath(rootNode);
+    ShaderNode* shaderNode = graph.createNode2(rootName, nodeDef, _context);
     if (!shaderNode)
     {
         throw ExceptionShaderGenError("ShaderGraphBuilder: createNode failed for '" +
@@ -114,7 +114,7 @@ void ShaderGraphBuilder::buildNodeRoot(ShaderGraph2& graph, DataHandle rootNode,
         if (outputSocket)
         {
             outputSocket->makeConnection(shaderNode->getOutput(i));
-            outputSocket->setPath(uniqueId);
+            outputSocket->setPath(rootPath);
         }
     }
 
@@ -331,8 +331,11 @@ void ShaderGraphBuilder::createConnectedNodes(ShaderGraph2& graph,
                                                DataHandle connectingInput)
 {
     // ── Create upstream ShaderNode if it doesn't exist ────────────────────────
-    const string upstreamPath = _source.getElementPath(upstreamNode);
-    ShaderNode* newNode = graph.getNode(upstreamPath);
+    // Nodes are keyed by their short element name in _nodeMap (matching
+    // ShaderGraph::createNode behavior) so that ShaderGraph::optimize() can
+    // correctly erase bypassed nodes via _nodeMap.erase(node->getName()).
+    const string nodeName = _source.getElementName(upstreamNode);
+    ShaderNode* newNode = graph.getNode(nodeName);
     if (!newNode)
     {
         // Resolve the NodeDef via the MX compatibility bridge.
@@ -343,12 +346,11 @@ void ShaderGraphBuilder::createConnectedNodes(ShaderGraph2& graph,
         {
             throw ExceptionShaderGenError(
                 "ShaderGraphBuilder: could not resolve NodeDef for upstream node '" +
-                _source.getElementName(upstreamNode) +
+                nodeName +
                 "'. Non-MX backends must override getMxNodeDef().");
         }
 
-        const string nodeName = _source.getElementName(upstreamNode);
-        newNode = graph.createNode2(nodeName, upstreamPath, nodeDef, _context);
+        newNode = graph.createNode2(nodeName, nodeDef, _context);
         if (!newNode)
         {
             throw ExceptionShaderGenError(
@@ -382,8 +384,8 @@ void ShaderGraphBuilder::createConnectedNodes(ShaderGraph2& graph,
     // ── Wire connection to downstream node input or graph output socket ────────
     if (_source.isNode(downstreamElem))
     {
-        const string downstreamPath = _source.getElementPath(downstreamElem);
-        ShaderNode* downstream = graph.getNode(downstreamPath);
+        const string downstreamName = _source.getElementName(downstreamElem);
+        ShaderNode* downstream = graph.getNode(downstreamName);
         if (!downstream)
         {
             return; // downstream not yet created; will be connected when processed

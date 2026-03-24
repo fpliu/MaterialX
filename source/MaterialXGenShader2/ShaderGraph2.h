@@ -21,6 +21,7 @@
 #include <MaterialXGenShader2/DataHandle.h>
 #include <MaterialXGenShader2/Export.h>
 
+#include <MaterialXGenShader/ShaderGenerator.h>
 #include <MaterialXGenShader/ShaderGraph.h>
 
 MATERIALX_NAMESPACE_BEGIN
@@ -62,10 +63,21 @@ class MX_GENSHADER2_API ShaderGraph2 : public ShaderGraph
     /// Exposes the protected simple createNode overload that creates a ShaderNode
     /// without adding defaultgeomprop nodes or running applyInputTransforms.
     /// This mirrors the call used in ShaderGraph::create() for the root node.
-    ShaderNode* createNode2(const string& name, const string& uniqueId,
-                            ConstNodeDefPtr nodeDef, GenContext& context)
+    ///
+    /// @note The node is stored in _nodeMap keyed by its short *name* (not the
+    ///       full element path).  This matches ShaderGraph::createNode(ConstNodePtr)
+    ///       and is required so that ShaderGraph::optimize() can correctly erase
+    ///       bypassed nodes via _nodeMap.erase(node->getName()).  Storing by path
+    ///       would cause a key mismatch that makes _nodeMap.size() diverge from
+    ///       _nodeOrder.size(), causing a null-pointer crash in topologicalSort().
+    ShaderNode* createNode2(const string& name, ConstNodeDefPtr nodeDef, GenContext& context)
     {
-        return createNode(name, uniqueId, nodeDef, context);
+        if (!nodeDef)
+            throw ExceptionShaderGenError("Could not find a nodedef for node '" + name + "'");
+        ShaderNodePtr newNode = ShaderNode::create(this, name, *nodeDef, context);
+        _nodeMap[name] = newNode;
+        _nodeOrder.push_back(newNode.get());
+        return newNode.get();
     }
 
     /// Initializes an upstream ShaderNode from IShaderSource queries, replacing

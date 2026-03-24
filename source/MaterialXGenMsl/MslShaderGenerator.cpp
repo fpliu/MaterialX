@@ -199,7 +199,8 @@ ShaderPtr MslShaderGenerator::generate(const string& name, ShaderGraphPtr graph,
     ShaderStage& vs = shader->getStage(Stage::VERTEX);
     emitVertexStage(shader->getGraph(), context, vs);
     replaceTokens(_tokenSubstitutions, vs);
-    MetalizeGeneratedShader(vs);
+    // Note: MetalizeGeneratedShader is NOT applied to the vertex stage to match
+    // the generate(ElementPtr) path, which only metallizes the pixel stage.
 
     ShaderStage& ps = shader->getStage(Stage::PIXEL);
     emitPixelStage(shader->getGraph(), context, ps);

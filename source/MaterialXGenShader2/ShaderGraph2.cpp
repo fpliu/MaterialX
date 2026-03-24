@@ -62,11 +62,11 @@ void ShaderGraph2::populateUnitTransformMap2(UnitSystemPtr unitSystem,
             shaderPort->setUnit(sourceUnitSpace);
             if (asInput)
             {
-                _inputUnitTransformMap.emplace_back(static_cast<ShaderInput*>(shaderPort), transform);
+                _inputUnitTransformMap.emplace(static_cast<ShaderInput*>(shaderPort), transform);
             }
             else
             {
-                _outputUnitTransformMap.emplace_back(static_cast<ShaderOutput*>(shaderPort), transform);
+                _outputUnitTransformMap.emplace(static_cast<ShaderOutput*>(shaderPort), transform);
             }
         }
     }
