@@ -31,6 +31,7 @@
 
 #include <MaterialXGenShader2/GenContextCreate.h>
 #include <MaterialXGenShader2/MxElementAdapter.h>
+#include <MaterialXGenShader2/PlainGraphAdapter.h>
 
 #include <MaterialXGenShader/GenContext.h>
 #include <MaterialXGenShader/ShaderGraph.h>
@@ -1086,3 +1087,438 @@ TEST_CASE("GenShader2: emit parity GLSL - all examples", "[genshader2][emit][swe
     INFO("Sweep tested " << tested << " shader nodes across " << mtlxFiles.size() << " files");
     CHECK(tested > 0);
 }
+
+// --- PlainGraphAdapter parity tests -------------------------------------------
+//
+// These tests verify that PlainGraphAdapter (backed by flat maps, no mx::Element
+// pointers for nodes/inputs) produces identical shader output to MxElementAdapter.
+// This proves the IShaderSource interface is sufficient for non-MX graph sources.
+
+/// Build ShaderGraphs from both adapters and verify structural equivalence.
+static void runPlainGraphParityTest(mx::DocumentPtr doc, mx::NodePtr rootNode,
+                                     const std::string& shaderName)
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::DocumentPtr lib = loadLibraries();
+
+    // Reference: MxElementAdapter
+    auto mxAdapter = std::make_unique<mx::MxElementAdapter>(doc, rootNode);
+    mx::GenContextCreate mxCtx(mx::GlslShaderGenerator::create(), std::move(mxAdapter));
+    mxCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderGraph2Ptr mxGraph = mxCtx.buildGraph(shaderName);
+    REQUIRE(mxGraph);
+
+    // Test: PlainGraphAdapter (same graph name for structural comparison)
+    mx::PlainGraphAdapter plainAdapter = mx::PlainGraphAdapter::extractFromDocument(lib, doc, rootNode);
+    mx::GenContextCreate plainCtx(mx::GlslShaderGenerator::create(),
+                                   std::make_unique<mx::PlainGraphAdapter>(std::move(plainAdapter)));
+    plainCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderGraph2Ptr plainGraph = plainCtx.buildGraph(shaderName);
+    REQUIRE(plainGraph);
+
+    checkGraphParity(*mxGraph, *plainGraph, shaderName);
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter graph parity - standard_surface_default",
+          "[genshader2][plain][parity]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainGraphParityTest(doc, rootNode, "plain_ss_default");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter graph parity - standard_surface_marble_solid",
+          "[genshader2][plain][parity]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_marble_solid.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainGraphParityTest(doc, rootNode, "plain_ss_marble");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter graph parity - open_pbr_default",
+          "[genshader2][plain][parity]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/OpenPbr/open_pbr_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "open_pbr_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainGraphParityTest(doc, rootNode, "plain_openpbr_default");
+}
+
+// --- PlainGraphAdapter emit parity (GLSL) -------------------------------------
+
+/// Compare full shader emit between MxElementAdapter and PlainGraphAdapter.
+static void runPlainEmitParityTest(mx::DocumentPtr doc, mx::NodePtr rootNode,
+                                    mx::ShaderGeneratorPtr generator,
+                                    const std::string& shaderName,
+                                    const std::string& label)
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::DocumentPtr lib = loadLibraries();
+
+    // Reference: MxElementAdapter
+    auto mxAdapter = std::make_unique<mx::MxElementAdapter>(doc, rootNode);
+    mx::GenContextCreate mxCtx(generator, std::move(mxAdapter));
+    mxCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr mxShader = mxCtx.buildShader(shaderName);
+    REQUIRE(mxShader);
+
+    // Test: PlainGraphAdapter
+    mx::PlainGraphAdapter plainAdapter = mx::PlainGraphAdapter::extractFromDocument(lib, doc, rootNode);
+    mx::GenContextCreate plainCtx(generator,
+                                   std::make_unique<mx::PlainGraphAdapter>(std::move(plainAdapter)));
+    plainCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+    mx::ShaderPtr plainShader = plainCtx.buildShader(shaderName);
+    REQUIRE(plainShader);
+
+    checkShaderParity(*mxShader, *plainShader, label);
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity GLSL - standard_surface_default",
+          "[genshader2][plain][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::GlslShaderGenerator::create(),
+                           "plain_emit_glsl_ss_default", "PlainGLSL standard_surface_default");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity GLSL - standard_surface_marble_solid",
+          "[genshader2][plain][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_marble_solid.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::GlslShaderGenerator::create(),
+                           "plain_emit_glsl_ss_marble", "PlainGLSL standard_surface_marble_solid");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity GLSL - open_pbr_default",
+          "[genshader2][plain][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/OpenPbr/open_pbr_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "open_pbr_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::GlslShaderGenerator::create(),
+                           "plain_emit_glsl_openpbr", "PlainGLSL open_pbr_default");
+}
+
+// --- PlainGraphAdapter emit parity (MDL) --------------------------------------
+
+#ifdef MATERIALX_BUILD_GEN_MDL
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity MDL - standard_surface_default",
+          "[genshader2][plain][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::MdlShaderGenerator::create(),
+                           "plain_emit_mdl_ss_default", "PlainMDL standard_surface_default");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity MDL - open_pbr_default",
+          "[genshader2][plain][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/OpenPbr/open_pbr_default.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "open_pbr_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::MdlShaderGenerator::create(),
+                           "plain_emit_mdl_openpbr", "PlainMDL open_pbr_default");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity MDL - standard_surface_marble_solid",
+          "[genshader2][plain][emit]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_marble_solid.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::MdlShaderGenerator::create(),
+                           "plain_emit_mdl_ss_marble", "PlainMDL standard_surface_marble_solid");
+}
+
+#endif // MATERIALX_BUILD_GEN_MDL
+
+// --- PlainGraphAdapter: complex material tests --------------------------------
+//
+// These exercise features beyond the basic tests above:
+//   brick_procedural: tiledimage textures, normalmap, 28-node deep graph
+//   boombox:          multi-output nodes (separate3, gltf_colorimage), colorspace
+//   chess_set:        15 NodeGraphs, image nodes, normalmap, colorspace
+
+TEST_CASE("GenShader2: PlainGraphAdapter graph parity - brick_procedural",
+          "[genshader2][plain][parity][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_brick_procedural.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainGraphParityTest(doc, rootNode, "plain_brick_procedural");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity GLSL - brick_procedural",
+          "[genshader2][plain][emit][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_brick_procedural.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::GlslShaderGenerator::create(),
+                           "plain_emit_glsl_brick", "PlainGLSL brick_procedural");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter graph parity - gltf_pbr_boombox",
+          "[genshader2][plain][parity][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/GltfPbr/gltf_pbr_boombox.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "gltf_pbr") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainGraphParityTest(doc, rootNode, "plain_boombox");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity GLSL - gltf_pbr_boombox",
+          "[genshader2][plain][emit][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/GltfPbr/gltf_pbr_boombox.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "gltf_pbr") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::GlslShaderGenerator::create(),
+                           "plain_emit_glsl_boombox", "PlainGLSL gltf_pbr_boombox");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter graph+emit sweep - chess_set",
+          "[genshader2][plain][emit][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_chess_set.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::DocumentPtr lib = loadLibraries();
+
+    int tested = 0;
+    for (mx::NodePtr node : doc->getNodes())
+    {
+        if (node->getType() != mx::SURFACE_SHADER_TYPE_STRING)
+            continue;
+        if (node->getActiveSourceUri() != doc->getActiveSourceUri())
+            continue;
+
+        const std::string label = "plain_chess_" + node->getName();
+        INFO("Testing: " << label);
+
+        // Graph parity
+        {
+            auto mxAdapter = std::make_unique<mx::MxElementAdapter>(doc, node);
+            mx::GenContextCreate mxCtx(mx::GlslShaderGenerator::create(), std::move(mxAdapter));
+            mxCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+            mx::ShaderGraph2Ptr mxGraph = mxCtx.buildGraph(label);
+            REQUIRE(mxGraph);
+
+            mx::PlainGraphAdapter plainAdapter = mx::PlainGraphAdapter::extractFromDocument(lib, doc, node);
+            mx::GenContextCreate plainCtx(mx::GlslShaderGenerator::create(),
+                                           std::make_unique<mx::PlainGraphAdapter>(std::move(plainAdapter)));
+            plainCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+            mx::ShaderGraph2Ptr plainGraph = plainCtx.buildGraph(label);
+            REQUIRE(plainGraph);
+
+            checkGraphParity(*mxGraph, *plainGraph, label);
+        }
+
+        // Emit parity (GLSL)
+        {
+            auto mxAdapter = std::make_unique<mx::MxElementAdapter>(doc, node);
+            mx::GenContextCreate mxCtx(mx::GlslShaderGenerator::create(), std::move(mxAdapter));
+            mxCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+            mx::ShaderPtr mxShader = mxCtx.buildShader(label);
+            REQUIRE(mxShader);
+
+            mx::PlainGraphAdapter plainAdapter = mx::PlainGraphAdapter::extractFromDocument(lib, doc, node);
+            mx::GenContextCreate plainCtx(mx::GlslShaderGenerator::create(),
+                                           std::make_unique<mx::PlainGraphAdapter>(std::move(plainAdapter)));
+            plainCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+            mx::ShaderPtr plainShader = plainCtx.buildShader(label);
+            REQUIRE(plainShader);
+
+            checkShaderParity(*mxShader, *plainShader, "PlainGLSL chess " + node->getName());
+        }
+
+        ++tested;
+    }
+
+    INFO("Chess set tested " << tested << " shader nodes");
+    CHECK(tested > 0);
+}
+
+#ifdef MATERIALX_BUILD_GEN_MDL
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity MDL - brick_procedural",
+          "[genshader2][plain][emit][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_brick_procedural.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "standard_surface") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::MdlShaderGenerator::create(),
+                           "plain_emit_mdl_brick", "PlainMDL brick_procedural");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit parity MDL - gltf_pbr_boombox",
+          "[genshader2][plain][emit][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/GltfPbr/gltf_pbr_boombox.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::NodePtr rootNode;
+    for (mx::NodePtr node : doc->getNodes())
+        if (node->getCategory() == "gltf_pbr") { rootNode = node; break; }
+    REQUIRE(rootNode);
+    runPlainEmitParityTest(doc, rootNode, mx::MdlShaderGenerator::create(),
+                           "plain_emit_mdl_boombox", "PlainMDL gltf_pbr_boombox");
+}
+
+TEST_CASE("GenShader2: PlainGraphAdapter emit sweep MDL - chess_set",
+          "[genshader2][plain][emit][complex]")
+{
+    mx::FileSearchPath searchPath = mx::getDefaultDataSearchPath();
+    mx::FilePath mtlxFile = searchPath.find(
+        "resources/Materials/Examples/StandardSurface/standard_surface_chess_set.mtlx");
+    if (!mtlxFile.exists()) { WARN("Test material not found, skipping: " + mtlxFile.asString()); return; }
+
+    mx::DocumentPtr doc = loadMaterial(mtlxFile);
+    mx::DocumentPtr lib = loadLibraries();
+
+    int tested = 0;
+    for (mx::NodePtr node : doc->getNodes())
+    {
+        if (node->getType() != mx::SURFACE_SHADER_TYPE_STRING)
+            continue;
+        if (node->getActiveSourceUri() != doc->getActiveSourceUri())
+            continue;
+
+        const std::string label = "plain_chess_mdl_" + node->getName();
+        INFO("Testing: " << label);
+
+        auto mxAdapter = std::make_unique<mx::MxElementAdapter>(doc, node);
+        mx::GenContextCreate mxCtx(mx::MdlShaderGenerator::create(), std::move(mxAdapter));
+        mxCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+        mx::ShaderPtr mxShader = mxCtx.buildShader(label);
+        REQUIRE(mxShader);
+
+        mx::PlainGraphAdapter plainAdapter = mx::PlainGraphAdapter::extractFromDocument(lib, doc, node);
+        mx::GenContextCreate plainCtx(mx::MdlShaderGenerator::create(),
+                                       std::make_unique<mx::PlainGraphAdapter>(std::move(plainAdapter)));
+        plainCtx.getGenContext().registerSourceCodeSearchPath(searchPath);
+        mx::ShaderPtr plainShader = plainCtx.buildShader(label);
+        REQUIRE(plainShader);
+
+        checkShaderParity(*mxShader, *plainShader, "PlainMDL chess " + node->getName());
+        ++tested;
+    }
+
+    INFO("Chess set tested " << tested << " shader nodes (MDL)");
+    CHECK(tested > 0);
+}
+
+#endif // MATERIALX_BUILD_GEN_MDL
